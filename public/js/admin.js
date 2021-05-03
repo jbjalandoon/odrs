@@ -272,3 +272,15 @@ jQuery(function ($) {
     $(this).css('cursor', 'pointer');
   });
 });
+
+//for active links
+var header = document.getElementById("link");
+var list = header.getElementsByClassName("li");
+
+for (var i = 0; i < list.length; i++) {
+  list[i].addEventListener("click", function() {
+  var current = document.getElementsByClassName("active");
+  current[0].className = current[0].className.replace(" active", "");
+  this.className += " active";
+  });
+}

@@ -11,13 +11,15 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/sl-1.3.1/datatables.min.css"/>
+    <link rel="shortcut icon" type="image/png" href="/img/pupt-logo.png"/>
     <link rel="stylesheet" href="/css/admin.css">
     <title>ODRS</title>
 
   </head>
+
   <body>
-    <?= view('admin/template/navbar') ?>
     <?= view('admin/template/sidebar') ?>
+    <?= view('admin/template/navbar') ?>
     <main class="page-content" id="content">
 
       <!-- sidebar-wrapper  -->
