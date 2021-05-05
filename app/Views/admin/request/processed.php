@@ -1,4 +1,4 @@
-<div class="card me-3 mt-5">
+<div class="card mt-4">
   <div class="card-body">
     <div class="container-fluid p-1">
       <div class="row">
@@ -37,7 +37,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <table class="table table-data table-striped table-bordered mt-3 dataTable" id="processed-table" style="width:100%">
+          <table class="table table-data mt-3 dataTable" id="processed-table" style="width:100%">
             <thead>
               <tr>
                 <th>Student Number</th>

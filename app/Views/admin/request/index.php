@@ -1,15 +1,16 @@
-<div class="card mt-5 me-3">
+<div class="card mt-4">
   <div class="card-body">
     <div class="container-fluid p-1">
       <div class="row">
-        <div class="col-12">
-          <table id="admin-pending-table" class="table table-striped table-bordered mt-3" style="width:100%">
+        <div class="col-12">        
+          <table id="admin-pending-table" class="table table-striped table-bordered dataTables" style="width:100%">
             <thead>
               <tr>
                 <th>id</th>
+                <!-- <th>&nbsp;</th> -->
                 <th>Student Number</th>
                 <th>Name</th>
-                <th>Course</th>
+                <th>Course</th> 
                 <th>Reason</th>
                 <th>Documents</th>
                 <th>Date Requested</th>
@@ -18,8 +19,9 @@
             <tbody>
               <?php if (!empty($requests)): ?>
                 <?php foreach ($requests as $request): ?>
-                  <tr id="row">
+                  <tr class="active-row">
                     <td><?=esc($request['id'])?></td>
+                    <!-- <td><input  id="row" type="checkbox"></td> -->
                     <td><?= esc($request['student_number']) ?></td>
                     <td><?= ucwords(esc($request['firstname']) . ' ' . esc($request['lastname'])) ?></td>
                     <td><?=esc($request['abbreviation'])?></td>

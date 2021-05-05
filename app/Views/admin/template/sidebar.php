@@ -2,7 +2,8 @@
   <!-- <div class="sidebar-menu"> -->
     <div class="smartphone-menu-trigger"></div>
       <header class="avatar sticky">
-        <span>RODRAS</span>
+        <img src="/img/pupt-logo.png" alt=""><br>
+        <span>ADMIN</span>
       </header>
 <!-- <div class="page-wrapper chiller-theme toggled">
   <nav id="sidebar" class="sidebar-wrapper">

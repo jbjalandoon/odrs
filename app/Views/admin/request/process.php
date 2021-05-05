@@ -1,4 +1,4 @@
-<div class="card me-3 mt-5">
+<div class="card mt-4">
   <div class="card-body">
     <div class="container-fluid p-1">
       <div class="row">

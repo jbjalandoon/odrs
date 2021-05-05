@@ -9,7 +9,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <img src="/img/sample.png" alt="">  
-              <span>Super Admin</span>
+              <span>Admin</span>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="/logout">Log out<i class="fas fa-sign-out-alt"></i></a></li>

@@ -1,8 +1,8 @@
       <footer class="footer p-3 bg-transparent">
         <div class="container-fluid text-center align-items-center">
-          <span class="text-dark">
-            © 2021 made with <i class="fa fa-heart" style="color:red"></i> by - Mitsu Tech
-          </span>
+          <small>
+            © 2021 made by - <img src="/img/logo.png" alt=""> Mitsu Tech
+          </small>
         </div>
       </footer>
     </main>

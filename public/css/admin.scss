@@ -1,17 +1,37 @@
 @import "./variables";
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
 
+@mixin btn_admin {
+	background-color: $tb_header;
+	border-radius: 2px;
+	color: $white;
+}
+
+@mixin editbtn {
+	background: #002147;
+	border-radius: 2px;
+}
+
+@mixin deletebtn {
+	background: rgb(216, 1, 1);
+	border-radius: 2px;
+}
+
 $menu-width-desktop: 240px;
 $menu-width-tablet: 90px;
 $menu-width-smartphone: 230px;
-
 
 body{
 	background: $bgColor;
 	margin: 0;
 	font-family: "Raleway", sans-serif;
-	color: $white;
+	color: $darkcolor;
 	padding-left: $menu-width-desktop;
+
+	footer{
+		color: $darkcolor;
+		img{width: 3%;}
+	}
 	
 	nav.sticky{
 		position: -webkit-sticky;
@@ -71,10 +91,18 @@ body{
 	  top: 0;
 	  z-index: 99999;
 	}
+
     .avatar{
       background-color: $maroonColor;
+	  border-bottom: #DAA520 3px solid;
       padding: 20px;
+	  color: $white;
       text-align:center;
+	  
+	  img{
+		  width: 30%;
+		  padding-bottom: 10px;
+	  }
     }
     
     ul{
@@ -124,8 +152,6 @@ body{
 			}
 		}
 		
-
-
 		.active, li:hover{
 			background-color: $bgColor;
 			a{color: $darkcolor;}
@@ -160,7 +186,48 @@ body{
   //contents
   .card{
 	  max-width: 95%;
-	  
+	  margin: auto;
+
+	  .btn{@include btn_admin();}
+	  .btn-edit{@include editbtn();}
+	  .btn-delete{@include deletebtn()}
+
+	  .table {
+		font-size: 0.9em;
+		font-family: sans-serif;
+		// min-width: 400px;
+		box-shadow: 0 0 20px #00000026;
+
+		thead{ 
+			tr {
+				background-color: $tb_header;
+				color: #ffffff;
+				text-align: left;
+			}
+		}
+
+		th, td{
+			padding: 12px 15px;
+		}
+
+		tbody{
+			font-size: .9em;
+			tr {
+				border-bottom: 1px solid $graycolor;
+				color: black!important;
+			}
+			
+			// tr:last-of-type {
+			// 	border-bottom: 2px solid $tb_header;
+			// }
+
+			// tr.active-row {
+			// 	// font-weight: bold;
+			// 	color: $tb_active;
+			// }
+		}
+
+	}
   }
 }
 

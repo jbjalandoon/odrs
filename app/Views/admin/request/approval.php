@@ -1,9 +1,9 @@
-<div class="card me-3 mt-5">
+<div class="card mt-4">
   <div class="card-body">
     <div class="container-fluid p-1">
       <div class="row">
         <div class="col-12">
-          <table id="approval-table" class="table table-striped table-bordered mt-3" style="width:100%">
+          <table id="approval-table" class="table table-striped table-bordered dataTables" style="width:100%">
             <thead>
               <tr>
                 <th>id</th>
