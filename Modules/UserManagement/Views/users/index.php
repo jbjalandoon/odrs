@@ -41,7 +41,6 @@
                       <td><?=ucfirst(esc($user['role']))?></td>
                       <td><?=ucfirst(esc($user['email']))?></td>
                       <td class="text-center">
-                        <?=esc(buttons($allPermissions, ['edit-role-permission'], 'role-permissions', $role['id']))?>
                       </td>
                     </tr>
                   <?php endforeach; ?>

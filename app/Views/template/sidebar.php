@@ -1,16 +1,24 @@
-<div class="page-wrapper chiller-theme toggled">
+
+<nav class="menu" tabindex="0">
+  <!-- <div class="sidebar-menu"> -->
+    <div class="smartphone-menu-trigger"></div>
+      <header class="avatar sticky">
+        <img src="/img/pupt-logo.png" alt=""><br>
+        <span><?=strtoupper(esc($_SESSION['role']))?></span>
+      </header>
+<!-- <div class="page-wrapper chiller-theme toggled">
   <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content">
-      <!-- sidebar-header  -->
-      <div class="sidebar-menu mt-5">
-        <ul>
+      //sidebar-header 
+      <div class="sidebar-menu mt-5"> -->
+      <ul class="link">
           <?php foreach ($allModules as $module): ?>
-            <li class="header-menu">
+            <li class="header-menu" tabindex="0">
               <span><?=esc(ucwords($module['module']))?></span>
             </li>
             <?php foreach ($allPermissions as $permission): ?>
               <?php if ($permission['module_id'] == $module['id'] && $permission['type_slug'] == 'view'): ?>
-                <li>
+                <li tabindex="0">
                   <a href="<?=esc(base_url($permission['slug']))?>">
                     <i class="fa fa-file-import"></i>
                     <span><?=esc(ucwords($permission['permission']))?></span>
@@ -101,8 +109,6 @@
             </a>
           </li> -->
         </ul>
-      </div>
-      <!-- sidebar-menu  -->
-    </div>
     <!-- sidebar-content  -->
-  </nav>
+  <!-- </div> -->
+</nav>

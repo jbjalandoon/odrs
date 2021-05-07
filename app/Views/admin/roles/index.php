@@ -1,4 +1,4 @@
-<div class="card mt-5 me-3">
+<div class="card mt-4">
   <div class="card-body">
     <div class="container-fluid p-1">
       <div class="row mb-3">
@@ -39,8 +39,8 @@
                       <?=$ctr == 0 ? 'No Permissions': ''?>
                     </td>
                     <td class="text-center">
-                      <a href="roles/edit/<?=esc($role['id'])?>" class="btn btn-success btn-sm"> Edit </a>
-                      <a href="#" class="btn btn-danger btn-sm"> Delete </a>
+                      <a href="roles/edit/<?=esc($role['id'])?>" class="btn btn-edit btn-sm"><i class="fas fa-pencil-alt"></i> Edit </a>
+                      <a href="#" class="btn btn-delete btn-sm"><i class="fas fa-trash-alt"></i> Delete </a>
                     </td>
                   </tr>
                 <?php endforeach; ?>

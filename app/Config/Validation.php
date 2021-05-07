@@ -70,11 +70,11 @@ class Validation
 				'valid_email' => 'Email is invalid'
 			]
 		],
-		'office_id' => [
+		'username' => [
 			'rules' => 'required',
 			'errors' => [
-				'required' => 'This field is required'
-			]
+				'required' => 'This field is required',
+			]	
 		],
 		'password' => [
 			'rules' => 'required',

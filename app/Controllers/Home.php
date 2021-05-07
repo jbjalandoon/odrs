@@ -16,7 +16,7 @@ class Home extends BaseController
 
 	public function verification(){
 		if($this->validate('login')){
-			$users = $this->user->getUsername($_POST['username']);
+			$users = $this->userModel->getUsername($_POST['username']);
 			if(!empty($users))
 			{
 				foreach($users as $user)
@@ -24,35 +24,32 @@ class Home extends BaseController
 					if(password_verify($_POST['password'], $user['password']))
 					{
 						if ($user['status'] == 'a') {
-								if ($user['role_id'] == 1) {
-									$students = $this->student->getStudentByUserId($user['id']);
-									$this->session->set([
-										'user_id' => $user['id'],
-										'role_id' => $user['role_id'],
-										'student_id' => $students[0]['id'],
-										'student_number' => $students[0]['student_number'],
-										'name' => $students[0]['firstname'] . ' ' . $students[0]['lastname'],
-									]);
-								} else {
-									$admins = $this->admin->getAdminByUserId($user['id']);
-									$this->session->set([
-										'user_id' => $user['id'],
-										'role_id' => $user['role_id'],
-										'admin_id' => $admins[0]['id'],
-										'office_id' => $admins[0]['office_id'],
-										'name' => $admins[0]['firstname'] . ' ' . $admins[0]['lastname'],
-									]);
-								}
-								// $this->session->setFlashdata('error_login', 'Correct');
-								if ($_SESSION['role_id'] == 1) {
-									return redirect()->to(base_url() . '/student');
-								} else if ($_SESSION['role_id'] == 2){
-									return redirect()->to(base_url() . '/admin/pending-requests');
-								} else {
-									return redirect()->to(base_url() . '/office');
-								}
+							if ($user['identifier'] == 'student') {
+								$students = $this->student->getStudentByUserId($user['id']);
+								$this->session->set([
+									'user_id' => $user['id'],
+									'role_id' => $user['role_id'],
+									'username' => $user['username'],
+									'role' => $user['role'],
+									'student_id' => $students[0]['id'],
+									'student_number' => $students[0]['student_number'],
+									'name' => $students[0]['firstname'] . ' ' . $students[0]['lastname'],
+								]);
+							} else {
+								$admins = $this->adminModel->getAdminByUserId($user['id']);
+								$this->session->set([
+									'user_id' => $user['id'],
+									'username' => $user['username'],
+									'role_id' => $user['role_id'],
+									'role' => $user['role'],
+									'admin_id' => $admins[0]['id'],
+									'name' => $admins[0]['firstname'] . ' ' . $admins[0]['lastname'],
+								]);
+							}
+							// $this->session->setFlashdata('error_login', 'Correct');
+							return redirect()->to(base_url($user['landing_page']));
 						} else {
-							$this->session->setFlashdata('error_login', 'This account is not yet activated');
+							$this->session->setFlashdata('error_login', 'This account is inactive');
 							return redirect()->to(base_url());
 						}
 					} else {

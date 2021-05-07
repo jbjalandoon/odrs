@@ -1,4 +1,4 @@
-<div class="card mt-5 me-3">
+<div class="card mt-4">
   <div class="card-body">
     <div class="container-fluid p-1">
       <div class="row">
@@ -44,8 +44,8 @@
                     </ul>
                   </td>
                   <td>
-                    <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                    <a href="#" class="btn btn-sm btn-danger">Archive</a>
+                    <a href="#" class="btn btn-sm btn-edit"><i class="fas fa-pencil-alt"></i> Edit</a>
+                    <a href="#" class="btn btn-sm btn-delete"><i class="fas fa-archive"></i> Archive</a>
                   </td>
                 </tr>
                 <?php endforeach; ?>

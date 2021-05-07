@@ -46,25 +46,75 @@
           <div class="col-3">
         		<div class="form-group mb-3">
 							<label for="username">Username</label>
-							<input value="<?=isset($value['username'] ? $value['username']: ''?>" type="text" name="username" id="username">
+							<input value="<?=isset($value['username']) ? $value['username']: ''?>" type="text" name="username" id="username" class="form-control">
 							<?php if(isset($error['username'])): ?>
 								<div class="text-danger">
 									<?=esc($error['username'])?>
+                </div>
 							<?php endif; ?>
             </div>      
           </div>
+          <div class="col-3">
+            <div class="form-group mb-3">
+              <label for="password">Password</label>
+              <input value="" type="password" class="form-control" name="password" id="password">
+              <?php if(isset($error['password'])): ?>
+                <div class="text-danger">
+                  <?=esc($error['password'])?>
+                </div>
+              <?php endif; ?>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group mb-3">
+              <label for="confirm_password">Confirm Password</label>
+              <input value="" type="password" name="confirm_password" id="confirm_password" class="form-control">
+              <?php if(isset($error['confirm_password'])): ?>
+                <div class="text-danger">
+                  <?=esc($error['confirm_password'])?>
+                </div>
+              <?php endif; ?>
+            </div>
+          </div>
         </div>
-				<div class="col-3">
-					<div class="form-group mb-3">
-						<label for="password">Password</label>
-						<input value="<?=isset($value['password']) ? esc($value['password']): ''?>" type="password" class="form-control" name="password" id="password">
-						<?php if(isset($error['password'])): ?>
-							<div class="text-danger">
-								<?=esc($error['password'])?>
-							</div>
-						<?php endif; ?>
-					</div>
-				</div>
+        <div class="row justify-content-center">
+          <div class="col-3">
+            <div class="form-group mb-3">
+              <label for="email">Email</label>
+              <input type="text" class="form-control" value="<?=isset($value['email']) ? $value['email'] : ''?>" name="email" id="email">
+              <?php if(isset($error['email'])): ?>
+                <div class="text-danger">
+                  <?=esc($error['email'])?>
+                </div>
+              <?php endif;?>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group mb-3">
+              <label for="contact">Contact</label>
+              <input type="text" name="contact" value="<?=isset($value['contact']) ? $value['contact']: ''?>" id="contact" class="form-control">
+              <?php if(isset($error['contact'])): ?>
+                <div class="text-danger">
+                  <?=esc($value['contact'])?>
+                </div>
+              <?php endif; ?>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group mb-3">
+              <label for="role_id">Roles</label>
+              <select class="form-select" name="role_id" id="role_id">
+                <?php foreach($roles as $role): ?>
+                  <?php $selected = false; ?>
+                  <?php if(isset($value['role_id'])):?>
+                    <?php $value['role_id'] == $role['id'] ? $selected = true: $selected = false;?>
+                  <?php endif; ?>
+                  <option value="<?=esc($role['id'])?>" <?= $selected ? 'selected': ''?>><?=esc(ucwords($role['role']))?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-12">
             <button type="submit" class="float-end btn btn-primary" name="button">Submit</button>

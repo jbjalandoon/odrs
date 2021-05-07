@@ -45,14 +45,14 @@ class RolePermissions extends BaseController
     $this->data['role_permissions'] = $this->rolePermissionModel->getDetails(['roles.id' => $id]);
     $this->data['view'] = 'Modules\UserManagement\Views\permissions\form';
     if ($this->request->getMethod() === 'post') {
-      if ($this->rolePermission->softDeleteByRoleId($id)) {
+      if ($this->rolePermissionModel->softDeleteByRoleId($id)) {
         if(!empty($_POST['permission_id'])){
           foreach ($_POST['permission_id'] as $key => $value) {
-            $permission = $this->rolePermission->get(['role_id' => $id, 'permission_id' => $value]);
+            $permission = $this->rolePermissionModel->get(['role_id' => $id, 'permission_id' => $value]);
             if (!empty($permission)) {
-              $this->rolePermission->EditByModuleId(['deleted_at' => null],$value);
+              $this->rolePermissionModel->EditByModuleId(['deleted_at' => null],$value);
             } else {
-              $this->rolePermission->input(['role_id' => $id, 'permission_id' => $value]);
+              $this->rolePermissionModel->input(['role_id' => $id, 'permission_id' => $value]);
             }
           }
         }

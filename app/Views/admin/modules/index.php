@@ -1,4 +1,4 @@
-<div class="card mt-5 me-3">
+<div class="card mt-4">
   <div class="card-body">
     <div class="container-fluid p-1">
       <?php if (isset($_SESSION['success_message'])): ?>
@@ -38,8 +38,8 @@
                     <td><?=ucwords(esc($module['module']))?></td>
                     <td><?=esc($module['slug'])?></td>
                     <td class="text-center">
-                      <a href="modules/edit/<?=esc($module['id'])?>" class="btn btn-success btn-sm"> Edit </a>
-                      <a href="modules/delete/<?=esc($module['id'])?>" class="btn btn-danger btn-sm"> Delete </a>
+                      <a href="modules/edit/<?=esc($module['id'])?>" class="btn btn-edit btn-sm"><i class="fas fa-pencil-alt"></i> Edit </a>
+                      <a href="modules/delete/<?=esc($module['id'])?>" class="btn btn-delete btn-sm"><i class="fas fa-trash-alt"></i> Delete </a>
                     </td>
                   </tr>
                 <?php endforeach; ?>

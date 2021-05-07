@@ -84,12 +84,12 @@ function script(){
     "dom": '<"row"<"col-6"<"select-pending mb-3">><"col-6"f>>t<"row"<"col-6"<"action-pending mt-3">><"col-6 float-end mt-3"p>>',
     fnInitComplete: function(){
         $('div.select-pending').html('<span class="h2"> Pending Request </span>');
-        $('div.action-pending').html('<button id="confirm-request" class="btn btn-primary">Confirm</button>');
+        $('div.action-pending').html('<button id="confirm-request" class="btn btn-primary">Confirm Selected</button>');
       }
   });
 
 
-   $('#admin-pending-table tbody').on( 'click', 'tr', function () {
+   $('#admin-pending-table td').on( 'click', 'tr', function () {
       if($(this).id == 'row'){
         $(this).toggleClass('selected');
       }
@@ -254,43 +254,31 @@ function activateUser(id, url){
   });
 }
 
-// jQuery(function () {
-//   $(".sidebar-dropdown > a").click(function() {
-//   $(".sidebar-submenu").slideUp(200);
-//   if (
-//     $(this)
-//       .parent()
-//       .hasClass("active")
-//   ) {
-//     $(".sidebar-dropdown").removeClass("active");
-//     $(this)
-//       .parent()
-//       .removeClass("active");
-//   } else {
-//     $(".sidebar-dropdown").removeClass("active");
-//     $(this)
-//       .next(".sidebar-submenu")
-//       .slideDown(200);
-//     $(this)
-//       .parent()
-//       .addClass("active");
-//   }
-//
-// });
 
-//   $(".sideLink").click(function(){
-//     const page = $(this).children('span').html();
-//     window.history.pushState('', 'New Page Title', '/admin/' + page.replace(/\s+/g, '-').toLowerCase());
-//     const url = page.replace(/\s+/g, '-').toLowerCase();
-//     $.ajax({
-//       url: url,
-//       type : 'GET',
-//       success: function(html){
-//         $("#content").html(html);
-//         script();
-//       }
-//     });
-//   }).hover(function(){
-//     $(this).css('cursor', 'pointer');
-//   });
-// });
+  $(".sideLink").click(function(){
+    const page = $(this).children('span').html();
+    window.history.pushState('', 'New Page Title', '/admin/' + page.replace(/\s+/g, '-').toLowerCase());
+    const url = page.replace(/\s+/g, '-').toLowerCase();
+    $.ajax({
+      url: url,
+      type : 'GET',
+      success: function(html){
+        $("#content").html(html);
+        script();
+      }
+    });
+  }).hover(function(){
+    $(this).css('cursor', 'pointer');
+  });
+
+//for active links
+var header = document.getElementById("link");
+var list = header.getElementsByClassName("li");
+
+for (var i = 0; i < list.length; i++) {
+  list[i].addEventListener("click", function() {
+  var current = document.getElementsByClassName("active");
+  current[0].className = current[0].className.replace(" active", "");
+  this.className += " active";
+  });
+}
