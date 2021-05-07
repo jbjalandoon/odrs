@@ -66,6 +66,7 @@ class BaseController extends Controller
 		$this->roleModel = new UserManagement\RolesModel();
 		$this->rolePermissionModel = new UserManagement\RolePermissionsModel();
 		$this->userModel = new UserManagement\UsersModel();
+		$this->adminModel = new UserManagement\AdminsModel();
 
 		// Module Management Models - ModuleManagement\Class();
 
@@ -73,7 +74,7 @@ class BaseController extends Controller
 		$this->permissionModel = new ModuleManagement\PermissionsModel();
 		$this->permissionTypeModel = new ModuleManagement\permissionTypesModel();
 
-		$this->admin = new AdminsModel();
+		
 		$this->course = new CoursesModel();
 		$this->documentRequirement = new DocumentRequirementsModel();
 		$this->document = new DocumentsModel();

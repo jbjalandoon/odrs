@@ -16,7 +16,7 @@
           <span class="h2">Role Permissions</span>
         </div>
         <div class="col-2">
-          <!-- <?=esc(buttons($allPermissions, ['add-roles'], 'roles'))?> -->
+          <?=esc(buttons($allPermissions, ['add-users'], 'users'))?>
         </div>
       </div>
       <div class="row">
