@@ -250,6 +250,45 @@ class Validation
 			'errors' => [
 				'required' => 'Please enter Roles'
 			]
+		],
+		'description' => [
+			'rules' => 'required',
+			'label' => 'Role Description'
 		]
 	];
+
+	public $permissionType = [
+		'type' => [
+			'rules' => 'required',
+			'label' => 'Permission Type'
+		],
+		'slug' => [
+			'rules' => 'required',
+			'label' => 'Slug'
+		]
+	];
+
+	public $permission =[
+		'permission' => [
+			'rules' => 'required',
+			'label' => 'Permission'
+		],
+		'slug' => [
+			'rules' => 'required',
+			'label' => 'Slug'
+		],
+		'description' => [
+			'rules' => 'required',
+			'label' => 'Description'
+		],
+		'permission_type' => [
+			'rules' => 'required',
+			'label' => 'Permission Type'
+		],
+		'module_id' => [
+			'rules' => 'required',
+			'label' => 'Module'
+		]
+	];
+
 }

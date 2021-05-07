@@ -45,6 +45,7 @@ class BaseModel extends Model
   {
     return $this->update($id, $data);
   }
+
   public function softDelete($id)
   {
     return $this->delete($id);

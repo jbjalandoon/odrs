@@ -2,6 +2,28 @@ const server = location.protocol+'//'+location.hostname+(location.port ? ':'+loc
 
 script();
 
+$(document).ready(function(){
+  $(".permissions-data").each(function(){
+    var element = $(this);
+    $.ajax({
+      url : 'role-permissions/retrieve',
+      type: 'get',
+      data: {id: $(this).attr("id")},
+      beforeSend: function(){
+        element.html('Fetching Data...');
+      },
+      success: function(html){
+        console.log(html);
+        element.html(html);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.responseText);
+        alert(thrownError);
+      }
+    });
+  });
+});
+
 function filter(id){
   $.ajax({
     url : 'claimed-requests',
@@ -232,43 +254,43 @@ function activateUser(id, url){
   });
 }
 
-jQuery(function ($) {
-  $(".sidebar-dropdown > a").click(function() {
-  $(".sidebar-submenu").slideUp(200);
-  if (
-    $(this)
-      .parent()
-      .hasClass("active")
-  ) {
-    $(".sidebar-dropdown").removeClass("active");
-    $(this)
-      .parent()
-      .removeClass("active");
-  } else {
-    $(".sidebar-dropdown").removeClass("active");
-    $(this)
-      .next(".sidebar-submenu")
-      .slideDown(200);
-    $(this)
-      .parent()
-      .addClass("active");
-  }
+// jQuery(function () {
+//   $(".sidebar-dropdown > a").click(function() {
+//   $(".sidebar-submenu").slideUp(200);
+//   if (
+//     $(this)
+//       .parent()
+//       .hasClass("active")
+//   ) {
+//     $(".sidebar-dropdown").removeClass("active");
+//     $(this)
+//       .parent()
+//       .removeClass("active");
+//   } else {
+//     $(".sidebar-dropdown").removeClass("active");
+//     $(this)
+//       .next(".sidebar-submenu")
+//       .slideDown(200);
+//     $(this)
+//       .parent()
+//       .addClass("active");
+//   }
+//
+// });
 
-});
-
-  $(".sideLink").click(function(){
-    const page = $(this).children('span').html();
-    window.history.pushState('', 'New Page Title', '/admin/' + page.replace(/\s+/g, '-').toLowerCase());
-    const url = page.replace(/\s+/g, '-').toLowerCase();
-    $.ajax({
-      url: url,
-      type : 'GET',
-      success: function(html){
-        $("#content").html(html);
-        script();
-      }
-    });
-  }).hover(function(){
-    $(this).css('cursor', 'pointer');
-  });
-});
+//   $(".sideLink").click(function(){
+//     const page = $(this).children('span').html();
+//     window.history.pushState('', 'New Page Title', '/admin/' + page.replace(/\s+/g, '-').toLowerCase());
+//     const url = page.replace(/\s+/g, '-').toLowerCase();
+//     $.ajax({
+//       url: url,
+//       type : 'GET',
+//       success: function(html){
+//         $("#content").html(html);
+//         script();
+//       }
+//     });
+//   }).hover(function(){
+//     $(this).css('cursor', 'pointer');
+//   });
+// });

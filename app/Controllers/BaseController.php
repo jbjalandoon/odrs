@@ -7,6 +7,12 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
+// User Management Models
+use Modules\UserManagement\Models as UserManagement; 
+
+// Module Management Models
+use Modules\ModuleManagement\Models as ModuleManagement;
+
 use App\Models\AdminsModel;
 use App\Models\CoursesModel;
 use App\Models\DocumentRequirementsModel;
@@ -14,12 +20,8 @@ use App\Models\DocumentsModel;
 use App\Models\OfficesModel;
 use App\Models\RequestApprovalsModel;
 use App\Models\RequestDetailsModel;
-use App\Models\PermissionsModel;
-use App\Models\ModulesModel;
 use App\Models\RequestsModel;
-use App\Models\RolesModel;
 use App\Models\StudentsModel;
-use App\Models\UsersModel;
 /**
  * Class BaseController
  *
@@ -40,7 +42,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = ['text'];
+	protected $helpers = [];
 
 	/**
 	 * Constructor.
@@ -53,11 +55,24 @@ class BaseController extends Controller
 	{
 		// Do Not Edit This Line
 		parent::initController($request, $response, $logger);
-
+		helper(['buttons']);
 		//--------------------------------------------------------------------
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
 		// E.g.: $this->session = \Config\Services::session();
+
+		// User Management Models - UserManagement\Class();
+
+		$this->roleModel = new UserManagement\RolesModel();
+		$this->rolePermissionModel = new UserManagement\RolePermissionsModel();
+		$this->userModel = new UserManagement\UsersModel();
+
+		// Module Management Models - ModuleManagement\Class();
+
+		$this->moduleModel = new ModuleManagement\ModulesModel();
+		$this->permissionModel = new ModuleManagement\PermissionsModel();
+		$this->permissionTypeModel = new ModuleManagement\permissionTypesModel();
+
 		$this->admin = new AdminsModel();
 		$this->course = new CoursesModel();
 		$this->documentRequirement = new DocumentRequirementsModel();
@@ -66,16 +81,16 @@ class BaseController extends Controller
 		$this->requestApproval = new RequestApprovalsModel();
 		$this->requestDetail = new RequestDetailsModel();
 		$this->requestModel = new RequestsModel();
-		$this->role = new RolesModel();
 		$this->student = new StudentsModel();
-		$this->user = new UsersModel();
-		$this->module = new ModulesModel();
-		$this->permission = new PermissionsModel();
+
 		$this->session = \Config\Services::session();
 		$this->validation =  \Config\Services::validation();
 		$this->request =  \Config\Services::request();
 		$this->email =  \Config\Services::email();
 		// $this->pdf = \Config\Services::TCPDF();
+
+		$this->data['allModules'] = $this->moduleModel->get();
+		$this->data['allPermissions'] = $this->permissionModel->getDetails();
 		date_default_timezone_set('asia/manila');
 		$this->session->start();
 
