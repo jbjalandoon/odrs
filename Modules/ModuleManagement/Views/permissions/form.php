@@ -36,6 +36,32 @@
         <div class="row justify-content-center">
           <div class="col-4">
             <div class="form-group mb-3">
+              <label for="icon">Icon (Font Awesome)</label>
+              <input type="text" class="form-control" name="icon" id="icon" value="<?= isset($value['icon']) ? esc($value['icon']) : '' ?>">
+              <?php if(isset($error['icon'])): ?>
+                <div class="text-danger">
+                  <?=esc($error['icon'])?>
+                </div>
+              <?php endif; ?>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <div class="form-group mb-3">
+              <label for="path">Path</label>
+              <input type="text" class="form-control" name="path" id="path" value="<?= isset($value['path']) ? esc($value['path']) : '' ?>">
+              <?php if(isset($error['path'])): ?>
+                <div class="text-danger">
+                  <?=esc($error['path'])?>
+                </div>
+              <?php endif; ?>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <div class="form-group mb-3">
               <label for="description" class="form-label">Description</label>
               <textarea name="description" id="description" class="form-control" rows="8" cols="80"><?=isset($value['description']) ? esc($value['description']): ''?></textarea>
               <?php if (isset($error['description'])): ?>

@@ -44,6 +44,7 @@ class Autoload extends AutoloadConfig
 		'Config'      => APPPATH . 'Config',
 		'Modules\UserManagement'			=> ROOTPATH . 'modules/UserManagement',
 		'Modules\ModuleManagement'			=> ROOTPATH . 'modules/ModuleManagement',
+		'Modules\StudentManagement' 		=> ROOTPATH . 'modules/StudentManagement',
 	];
 
 	/**

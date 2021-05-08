@@ -28,6 +28,8 @@
                   <th>#</th>
                   <th>Permission</th>
                   <th>Module</th>
+                  <th>Icon</th>
+                  <th>Path</th>
                   <th>Permission Type</th>
                   <th>Slug</th>
                   <th>Description</th>
@@ -41,6 +43,8 @@
                       <td>#</td>
                       <td><?=ucwords(esc($permission['permission']))?></td>
                       <td><?=esc($permission['module'])?></td>
+                      <td><?=esc($permission['icon'])?></td>
+                      <td><?=esc($permission['path'])?></td>
                       <td><?=ucwords(esc($permission['type']))?></td>
                       <td><?=esc($permission['slug'])?></td>
                       <td><?=esc($permission['description'])?></td>

@@ -35,7 +35,6 @@ class Permissions extends BaseController
       } else {
         $this->data['value'] = $_POST;
         $this->data['error'] = $this->validation->getErrors();
-        $this->data['view'] = 'Modules\ModuleManagement\Views\permissions\form';
       }
     }
     return view('template\index', $this->data);

@@ -11,7 +11,7 @@ class PermissionsModel extends BaseModel
 
   protected $table = 'permissions';
 
-  protected $allowedFields = ['permission', 'slug', 'description', 'permission_type', 'module_id', 'deleted_at'];
+  protected $allowedFields = ['permission', 'slug', 'path','icon', 'description', 'permission_type', 'module_id', 'deleted_at'];
 
   function __construct(){
     parent::__construct();

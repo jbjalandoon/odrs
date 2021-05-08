@@ -74,6 +74,7 @@ class BaseController extends Controller
 		$this->permissionModel = new ModuleManagement\PermissionsModel();
 		$this->permissionTypeModel = new ModuleManagement\permissionTypesModel();
 
+		// Student Management Models - StudentManagement\Class();
 		
 		$this->course = new CoursesModel();
 		$this->documentRequirement = new DocumentRequirementsModel();
@@ -89,9 +90,10 @@ class BaseController extends Controller
 		$this->request =  \Config\Services::request();
 		$this->email =  \Config\Services::email();
 		// $this->pdf = \Config\Services::TCPDF();
-
-		$this->data['allModules'] = $this->rolePermissionModel->getModules(['role_permissions.role_id' => $_SESSION['role_id']]);
-		$this->data['allPermissions'] = $this->rolePermissionModel->getDetails(['role_permissions.role_id' => $_SESSION['role_id']]);
+		if(isset($_SESSION['role_id'])){
+			$this->data['allModules'] = $this->rolePermissionModel->getModules(['role_permissions.role_id' => $_SESSION['role_id']]);
+			$this->data['allPermissions'] = $this->rolePermissionModel->getDetails(['role_permissions.role_id' => $_SESSION['role_id']]);
+		}
 		date_default_timezone_set('asia/manila');
 		$this->session->start();
 
