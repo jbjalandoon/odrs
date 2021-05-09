@@ -1,11 +1,12 @@
       <footer class="footer p-3 bg-transparent">
         <div class="container-fluid text-center align-items-center">
-          <span class="text-dark">
-            © 2021 made with <i class="fa fa-heart" style="color:red"></i> by - Mitsu Tech
-          </span>
+          <small>
+              © 2021 made by - <img src="/img/logo.png" alt=""> Mitsu Tech
+          </small>
         </div>
       </footer>
     </main>
+
     <!-- Optional JavaScript; choose one of the two! -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->

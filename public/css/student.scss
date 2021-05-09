@@ -1,0 +1,261 @@
+@import "./variables";
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+
+@mixin headings {
+    color: $maroonColor;
+    font-size: 1.5em;
+}
+
+@mixin btn{
+    padding: 8px;
+    border-radius: 0;
+    font-size: 1em;
+    box-shadow: 0 0 5px rgba(100, 15, 15, 0.418);
+}
+ 
+body{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    background-color: #e3e3e3;
+
+    .logout{
+        position: relative;
+        width: 150px;
+        color: $white;
+        a{color: $white;}
+        ul{
+            border-radius: 3px;
+            a{color: $darkcolor;}
+        }
+    }
+
+    footer{
+		color: $darkcolor;
+		img{width: 3%;}
+	}
+
+    .navbar{
+        background: $maroonColor;
+        img{max-width: 2.5%;}
+        height: 60px;
+        max-width: 100%;
+        .navbar-brand:hover{
+            color: $white;
+        }
+        .dropdown-item{
+            color: $darkcolor   ;
+        }
+
+        a{
+            text-decoration: none;
+            padding-left: 10px;
+            font-size: 1em;
+            color: white;
+            .active, &:hover{
+                color: $graycolor;
+            }
+        }
+        
+    }
+
+    #content{
+        h1, h2, h3, h4, h5, h6{
+            @include headings();
+            padding: 5px 0 10px 0;
+            i{
+                padding-right: 5px;
+            }
+        }
+
+        .container{ 
+            font-size: .98em;
+            padding: 25px;
+            .row{
+                padding: 10px 5px;
+                .card{
+		            box-shadow: 0 0 20px #00000026;
+                    padding: 20px;
+                    border-radius: 10px 10px 0 0;
+
+                    .card-body{
+                        padding: 0;
+
+                        
+
+                        .breadcrumb-item{
+                            a{
+                                color: maroon;
+                            }
+                        }
+
+                        form{
+                            font-size: .95em;
+                            .btn{
+                                @include btn();
+                                background-color: $maroonColor;
+                                width: 15%;
+                                color: $white;
+                                &:hover{
+                                    background: rgba(128, 0, 0, 0.774);
+                                }
+                            }
+
+                            .table{
+                                border-collapse: collapse;
+                                margin-left: auto;
+                                margin-right: auto;
+                                font-size: 0.95em;
+                                width: 100%;
+                                border: 1px solid rgba(128, 128, 128, 0.24);
+
+                                thead{
+                                    background-color: $gold;
+                                    i{float: right;}
+                                }
+                            }
+                        }
+
+                        .history{
+                            border-collapse: collapse;
+                            margin-left: auto;
+                            margin-right: auto;
+                            font-size: 0.81em;
+                            width: 100%;
+                            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    
+                            th, td{
+                                padding: 12px 15px;
+                            }
+    
+                            thead{
+                                border-radius: 10px 10px 0 0;
+                                tr{
+                                    background-color: #cb3737;
+                                    color: $white;
+                                    text-align: left;
+                                }
+                            }
+    
+                            tbody{
+                                border-bottom: 1px solid #dddddd;
+                            }
+                        }
+
+                        .request{
+                            border-collapse: collapse;
+                            margin-left: auto;
+                            margin-right: auto;
+                            font-size: 0.95em;
+                            width: 100%;
+                            box-shadow: 0 0 20px rgba(0, 0, 0, 0.11);
+
+                            th, td{
+                                padding: 12px 15px;
+                            }
+    
+                            thead{
+                                border-radius: 10px 10px 0 0;
+                                i{padding-right: 10px;}
+                                tr{
+                                    background-color: $gold;
+                                    text-align: left;
+                                }
+                            }
+    
+                            tbody{
+                                border-bottom: 1px solid #dddddd;
+                                // span{padding-bottom: 150px;}
+                                .btn{
+                                    float: left;
+                                    @include btn();
+                                    width: 100%;
+                                    background-color: $gold;
+                                    font-weight: bolder;
+                                    
+                                    &:hover{
+                                        background: #e4a301ad;
+                                    }
+                                }
+                            }
+                        }
+
+                        .tab {
+                            width: 100%;
+                            overflow: hidden;
+                            border: 1px solid #ccc;
+                            background-color: $maroonColor;
+    
+                            button {
+                                background-color: inherit;
+                                color: white;
+                                float: left;
+                                border: none;
+                                outline: none;
+                                cursor: pointer;
+                                padding: 10px 16px;
+                                transition: 0.3s;
+                                font-size: 17px;
+                                border-radius: 0 10px 0 0;
+                                border-right: 1px solid rgba(255, 255, 255, 0.651);
+    
+                                &:hover {
+                                    background-color: rgba(148, 49, 49, 0.774);
+                                    color: $white;
+                                }
+    
+                                &.active {
+                                    background-color: #ccc;
+                                    color: $darkcolor;
+                                  }
+                            }
+                        } 
+    
+                        .tabcontent {
+                            display: none;
+                            padding: 6px 12px;
+                            border: 1px solid #ccc;
+                            border-top: none;
+    
+                            table{
+                                border-collapse: collapse;
+                                margin-left: auto;
+                                margin-right: auto;
+                                font-size: 0.95em;
+                                width: 90%;
+                                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        
+                                th, td{
+                                    padding: 12px 15px;
+                                }
+        
+                                thead{
+                                    border-radius: 10px 10px 0 0;
+                                    tr{
+                                        background-color: #cb3737;
+                                        color: $white;
+                                        text-align: left;
+                                    }
+                                }
+        
+                                tbody{
+                                    border-bottom: 1px solid #dddddd;
+                                    .btn-danger{
+                                        border-radius: 0;
+                                        font-size: 1em;
+                                        box-shadow: 0 0 5px rgba(100, 15, 15, 0.418);
+                                    }
+                                    .btn-success{
+                                        border-radius: 0;
+                                        font-size: 1em;
+                                        box-shadow: 0 0 5px rgba(100, 15, 15, 0.418);
+                                    }
+                                }
+                            }
+                        }
+                    }                    
+                }
+            }
+        }
+    }
+}
