@@ -291,4 +291,22 @@ class Validation
 		]
 	];
 
+	public $courseType = [
+		'type' => 'required'
+	];
+
+	public $course = [
+		'course' => 'required',
+		'abbreviation' => 'required',
+		'course_type' => 'required'
+	];
+
+	public $academicStatus = [
+		'status' => 'required'
+	];
+
+	public $office = [
+		'office' => 'required'
+	];
+
 }

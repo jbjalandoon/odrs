@@ -13,10 +13,10 @@
       <?php endif; ?>
       <div class="row mb-3">
         <div class="col-10">
-          <span class="h2">Role Permissions</span>
+          <span class="h2">Course Types</span>
         </div>
         <div class="col-2">
-          <!-- <?=esc(buttons($allPermissions, ['add-roles'], 'roles'))?> -->
+          <?=esc(buttons($allPermissions, ['add-course-types'], 'course-types'))?>
         </div>
       </div>
       <div class="row">
@@ -26,22 +26,18 @@
               <thead>
                 <tr>
                   <th width="5%">#</th>
-                  <th width="10%">Role</th>
-                  <th width="20%">Description</th>
-                  <th width="60%">Permissions</th>
+                  <th width="10%">Course Type</th>
                   <th width="5%">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <?php if (!empty($roles)): ?>
-                  <?php foreach ($roles as $role): ?>
+                <?php if (!empty($types)): ?>
+                  <?php foreach ($types as $type): ?>
                     <tr>
                       <td>#</td>
-                      <td><?=ucwords(esc($role['role']))?></td>
-                      <td><?=ucfirst(esc($role['description']))?></td>
-                      <td class="permissions-data" id="<?=$role['id']?>">test</td>
+                      <td><?=ucwords(esc($type['type']))?></td>
                       <td class="text-center">
-                        <?=esc(buttons($allPermissions, ['edit-role-permission'], 'role-permissions', $role['id']))?>
+                        <!-- <?=esc(buttons($allPermissions, ['edit-role-permission'], 'role-permissions', $type['id']))?> -->
                       </td>
                     </tr>
                   <?php endforeach; ?>

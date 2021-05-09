@@ -13,6 +13,9 @@ use Modules\UserManagement\Models as UserManagement;
 // Module Management Models
 use Modules\ModuleManagement\Models as ModuleManagement;
 
+// System Settings Models
+use Modules\SystemSettings\Models as SystemSettings;
+
 use App\Models\AdminsModel;
 use App\Models\CoursesModel;
 use App\Models\DocumentRequirementsModel;
@@ -76,10 +79,15 @@ class BaseController extends Controller
 
 		// Student Management Models - StudentManagement\Class();
 		
-		$this->course = new CoursesModel();
+		// System Settings Model - SystemSettings\Class();
+
+		$this->courseTypeModel = new SystemSettings\CourseTypesModel();
+		$this->courseModel = new SystemSettings\CoursesModel();
+		$this->academicStatusModel = new SystemSettings\AcademicStatusModel();
+		$this->officeModel = new SystemSettings\OfficesModel();
+
 		$this->documentRequirement = new DocumentRequirementsModel();
 		$this->document = new DocumentsModel();
-		$this->office = new OfficesModel();
 		$this->requestApproval = new RequestApprovalsModel();
 		$this->requestDetail = new RequestDetailsModel();
 		$this->requestModel = new RequestsModel();

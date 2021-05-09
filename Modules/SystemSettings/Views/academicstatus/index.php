@@ -12,11 +12,11 @@
         </div>
       <?php endif; ?>
       <div class="row mb-3">
-        <div class="col-10">
-          <span class="h2">Students</span>
-        </div>
         <div class="col-2">
-          <a href="students/add" class="float-end btn btn-success"> Add </a>
+          <span class="h2">Courses</span>
+        </div>
+        <div class="col-10">
+          <?=esc(buttons($allPermissions, ['add-academic-status'], 'academic-status'))?>
         </div>
       </div>
       <div class="row">
@@ -26,28 +26,18 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Name</th>
-                  <th>Courses</th>
                   <th>Academic Status</th>
-                  <th>Level</th>
-                  <th>Year Graduated</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                <?php if (!empty($permissions)): ?>
-                  <?php foreach ($permissions as $permission): ?>
+                <?php if (!empty($academic_statuses)): ?>
+                  <?php foreach ($academic_statuses as $acdemic_status): ?>
                     <tr>
                       <td>#</td>
-                      <td><?=ucwords(esc($permission['permission']))?></td>
-                      <td><?=esc($permission['module'])?></td>
-                      <td><?=esc($permission['icon'])?></td>
-                      <td><?=esc($permission['path'])?></td>
-                      <td><?=ucwords(esc($permission['type']))?></td>
-                      <td><?=esc($permission['slug'])?></td>
-                      <td><?=esc($permission['description'])?></td>
+                      <td><?=ucwords(esc($acdemic_status['status']))?></td>
                       <td class="text-center">
-                        #
+                        <?=esc(buttons($allPermissions, ['edit-role', 'delete-role'], 'academic-status', $acdemic_status['id']))?>
                       </td>
                     </tr>
                   <?php endforeach; ?>
@@ -58,5 +48,6 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>
