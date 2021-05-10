@@ -2,6 +2,66 @@ const server = location.protocol+'//'+location.hostname+(location.port ? ':'+loc
 
 script();
 
+$(document).ready(function(){
+  $(".permissions-data").each(function(){
+    var element = $(this);
+    $.ajax({
+      url : 'role-permissions/retrieve',
+      type: 'get',
+      data: {id: $(this).attr("id")},
+      beforeSend: function(){
+        element.html('Fetching Data...');
+      },
+      success: function(html){
+        console.log(html);
+        element.html(html);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.responseText);
+        alert(thrownError);
+      }
+    });
+  });
+
+  $(".document-notes").each(function(){
+    var element = $(this);
+    $.ajax({
+      url : 'documents/notes',
+      type: 'get',
+      data: {id: $(this).attr("id")},
+      beforeSend: function(){
+        element.html('Fetching Data...');
+      },
+      success: function(html){
+        element.html(html);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.responseText);
+        alert(thrownError);
+      }
+    });
+  });
+
+  $(".document-requirements").each(function(){
+    var element = $(this);
+    $.ajax({
+      url : 'documents/requirements',
+      type: 'get',
+      data: {id: $(this).attr("id")},
+      beforeSend: function(){
+        element.html('Fetching Data...');
+      },
+      success: function(html){
+        element.html(html);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.responseText);
+        alert(thrownError);
+      }
+    });
+  });
+});
+
 function filter(id){
   $.ajax({
     url : 'claimed-requests',
@@ -35,6 +95,11 @@ function script(){
 
     $(".js-example-responsive").select2({
   });
+
+  $(".documents-tag").select2({
+    tags: true
+  });
+  
 
   $('#type').change(function(){
     var type = 'yearly';
@@ -232,29 +297,6 @@ function activateUser(id, url){
   });
 }
 
-jQuery(function ($) {
-  $(".sidebar-dropdown > a").click(function() {
-  $(".sidebar-submenu").slideUp(200);
-  if (
-    $(this)
-      .parent()
-      .hasClass("active")
-  ) {
-    $(".sidebar-dropdown").removeClass("active");
-    $(this)
-      .parent()
-      .removeClass("active");
-  } else {
-    $(".sidebar-dropdown").removeClass("active");
-    $(this)
-      .next(".sidebar-submenu")
-      .slideDown(200);
-    $(this)
-      .parent()
-      .addClass("active");
-  }
-
-});
 
   $(".sideLink").click(function(){
     const page = $(this).children('span').html();
@@ -271,7 +313,6 @@ jQuery(function ($) {
   }).hover(function(){
     $(this).css('cursor', 'pointer');
   });
-});
 
 //for active links
 var header = document.getElementById("link");

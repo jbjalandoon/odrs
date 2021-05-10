@@ -7,6 +7,21 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
+// User Management Models
+use Modules\UserManagement\Models as UserManagement; 
+
+// Module Management Models
+use Modules\ModuleManagement\Models as ModuleManagement;
+
+// System Settings Models
+use Modules\SystemSettings\Models as SystemSettings;
+
+// Student Management Models
+use Modules\StudentManagement\Models as StudentManagement;
+
+// Document Manageent odels
+use Modules\DocumentManagement\Models as DocumentManagement;
+
 use App\Models\AdminsModel;
 use App\Models\CoursesModel;
 use App\Models\DocumentRequirementsModel;
@@ -14,12 +29,8 @@ use App\Models\DocumentsModel;
 use App\Models\OfficesModel;
 use App\Models\RequestApprovalsModel;
 use App\Models\RequestDetailsModel;
-use App\Models\PermissionsModel;
-use App\Models\ModulesModel;
 use App\Models\RequestsModel;
-use App\Models\RolesModel;
 use App\Models\StudentsModel;
-use App\Models\UsersModel;
 /**
  * Class BaseController
  *
@@ -40,7 +51,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = ['text'];
+	protected $helpers = [];
 
 	/**
 	 * Constructor.
@@ -53,29 +64,59 @@ class BaseController extends Controller
 	{
 		// Do Not Edit This Line
 		parent::initController($request, $response, $logger);
-
+		helper(['buttons']);
 		//--------------------------------------------------------------------
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
 		// E.g.: $this->session = \Config\Services::session();
-		$this->admin = new AdminsModel();
-		$this->course = new CoursesModel();
+
+		// User Management Models - UserManagement\Class();
+
+		$this->roleModel = new UserManagement\RolesModel();
+		$this->rolePermissionModel = new UserManagement\RolePermissionsModel();
+		$this->userModel = new UserManagement\UsersModel();
+		$this->adminModel = new UserManagement\AdminsModel();
+
+		// Module Management Models - ModuleManagement\Class();
+
+		$this->moduleModel = new ModuleManagement\ModulesModel();
+		$this->permissionModel = new ModuleManagement\PermissionsModel();
+		$this->permissionTypeModel = new ModuleManagement\permissionTypesModel();
+
+		// Student Management Models - StudentManagement\Class();
+		
+		$this->studentModel = new StudentManagement\StudentsModel();
+
+		// System Settings Model - SystemSettings\Class();
+
+		$this->courseTypeModel = new SystemSettings\CourseTypesModel();
+		$this->courseModel = new SystemSettings\CoursesModel();
+		$this->academicStatusModel = new SystemSettings\AcademicStatusModel();
+		$this->officeModel = new SystemSettings\OfficesModel();
+
+		// Document Model Models - DocumentManagement\Class();
+
+		$this->noteModel = new DocumentManagement\NotesModel();
+		$this->documentModel = new DocumentManagement\DocumentsModel();
+		$this->documentNoteModel = new DocumentManagement\DocumentNotesModel();
+		$this->documentRequirementModel = new DocumentManagement\DocumentRequirementsModel();
+		
+
 		$this->documentRequirement = new DocumentRequirementsModel();
 		$this->document = new DocumentsModel();
-		$this->office = new OfficesModel();
 		$this->requestApproval = new RequestApprovalsModel();
 		$this->requestDetail = new RequestDetailsModel();
 		$this->requestModel = new RequestsModel();
-		$this->role = new RolesModel();
-		$this->student = new StudentsModel();
-		$this->user = new UsersModel();
-		$this->module = new ModulesModel();
-		$this->permission = new PermissionsModel();
+
 		$this->session = \Config\Services::session();
 		$this->validation =  \Config\Services::validation();
 		$this->request =  \Config\Services::request();
 		$this->email =  \Config\Services::email();
 		// $this->pdf = \Config\Services::TCPDF();
+		if(isset($_SESSION['role_id'])){
+			$this->data['allModules'] = $this->rolePermissionModel->getModules(['role_permissions.role_id' => $_SESSION['role_id']]);
+			$this->data['allPermissions'] = $this->rolePermissionModel->getDetails(['role_permissions.role_id' => $_SESSION['role_id']]);
+		}
 		date_default_timezone_set('asia/manila');
 		$this->session->start();
 

@@ -12,6 +12,7 @@ class BaseModel extends Model
   protected $deletedField  = 'deleted_at';
   protected $updatedField  = 'updated_at';
   protected $createdField  = 'created_at';
+  protected $primaryKey = 'id';
   protected $useSoftDeletes = true;
   protected $useTimestamps  = true;
 
@@ -35,7 +36,7 @@ class BaseModel extends Model
       return $this->insert($data);
     } else if ($return == 'id') {
       $this->insert($data);
-      return $this->insertID();
+      return $this->getInsertID();
     } else {
       die('2nd argument is between null and id only');
     }
@@ -45,6 +46,7 @@ class BaseModel extends Model
   {
     return $this->update($id, $data);
   }
+
   public function softDelete($id)
   {
     return $this->delete($id);

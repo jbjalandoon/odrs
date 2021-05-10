@@ -70,11 +70,11 @@ class Validation
 				'valid_email' => 'Email is invalid'
 			]
 		],
-		'office_id' => [
+		'username' => [
 			'rules' => 'required',
 			'errors' => [
-				'required' => 'This field is required'
-			]
+				'required' => 'This field is required',
+			]	
 		],
 		'password' => [
 			'rules' => 'required',
@@ -250,6 +250,72 @@ class Validation
 			'errors' => [
 				'required' => 'Please enter Roles'
 			]
+		],
+		'description' => [
+			'rules' => 'required',
+			'label' => 'Role Description'
 		]
 	];
+
+	public $permissionType = [
+		'type' => [
+			'rules' => 'required',
+			'label' => 'Permission Type'
+		],
+		'slug' => [
+			'rules' => 'required',
+			'label' => 'Slug'
+		]
+	];
+
+	public $permission =[
+		'permission' => [
+			'rules' => 'required',
+			'label' => 'Permission'
+		],
+		'slug' => [
+			'rules' => 'required',
+			'label' => 'Slug'
+		],
+		'description' => [
+			'rules' => 'required',
+			'label' => 'Description'
+		],
+		'permission_type' => [
+			'rules' => 'required',
+			'label' => 'Permission Type'
+		],
+		'module_id' => [
+			'rules' => 'required',
+			'label' => 'Module'
+		]
+	];
+
+	public $courseType = [
+		'type' => 'required'
+	];
+
+	public $course = [
+		'course' => 'required',
+		'abbreviation' => 'required',
+		'course_type' => 'required'
+	];
+
+	public $academicStatus = [
+		'status' => 'required'
+	];
+
+	public $office = [
+		'office' => 'required'
+	];
+
+	public $note = [
+		'note' => 'required',
+	];
+
+	public $document = [
+		'document' => 'required',
+		'price' => 'required'
+	];
+
 }

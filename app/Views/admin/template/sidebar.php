@@ -3,7 +3,7 @@
     <div class="smartphone-menu-trigger"></div>
       <header class="avatar sticky">
         <img src="/img/pupt-logo.png" alt=""><br>
-        <span>ADMIN</span>
+        <span><?=esc($_SESSION['role'])[?></span>
       </header>
 <!-- <div class="page-wrapper chiller-theme toggled">
   <nav id="sidebar" class="sidebar-wrapper">
