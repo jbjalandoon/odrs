@@ -22,6 +22,44 @@ $(document).ready(function(){
       }
     });
   });
+
+  $(".document-notes").each(function(){
+    var element = $(this);
+    $.ajax({
+      url : 'documents/notes',
+      type: 'get',
+      data: {id: $(this).attr("id")},
+      beforeSend: function(){
+        element.html('Fetching Data...');
+      },
+      success: function(html){
+        element.html(html);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.responseText);
+        alert(thrownError);
+      }
+    });
+  });
+
+  $(".document-requirements").each(function(){
+    var element = $(this);
+    $.ajax({
+      url : 'documents/requirements',
+      type: 'get',
+      data: {id: $(this).attr("id")},
+      beforeSend: function(){
+        element.html('Fetching Data...');
+      },
+      success: function(html){
+        element.html(html);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.responseText);
+        alert(thrownError);
+      }
+    });
+  });
 });
 
 function filter(id){
@@ -57,6 +95,11 @@ function script(){
 
     $(".js-example-responsive").select2({
   });
+
+  $(".documents-tag").select2({
+    tags: true
+  });
+  
 
   $('#type').change(function(){
     var type = 'yearly';

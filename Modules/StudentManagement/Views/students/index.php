@@ -12,13 +12,23 @@
         </div>
       <?php endif; ?>
       <div class="row mb-3">
-        <div class="col-10">
+        <div class="col-2">
           <span class="h2">Students</span>
         </div>
         <div class="col-2">
           <a href="students/add" class="float-end btn btn-success"> Add </a>
         </div>
       </div>
+      <form action="students/insert-spreadsheet" method="post" enctype="multipart/form-data">
+        <div class="row">
+          <div class="col-5">
+            <input type="file" name="students" class="form-control" required>
+          </div>
+          <div class="col-2">
+            <button type="submit" class="btn btn-primary">Upload</button>
+          </div>
+        </div>
+      </form>
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">

@@ -12,11 +12,11 @@
         </div>
       <?php endif; ?>
       <div class="row mb-3">
-        <div class="col-2">
-          <span class="h2">Roles</span>
-        </div>
         <div class="col-10">
-          <?=esc(buttons($allPermissions, ['add-roles'], 'roles'))?>
+          <span class="h2">Document Notes</span>
+        </div>
+        <div class="col-2">
+          <?=esc(buttons($allPermissions, ['add-notes'], 'notes'))?>
         </div>
       </div>
       <div class="row">
@@ -25,21 +25,19 @@
             <table class="table table-striped table-bordered mt-3 dataTable" style="width:100%">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Role</th>
-                  <th>Description</th>
-                  <th>Action</th>
+                  <th width="5%">#</th>
+                  <th width="10%">Notes</th>
+                  <th width="5%">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <?php if (!empty($roles)): ?>
-                  <?php foreach ($roles as $role): ?>
+                <?php if (!empty($notes)): ?>
+                  <?php foreach ($notes as $note): ?>
                     <tr>
                       <td>#</td>
-                      <td><?=ucwords(esc($role['role']))?></td>
-                      <td><?=ucfirst(esc($role['description']))?></td>
+                      <td><?=ucwords(esc($note['note']))?></td>
                       <td class="text-center">
-                        <?=esc(buttons($allPermissions, ['edit-role', 'delete-role'], 'roles', $role['id']))?>
+                        <?=esc(buttons($allPermissions, ['edit-role-permission'], 'role-permissions', $note['id']))?>
                       </td>
                     </tr>
                   <?php endforeach; ?>
@@ -50,6 +48,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>

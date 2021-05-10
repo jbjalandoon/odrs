@@ -309,4 +309,13 @@ class Validation
 		'office' => 'required'
 	];
 
+	public $note = [
+		'note' => 'required',
+	];
+
+	public $document = [
+		'document' => 'required',
+		'price' => 'required'
+	];
+
 }

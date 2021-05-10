@@ -2,9 +2,9 @@
   <div class="card">
 	<div class="card-body p-5">
 	  <div class="row">
-		<div class="col-12 mb-3">
-		  <span class="h2"><?=esc($edit) ? 'Editing': 'Adding'?> Student</span>
-		</div>
+			<div class="col-5 mb-3">
+				<span class="h2"><?=esc($edit) ? 'Editing': 'Adding'?> Student</span>
+			</div>
 	  </div>
 	  <form class="form-floating" action="<?=esc($edit) ? esc($value['id']) : 'add'?>" method="post" autocomplete="off">
 		<div class="row justify-content-center">

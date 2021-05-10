@@ -12,11 +12,11 @@
         </div>
       <?php endif; ?>
       <div class="row mb-3">
-        <div class="col-10">
-          <span class="h2">Role Permissions</span>
-        </div>
         <div class="col-2">
-          <!-- <?=esc(buttons($allPermissions, ['add-roles'], 'roles'))?> -->
+          <span class="h2">Documents</span>
+        </div>
+        <div class="col-10">
+          <?=esc(buttons($allPermissions, ['add-document'], 'documents'))?>
         </div>
       </div>
       <div class="row">
@@ -25,23 +25,31 @@
             <table class="table table-striped table-bordered mt-3 dataTable" style="width:100%">
               <thead>
                 <tr>
-                  <th width="5%">#</th>
-                  <th width="10%">Role</th>
-                  <th width="20%">Description</th>
-                  <th width="60%">Permissions</th>
-                  <th width="5%">Action</th>
+                  <th>#</th>
+                  <th>Document</th>
+                  <th>Price</th>
+                  <th>Free on first Request</th>
+                  <th>Notes</th>
+                  <th>Office Requirements</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <?php if (!empty($roles)): ?>
-                  <?php foreach ($roles as $role): ?>
+                <?php if (!empty($documents)): ?>
+                  <?php foreach ($documents as $document): ?>
                     <tr>
                       <td>#</td>
-                      <td><?=ucwords(esc($role['role']))?></td>
-                      <td><?=ucfirst(esc($role['description']))?></td>
-                      <td class="permissions-data" id="<?=$role['id']?>">test</td>
+                      <td><?=ucwords(esc($document['document']))?></td>
+                      <td><?=ucfirst('P '.esc($document['price']))?></td>
+                      <td><?=esc($document['is_free_on_first']) ? 'Yes': 'No'?></td>
+                      <td class="document-notes" id="<?=esc($document['id'])?>">
+                        Notes
+                      </td>
+                      <td class="document-requirements" id="<?=esc($document['id'])?>">
+                        Office Requirements
+                      </td>
                       <td class="text-center">
-                        <?=esc(buttons($allPermissions, ['edit-role-permission'], 'role-permissions', $role['id']))?>
+                        <?=esc(buttons($allPermissions, ['edit-role', 'delete-role'], 'roles', $document['id']))?>
                       </td>
                     </tr>
                   <?php endforeach; ?>
