@@ -22,9 +22,9 @@ class Modules extends BaseController
 
   public function add(){
 
-    if (!$this->redirectRole('add-module')) {
-      return view('errors/html/error_404');
-    }
+    // if (!$this->redirectRole('add-module')) {
+    //   return view('errors/html/error_404');
+    // }
 
     $data['edit'] = false;
     if ($this->request->getMethod() === 'get') {
@@ -51,9 +51,9 @@ class Modules extends BaseController
 
   public function edit($id){
 
-    if (!$this->redirectRole('edit-module')) {
-      return view('errors/html/error_404');
-    }
+    // if (!$this->redirectRole('edit-module')) {
+    //   return view('errors/html/error_404');
+    // }
 
     $data['edit'] = true;
     $data['value'] = $this->module->get(['id' => $id])[0];

@@ -3,7 +3,7 @@
     <div class="card-body p-5">
       <div class="row">
         <div class="col-12 mb-3">
-          <span class="h2"><?=esc($edit) ? 'Editing': 'Adding'?> Module</span>
+          <span class="h2"><?=esc($edit) ? 'Editing': 'Adding'?> Permissions</span>
         </div>
       </div>
       <form class="form-floating" action="<?=esc($edit) ? esc($value['id']) : 'add'?>" method="post" autocomplete="off">

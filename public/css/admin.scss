@@ -17,6 +17,13 @@
 	border-radius: 2px;
 }
 
+@mixin sticky{
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	z-index: 99999;
+}
+
 $menu-width-desktop: 240px;
 $menu-width-tablet: 90px;
 $menu-width-smartphone: 230px;
@@ -34,10 +41,7 @@ body{
 	}
 	
 	nav.sticky{
-		position: -webkit-sticky;
-		position: sticky;
-		top: 0;
-		z-index: 99999;
+		@include sticky();
 	}
 
 	.navbar{
@@ -55,7 +59,7 @@ body{
 			span{padding-left: 10px;}
 			
 			li{
-				position: relative;
+				position: relative; 
 				width: 150px;
 				color: $white;
 
@@ -86,10 +90,7 @@ body{
 	overflow: auto;
     
 	.sticky{
-	  position: -webkit-sticky;
-	  position: sticky;
-	  top: 0;
-	  z-index: 99999;
+	  @include sticky();
 	}
 
     .avatar{
@@ -190,7 +191,7 @@ body{
 
 	  .btn{@include btn_admin();}
 	  .btn-edit{@include editbtn();}
-	  .btn-delete{@include deletebtn()}
+	  .btn-delete{@include deletebtn();}
 
 	  .table {
 		font-size: 0.9em;

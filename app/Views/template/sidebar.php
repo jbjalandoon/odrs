@@ -20,7 +20,7 @@
               <?php if ($permission['module_id'] == $module['id'] && $permission['type_slug'] == 'view'): ?>
                 <li tabindex="0">
                   <a href="<?=esc(base_url($permission['slug']))?>">
-                    <i class="fa fa-file-import"></i>
+                    <i class="fas fa-cogs"></i>
                     <span><?=esc(ucwords($permission['permission']))?></span>
                   </a>
                 </li>

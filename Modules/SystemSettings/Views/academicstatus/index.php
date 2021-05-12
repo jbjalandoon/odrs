@@ -13,7 +13,7 @@
       <?php endif; ?>
       <div class="row mb-3">
         <div class="col-2">
-          <span class="h2">Courses</span>
+          <span class="h2">Academic Status</span>
         </div>
         <div class="col-10">
           <?=esc(buttons($allPermissions, ['add-academic-status'], 'academic-status'))?>

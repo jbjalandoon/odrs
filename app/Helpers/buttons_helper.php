@@ -7,13 +7,13 @@ if (! function_exists('buttons'))
 			foreach ($functions as $key => $value) {
 				if ($value == $permission['slug']) {
 					if ($permission['type_slug'] == 'add') {
-						echo '<a href="'.$link.'/add" class="float-end btn btn-success"> Add </a>';
+						echo '<a href="'.$link.'/add" class="float-end btn"> Add </a>';
 					}
 					elseif ($permission['type_slug'] == 'edit') {
-						echo '<a href="'.$link.'/edit/'.$id.'" class="btn btn-success btn-sm"> Edit </a> ';
+						echo '<a href="'.$link.'/edit/'.$id.'" class="btn btn-edit btn-sm"><i class="fas fa-edit"></i> Edit </a> ';
 					}
 					elseif ($permission['type_slug'] == 'delete') {
-						echo '<a href="'.$link.'/delete/'.$id.'" class="btn btn-danger btn-sm"> Delete </a> ';
+						echo '<a href="'.$link.'/delete/'.$id.'" class="btn btn-delete btn-sm"><i class="fas fa-trash-alt"></i> Delete </a> ';
 					} else {
 						echo "Other Function";
 					}

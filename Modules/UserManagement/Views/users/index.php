@@ -13,7 +13,7 @@
       <?php endif; ?>
       <div class="row mb-3">
         <div class="col-10">
-          <span class="h2">Role Permissions</span>
+          <span class="h2">Users</span>
         </div>
         <div class="col-2">
           <?=esc(buttons($allPermissions, ['add-users'], 'users'))?>
