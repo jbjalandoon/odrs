@@ -1,0 +1,241 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
+body {
+  background: #c9c9c9;
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  color: #2e2e2e;
+  padding-left: 240px;
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+
+body footer {
+  color: #2e2e2e;
+}
+
+body footer img {
+  width: 3%;
+}
+
+body nav.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 99999;
+}
+
+body .navbar {
+  padding: 12px;
+  background: #800000;
+  color: #fff !important;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+body .navbar i {
+  padding-right: 10px;
+}
+
+body .navbar a {
+  text-align: right;
+}
+
+body .navbar .logout {
+  font-size: 1em;
+  text-decoration: none !important;
+}
+
+body .navbar .logout img {
+  max-width: 22px;
+}
+
+body .navbar .logout span {
+  padding-left: 10px;
+}
+
+body .navbar .logout li {
+  position: relative;
+  width: 150px;
+  color: #fff;
+}
+
+body .navbar .logout li i {
+  padding-left: 50px;
+}
+
+body .navbar .logout li a {
+  color: #fff;
+}
+
+body .navbar .logout li ul {
+  border-radius: 3px;
+}
+
+body .navbar .logout li ul a {
+  color: #2e2e2e;
+}
+
+body main {
+  position: relative;
+  height: 100vh;
+}
+
+body .menu {
+  background: #e7e7e7;
+  height: 100vh;
+  width: 240px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  outline: none;
+  overflow: auto;
+}
+
+body .menu .sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 99999;
+}
+
+body .menu .avatar {
+  background-color: #800000;
+  border-bottom: #DAA520 3px solid;
+  padding: 20px;
+  color: #fff;
+  text-align: center;
+}
+
+body .menu .avatar img {
+  width: 30%;
+  padding-bottom: 10px;
+}
+
+body .menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+body .menu ul .header-menu {
+  padding-top: 1.5em;
+  color: #2e2e2e;
+  font-weight: bolder;
+  border-bottom: 0.05px solid #dddddd;
+}
+
+body .menu ul .header-menu:hover {
+  text-decoration: none;
+  background-color: #e7e7e7;
+  cursor: default;
+}
+
+body .menu ul li {
+  padding: 0.5em 1em;
+  font-size: 0.95em;
+  font-weight: regular;
+  background-repeat: no-repeat;
+  background-position: left 15px center;
+  background-size: auto 20px;
+  -webkit-transition: all 0.15s linear;
+  transition: all 0.15s linear;
+  cursor: pointer;
+}
+
+body .menu ul li:focus {
+  outline: none;
+}
+
+body .menu ul li a {
+  text-decoration: none;
+  color: #800000;
+}
+
+body .menu ul li a i {
+  margin-right: 10px;
+  font-size: normal;
+  width: 30px;
+  height: 30px;
+  background-color: #c9c9c9;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+body .menu ul .active, body .menu ul li:hover {
+  background-color: #c9c9c9;
+}
+
+body .menu ul .active a, body .menu ul li:hover a {
+  color: #2e2e2e;
+}
+
+body .menu ul .active i, body .menu ul li:hover i {
+  background-color: #800000;
+  color: #e7e7e7;
+}
+
+body ::-webkit-scrollbar {
+  width: 1px;
+}
+
+body ::-webkit-scrollbar-track {
+  background: #800000;
+}
+
+body ::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+body ::-webkit-scrollbar-thumb:hover {
+  background: transparent;
+}
+
+body .card {
+  max-width: 95%;
+  margin: auto;
+}
+
+body .card .btn {
+  background-color: #a51a1a;
+  border-radius: 2px;
+  color: #fff;
+}
+
+body .card .btn-edit {
+  background: #002147;
+  border-radius: 2px;
+}
+
+body .card .btn-delete {
+  background: #d80101;
+  border-radius: 2px;
+}
+
+body .card .table {
+  font-size: 0.9em;
+  font-family: sans-serif;
+  -webkit-box-shadow: 0 0 20px #00000026;
+          box-shadow: 0 0 20px #00000026;
+}
+
+body .card .table thead tr {
+  background-color: #a51a1a;
+  color: #ffffff;
+  text-align: left;
+}
+
+body .card .table th, body .card .table td {
+  padding: 12px 15px;
+}
+
+body .card .table tbody {
+  font-size: .9em;
+}
+
+body .card .table tbody tr {
+  border-bottom: 1px solid #dddddd;
+  color: black !important;
+}
+/*# sourceMappingURL=admin.css.map */
