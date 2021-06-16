@@ -24,8 +24,8 @@ class Home extends BaseController
 					if(password_verify($_POST['password'], $user['password']))
 					{
 						if ($user['status'] == 'a') {
-							if ($user['identifier'] == 'student') {
-								$students = $this->student->getStudentByUserId($user['id']);
+							if ($user['identifier'] == 'students') {
+								$students = $this->studentModel->getStudentByUserId($user['id']);
 								$this->session->set([
 									'user_id' => $user['id'],
 									'role_id' => $user['role_id'],
