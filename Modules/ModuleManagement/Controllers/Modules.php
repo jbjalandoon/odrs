@@ -6,10 +6,14 @@ use App\Controllers\BaseController;
 class Modules extends BaseController
 {
 
-	// public function __construct()
-	// {
-	// 	parent:: __construct();
-	// }
+  function __construct(){
+    $this->session = \Config\Services::session();
+    $this->session->start();
+    if(!isset($_SESSION['user_id'])){
+      header('Location: '.base_url());
+      exit();
+    }
+  }
 
   public function index()
   {

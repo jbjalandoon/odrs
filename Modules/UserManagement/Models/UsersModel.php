@@ -32,10 +32,11 @@ class UsersModel extends BaseModel
 
   public function inputDetails($data)
   {
-    
+
     $this->transStart();
 
     $data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $data['token'] = md5($_POST['password']);
 
     $this->insert($data);
     $data['user_id'] = $this->getInsertID();
@@ -62,7 +63,7 @@ class UsersModel extends BaseModel
       $userData = [
         'username' => $data[$key]['student_number'],
         'password' => password_hash('password', PASSWORD_DEFAULT),
-        'email' =>  $data[$key]['email'],                
+        'email' =>  $data[$key]['email'],
         'token' => md5(random_bytes(16)),
         'role_id' => 4
       ];

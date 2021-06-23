@@ -6,6 +6,15 @@ use App\Controllers\BaseController;
 class Documents extends BaseController
 {
 
+  function __construct(){
+    $this->session = \Config\Services::session();
+    $this->session->start();
+    if(!isset($_SESSION['user_id'])){
+      header('Location: '.base_url());
+      exit();
+    }
+  }
+
   public function index()
   {
     $this->data['documents'] = $this->documentModel->get();
@@ -34,7 +43,7 @@ class Documents extends BaseController
           die('Something went wrong!');
         }
       }
-      else 
+      else
       {
         $this->data['value'] = $_POST;
         $this->data['error'] = $this->validation->getErrors();
@@ -83,7 +92,7 @@ class Documents extends BaseController
     {
       $this->session->setFlash('success_message', 'Successfully deleted document');
     }
-    else 
+    else
     {
       die('Something went wrong');
     }

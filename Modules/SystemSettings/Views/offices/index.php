@@ -16,7 +16,7 @@
           <span class="h2">Offices</span>
         </div>
         <div class="col-10">
-          <?=esc(buttons($allPermissions, ['add-courses'], 'courses'))?>
+          <?=esc(buttons($allPermissions, ['add-offices'], 'offices'))?>
         </div>
       </div>
       <div class="row">

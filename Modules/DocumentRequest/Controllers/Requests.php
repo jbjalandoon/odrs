@@ -7,10 +7,14 @@ use App\Libraries\Pdf;
 class Requests extends BaseController
 {
 
-	// public function __construct()
-	// {
-	// 	parent:: __construct();
-	// }
+  function __construct(){
+    $this->session = \Config\Services::session();
+    $this->session->start();
+    if(!isset($_SESSION['user_id'])){
+      header('Location: '.base_url());
+      exit;
+    }
+  }
 
   public function index()
   {
@@ -30,7 +34,7 @@ class Requests extends BaseController
 
 		$this->data['documents'] = $this->documentModel->get();
     $this->data['view'] = 'Modules\DocumentRequest\Views\requests\form';
-		if ($this->request->getMethod() == 'post') 
+		if ($this->request->getMethod() == 'post')
     {
 			if ($this->validate('request')) {
 				// if (!empty($this->requestModel->get(['student_id' => $_SESSION['student_id'], 'completed_at' => null]))) {
@@ -41,14 +45,14 @@ class Requests extends BaseController
 				$data['request_document'] = [];
 				$requests['student_id']  = $_SESSION['student_id'];
 				$requests['reason'] = $_POST['reason'];
-				
+
 				$slugs = random_string('alnum', 12);
 				// while(!empty($this->requestModel->getBySlugs($slugs))){
 				// 	$slugs = random_string('alnum', 12);
 				// }
 				$requests['slug'] = $slugs;
 				$data['request'] = array_merge($data['request'], $requests);
-			
+
 			// $request_details['request_id'] = $this->requestModel->input($requests, 'id');
 			foreach ($_POST['document_id'] as $index => $document_id) {
 				$request_details['document_id'] = $document_id;
@@ -64,8 +68,8 @@ class Requests extends BaseController
 				{
 					$this->session->setFlashdata('success_message', 'You Have Succesfully Made a request');
 					return redirect()->to(base_url('requests'));
-				} 
-				else 
+				}
+				else
 				{
 					$this->session->setFlashdata('error_message', 'Something Went Wrong!');
 					return redirect()->to(base_url('requests'));
@@ -86,7 +90,7 @@ class Requests extends BaseController
 	}
 
   public function history()
-  {	
+  {
 		$this->data['request_details'] = $this->requestDetailModel->getDetails(['requests.id' => 5]);
 	  $this->data['view'] = 'Modules\DocumentRequest\Views\requests\history';
 	  return view('userTemplate/index', $this->data);
@@ -169,6 +173,6 @@ class Requests extends BaseController
     $pdf->Output('example_001.pdf', 'I');
     die();
 	}
-  
+
 
 }

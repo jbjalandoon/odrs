@@ -6,10 +6,14 @@ use App\Controllers\BaseController;
 class Permissions extends BaseController
 {
 
-	// public function __construct()
-	// {
-	// 	parent:: __construct();
-	// }
+  function __construct(){
+    $this->session = \Config\Services::session();
+    $this->session->start();
+    if(!isset($_SESSION['user_id'])){
+      header('Location: '.base_url());
+      exit();
+    }
+  }
 
   public function index()
   {
@@ -92,7 +96,7 @@ class Permissions extends BaseController
       } elseif($_GET['type_id'] != 0 && $_GET['module_id'] == 0){
         $this->data['permissions'] = $this->permissionModel->getDetails(['permission_type' => $_GET['type_id']]);
       } else {
-        $this->data['permissions'] = $this->permissionModel->getDetails(['module_id' => $_GET['type_id'], 'permission_type' => $_GET['type_id']]);
+        $this->data['permissions'] = $this->permissionModel->getDetails(['module_id' => $_GET['module_id'], 'permission_type' => $_GET['type_id']]);
       }
     }
     return view('Modules\ModuleManagement\Views\permissions\table', $this->data);

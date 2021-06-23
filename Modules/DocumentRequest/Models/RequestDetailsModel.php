@@ -19,7 +19,7 @@ class RequestDetailsModel extends BaseModel
 
   public function getDetails($conditions = [], $id = null){
 
-    $this->select('request_details.*, documents.price,requests.created_at as requested_at, requests.reason, documents.document, documents.price, students.firstname, students.lastname, students.student_number, courses.course, courses.abbreviation');
+    $this->select('request_details.*, documents.price,requests.created_at as requested_at, requests.reason, documents.document,documents.per_page_payment,documents.template, documents.price, students.firstname, students.lastname, students.student_number, courses.course, courses.abbreviation');
     $this->join('requests', 'request_id = requests.id');
     $this->join('documents', 'document_id = documents.id');
     $this->join('students', 'requests.student_id = students.id');
@@ -32,14 +32,11 @@ class RequestDetailsModel extends BaseModel
     return $this->findAll();
   }
 
-  public function printRequest($data)
+  public function printRequest($id, $data)
   {
     $this->transStart();
 
-      foreach($data as $value)
-      {
-        $this->update($value['id'], ['status' => 'r', 'page' => $value['page'], 'printed_at', $vaue['printed_at']]);
-      }
+      $this->update($id, $data);
 
     $this->transComplete();
 
@@ -51,7 +48,7 @@ class RequestDetailsModel extends BaseModel
       foreach($data as $key){
         $this->update($key, ['status' => 'c', 'received_at' => date("Y-m-d H:i:s")]);
       }
-      
+
     $this->transComplete();
 
     return $this->transStatus();

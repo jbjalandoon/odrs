@@ -28,6 +28,8 @@
                   <th>#</th>
                   <th>Document</th>
                   <th>Price</th>
+                  <th>Template</th>
+                  <th>Per Page Payment</th>
                   <th>Free on first Request</th>
                   <th>Notes</th>
                   <th>Office Requirements</th>
@@ -41,6 +43,8 @@
                       <td>#</td>
                       <td><?=ucwords(esc($document['document']))?></td>
                       <td><?=ucfirst('P '.esc($document['price']))?></td>
+                      <td><?=esc($document['template'] == null ? 'N/A': $document['template'])?></td>
+                      <td><?=esc($document['per_page_payment']) ? 'Yes': 'No'?></td>
                       <td><?=esc($document['is_free_on_first']) ? 'Yes': 'No'?></td>
                       <td class="document-notes" id="<?=esc($document['id'])?>">
                         Notes
@@ -49,7 +53,7 @@
                         Office Requirements
                       </td>
                       <td class="text-center">
-                        <?=esc(buttons($allPermissions, ['edit-role', 'delete-role'], 'roles', $document['id']))?>
+                        <?=esc(buttons($allPermissions, ['edit-document', 'delete-document'], 'documents', $document['id']))?>
                       </td>
                     </tr>
                   <?php endforeach; ?>

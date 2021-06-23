@@ -2,10 +2,20 @@
 namespace Modules\DocumentRequest\Controllers;
 
 use App\Libraries\Pdf;
+use App\Libraries\Fpdi;
 use App\Controllers\BaseController;
 
 class DocumentRequests extends BaseController
 {
+
+  function __construct(){
+    $this->session = \Config\Services::session();
+    $this->session->start();
+    if(!isset($_SESSION['user_id'])){
+      header('Location: '.base_url());
+      exit();
+    }
+  }
 
   public function index()
   {
@@ -46,7 +56,7 @@ class DocumentRequests extends BaseController
       $this->email->send();
     return $this->index();
   }
-  
+
   public function approval()
   {
     $this->data['request_approvals'] = $this->officeApprovalModel->getDetails(['office_id' => $_SESSION['office_id'], 'request_approvals.status' => 'p']);
@@ -60,7 +70,7 @@ class DocumentRequests extends BaseController
   {
     // return print_r($this->requestModel->denyRequest($_POST));
     $student = $this->userModel->get(['username' => $_POST['student_number']]);
-    
+
     $this->email->setTo($student[0]['email']);
     $this->email->setSubject('Document Request Update');
     $this->email->setFrom('ODRS', 'PUP');
@@ -78,13 +88,13 @@ class DocumentRequests extends BaseController
       $this->email->setSubject('Document Request Update');
       $this->email->setFrom('ODRS', 'PUP');
       $this->email->setMessage('You dont have any sanctions your request ' . $_POST['data'][$key][5] . ' is now to be processed');
-      
+
       // $this->email->send();
-      
+
     }
     if($this->officeApprovalModel->approveRequest($_POST['data']))
       return $this->approval();
-      
+
   }
 
   public function onProcess()
@@ -96,7 +106,7 @@ class DocumentRequests extends BaseController
 
   public function printed()
   {
-    
+
     $this->data['request_details_release'] = $this->requestDetailModel->getDetails(['request_details.status' => 'r', 'requests.status' => 'c']);
     $this->data['view'] = 'Modules\DocumentRequest\Views\requests\printed';
     return view('template/index', $this->data);
@@ -104,22 +114,35 @@ class DocumentRequests extends BaseController
 
   public function printRequest()
   {
-    $data = [];
-    foreach($_POST['data'] as $key => $value){
-      $temp = [
-        'id' => $value[0],
-        'page' => $_POST['pages'][$key],
-        'printed_at' => date("Y-m-d H:i:s"),
+    // return print_r($_FILES);
+    if(!isset($_FILES)){
+      $data = [
+        'status' => 'r',
+        'printed_at' => date('Y-m-d H:i:s'),
+        'page' => null,
       ];
-      array_push($data, $temp);
-      $student = $this->userModel->get(['username' => $_POST['data'][$key][2]]);
-        $this->email->setTo($student[0]['email']);
-        $this->email->setSubject('Document Request Update');
-        $this->email->setFrom('ODRS', 'PUP');
-        $this->email->setMessage('Your Request has been printed' . $_POST['data'][$key][5]);
+      if($this->requestDetailModel->printRequest($_POST['id'] ,$data)){
+
+      }
+    } else {
+      $file = $this->request->getFile('file');
+      $newName = $file->getRandomName();
+
+      $path = $file->move('../public/pdf/', $newName);
+      $pdftext = file_get_contents('../public/pdf/'.$newName);
+      $num = preg_match_all("/\Page\W/", $pdftext, $dummy);
+
+      $data = [
+        'status' => 'r',
+        'printed_at' => date('Y-m-d H:i:s'),
+        'file' => $newName,
+        'page' => $num,
+      ];
+
+      return $num  . '';
     }
-    if($this->requestDetailModel->printRequest($data))
-      return $this->printed();
+
+    return $this->printed();
   }
 
   public function claimRequest()
@@ -158,7 +181,7 @@ class DocumentRequests extends BaseController
     }
     return view('Modules\DocumentRequest\Views\requests\claimed', $data);
   }
-  
+
   public function report(){
     $pdf = new Pdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 

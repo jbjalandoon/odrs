@@ -6,6 +6,15 @@ use App\Controllers\BaseController;
 class CourseTypes extends BaseController
 {
 
+  function __construct(){
+    $this->session = \Config\Services::session();
+    $this->session->start();
+    if(!isset($_SESSION['user_id'])){
+      header('Location: '.base_url());
+      exit();
+    }
+  }
+
   public function index()
   {
     $this->data['view'] = 'Modules\SystemSettings\Views\coursetypes\index';
@@ -26,12 +35,12 @@ class CourseTypes extends BaseController
           $this->session->setFlash('success_message', 'Successfully Added Course Type');
           return redirect()->to(base_url('course-types'));
         }
-        else 
+        else
         {
           die('Something Went Wrong!');
         }
       }
-      else 
+      else
       {
         $this->data['value'] = $_POST;
         $this->data['error'] = $this->validation->getErrors();
@@ -54,12 +63,12 @@ class CourseTypes extends BaseController
           $this->session->setFlashData('success_message', 'Successfully Edited Course Type');
           return redirect()->to(base_url('course-types'));
         }
-        else 
+        else
         {
           die('Something Went Wrong!');
         }
       }
-      else 
+      else
       {
         $this->data['value'] = $_POST;
         $this->data['error'] = $this->validation->getErrors();
@@ -74,7 +83,7 @@ class CourseTypes extends BaseController
     {
       $this->session->setFlashData('success_message', 'Successfully deleted Course Type');
     }
-    else 
+    else
     {
       die('Something Went Wrong!');
     }

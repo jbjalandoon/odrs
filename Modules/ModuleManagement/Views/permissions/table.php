@@ -25,7 +25,7 @@
           <td><?=esc($permission['slug'])?></td>
           <td><?=esc($permission['description'])?></td>
           <td class="text-center">
-            #
+            <?=esc(buttons($allPermissions, ['edit-permissions', 'delete-permissions'], 'permissions', $permission['id']))?>
           </td>
         </tr>
       <?php endforeach; ?>

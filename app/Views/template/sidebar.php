@@ -16,11 +16,11 @@
             <li class="header-menu" tabindex="0">
               <span><?=esc(ucwords($module['module']))?></span>
             </li>
-             <?php foreach ($allPermissions as $permission): ?>
-              <?php if ($permission['module_id'] == $module['id'] && $permission['type_slug'] == 'add'): ?>
+            <?php foreach ($allPermissions as $permission): ?>
+              <?php if ($permission['module_id'] == $module['id'] && $permission['type_slug'] == 'view'): ?>
                 <li tabindex="0">
                   <a href="<?=esc(base_url($permission['slug']))?>">
-                    <i class="fas fa-<?=$permission['icon'] == null ? 'exclamation-triangle' : esc($permission['icon'])?>"></i>
+                    <i class="fa fa-<?=$permission['icon'] == NULL ? 'exclamation-triangle': esc($permission['icon'])?>"></i>
                     <span><?=esc(ucwords($permission['permission']))?></span>
                   </a>
                 </li>

@@ -91,11 +91,11 @@
               <label for="">Free on first Request</label>
               <br>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="is_free_on_first" id="inlineRadio1" value="0">
+                <input class="form-check-input" type="radio" name="is_free_on_first" id="inlineRadio1" value="1" checked>
                 <label class="form-check-label" for="inlineRadio1">Yes</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="is_free_on_first" id="inlineRadio2" value="1" checked>
+                <input class="form-check-input" type="radio" name="is_free_on_first" id="inlineRadio2" value="0" <?=isset($value['is_free_on_first']) && !$value['is_free_on_first'] ? 'checked': ''?>>
                 <label class="form-check-label" for="inlineRadio2">No</label>
               </div>
               <?php if (isset($error['is_free_on_first'])): ?>
