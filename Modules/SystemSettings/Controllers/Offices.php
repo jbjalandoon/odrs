@@ -6,6 +6,15 @@ use App\Controllers\BaseController;
 class Offices extends BaseController
 {
 
+  function __construct(){
+    $this->session = \Config\Services::session();
+    $this->session->start();
+    if(!isset($_SESSION['user_id'])){
+      header('Location: '.base_url());
+      exit();
+    }
+  }
+
   public function index()
   {
     $this->data['offices'] = $this->officeModel->get();
@@ -61,7 +70,7 @@ class Offices extends BaseController
           die('Something went wrong!');
         }
       }
-      else 
+      else
       {
         $this->data['value'] = $_POST;
         $this->data['error'] = $this->validation->getErrors();

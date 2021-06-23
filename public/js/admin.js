@@ -1,6 +1,437 @@
-const server = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '/')
-
+var server = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '/');
 script();
+
+var adminPendingTable = $('#admin-pending-table').DataTable({
+  "columnDefs" : [{
+    "targets" : [0],
+    "visible" : false,
+    "searchable" : false,
+  }],
+  "bPaginate": true,
+  "bLengthChange": false,
+  "bFilter": true,
+  "bInfo": false,
+  "bAutoWidth": false,
+  "dom": '<"row"<"col-6"<"select-pending mb-3">><"col-6"f>>t<"row"<"col-6"<"action-pending mt-3">><"col-6 float-end mt-3"p>>',
+  fnInitComplete: function(){
+      $('div.select-pending').html('<span class="h2"> Pending Request </span>');
+      $('div.action-pending').html('<button onClick="confirmSelect()" class="btn btn-primary">Confirm Selected</button>');
+    }
+});
+
+$('#admin-pending-table tbody').on( 'click', 'tr', function () {
+  $(this).toggleClass('selected');
+});
+
+function confirmSelect()
+{
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if(result.isConfirmed){
+      const data = [];
+      for (var i = 0; i < adminPendingTable.rows('.selected').data().length; i++) {
+        data.push(adminPendingTable.rows('.selected').data()[i]);
+      }
+    // alert(data);
+      $.ajax({
+        type: "POST",
+        data: {data},
+        url: "document-requests/request-confirm",
+        success: function(msg){
+          $("#content").html(msg);
+          setInterval(location.reload(), 500);
+        },
+        error: function (request, error) {
+          alert(" Can't do because: " + error);
+        },
+      });
+    }
+  });
+}
+
+function denyRequest(id, student_number)
+{
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    input: 'textarea',
+    inputLabel: 'Remark',
+    inputPlaceholder: 'Type your message here...',
+    inputAttributes: {
+      'aria-label': 'Type your message here'
+    },
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: 'POST',
+        url: 'document-requests/deny-request',
+        data: {
+          'id' : id,
+          'remark' : result.value,
+          'student_number' : student_number
+        },
+        success: function(html){
+          Swal.close();
+          Swal.fire({
+            'icon': 'success',
+            'title' : 'Successfully Denied',
+          });
+        }
+      });
+    }
+  });
+}
+
+var approvalTable = $('#approval-table').DataTable({
+  "columnDefs" : [{
+    "targets" : [0,1],
+    "visible" : false,
+    "searchable" : false,
+  }],
+  "bPaginate": true,
+  "bLengthChange": false,
+  "bFilter": true,
+  "bInfo": false,
+  "bAutoWidth": false,
+  "dom": '<"row"<"col-6"<"select mb-3">><"col-6"f>>t<"row"<"col-6"<"action mt-3">><"col-6 mt-3 float-end"p>>',
+  fnInitComplete: function(){
+      $('div.select').html('<span class="h2"> For Approval </span>');
+      $('div.action').html('<button onclick="approveSelect()" id="approve-selected" class="btn btn-primary">Approve Selected</button>');
+    }
+});
+
+var onHoldTable = $('#on-hold-table').DataTable({
+  "columnDefs" : [{
+    "targets" : [0,1],
+    "visible" : false,
+    "searchable" : false,
+  }],
+  "bPaginate": true,
+  "bLengthChange": false,
+  "bFilter": true,
+  "bInfo": false,
+  "bAutoWidth": false,
+  "dom": '<"row"<"col-6"<"select-hold mb-3">><"col-6"f>>t<"row"<"col-6"<"action-hold mt-3">><"col-6 mt-3 float-end"p>>',
+  fnInitComplete: function(){
+      $('div.select-hold').html('<span class="h2"> On Hold Requests </span>');
+      $('div.action-hold').html('<button onclick="approveSelect()" id="approve-selected" class="btn btn-primary">Approve Selected</button>');
+    }
+});
+
+$('#approval-table tbody').on ('click', 'tr', function(){
+  $(this).toggleClass('selected');
+});
+
+$('#on-hold-table').on ('click', 'tr', function(){
+  $(this).toggleClass('selected');
+});
+
+function approveSelect()
+{
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if(result.isConfirmed){
+      const data = [];
+      for (var i = 0; i < approvalTable.rows('.selected').data().length; i++) {
+        data.push(approvalTable.rows('.selected').data()[i]);
+      }
+      for (var i = 0; i < onHoldTable.rows('.selected').data().length; i++) {
+        data.push(onHoldTable.rows('.selected').data()[i]);
+      }
+      $.ajax({
+        type: "POST",
+        data: {data},
+        url: "approval/approve",
+        success: function(msg){
+
+          location.reload();
+        },
+        error: function (request, error) {
+          // console.log(arguments);
+          // alert(" Can't do because: " + error);
+        },
+      });
+    }
+  });
+}
+
+function holdRequest(id, student_number, detail_id)
+{
+  Swal.fire({
+    icon: 'warning',
+    title: 'Are you sure?',
+    text: 'You wont be able to revert this!',
+    input: 'textarea',
+    inputLabel: 'Remark',
+    inputPlaceholder: 'Type your message here...',
+    inputAttributes: {
+      'aria-label': 'Type your message here'
+    },
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, hold it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: 'POST',
+        url: 'approval/hold',
+        data: {
+          'id' : id,
+          'remark' : result.value,
+          'student_number' : student_number,
+          'request_detail_id': detail_id
+        },
+        success: function(html){
+          Swal.close();
+          Swal.fire({
+            'icon': 'success',
+            'title' : 'Successfully Hold the request',
+          });
+        }
+      });
+    }
+  });
+}
+
+function opentab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+var onProcessTable = $('#process-table').DataTable({
+  "columnDefs" : [{
+    "targets" : [0,1],
+    "visible" : false,
+    "searchable" : false,
+  }],
+  "bPaginate": true,
+  "bLengthChange": false,
+  "bFilter": true,
+  "bInfo": false,
+  "bAutoWidth": false,
+  "dom": '<"row"<"col-6"<"select mb-3">><"col-6"f>>t<"row"<"col-6"<"action mt-3">><"col-6 float-end mt-3"p>>',
+  fnInitComplete: function(){
+      $('div.select').html('<span class="h2"> On Process Documents </span>');
+      // $('div.action').html('<button onClick="printRequest()" id="process-selected" class="btn btn-primary">Process Complete</button>');
+    }
+});
+
+async function printRequest(id, per_page, template)
+{
+  if(per_page == 0 && template == null){
+    Swal.fire({
+      icon: 'warning',
+      title: 'This request will mark as printed.',
+      showCancelButton: true,
+      text: `You will not be able to undo the action`,
+      confirmButtonText: `Yes`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        $.ajax({
+          type: "POST",
+          data: {
+            'id': id,
+          },
+          url: "on-process-document/print-requests",
+          success: function(msg){
+            Swal.close();
+            Swal.fire({
+              'icon': 'success',
+              'title' : 'Successfully Processed',
+            }).then(function(){
+              location.reload();
+            });
+          },
+          error: function (request, error) {
+            alert(" Can't do because: " + error);
+          },
+        });
+      }
+    })
+  } else {
+    if(per_page == 1 && template != null){
+
+    } else if (per_page == 1 && template == null) {
+      Swal.fire({
+        title: 'Please Upload a File',
+        icon: 'warning',
+        html: `<form method='post' id='form' enctype='multipart/form-data'><input type='hidden' name='id' value`+id+`><input type='file' name='file' id='file' class='form-control' accept='application/pdf'></form>`,
+        showCancelButton: true,
+        confirmButtonText: `Confirm`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          $.ajax({
+            url: `on-process-document/print-requests`,
+            type: `POST`,
+            data: new FormData(document.getElementById('form')),
+            contentType: false,
+            processData:false,
+            success: function(resp){
+              console.log(resp);
+            }
+          });
+          Swal.fire('Saved!', '', 'success')
+        }
+      })
+    } else {
+
+    }
+  }
+
+  // const data = [];
+  // const steps = [];
+  // for (var i = 0; i < onProcessTable.rows('.selected').data().length; i++) {
+  //   data.push(onProcessTable.rows('.selected').data()[i]);
+  //   steps.push(i+1);
+  // }
+  // const swalQueueStep = Swal.mixin({
+  //   showCancelButton: true,
+  //   allowOutsideClick: false,
+  //   confirmButtonText: 'Next',
+  //   cancelButtonText: 'Cancel',
+  //   progressSteps: steps,
+  //   input: 'file',
+  //   inputAttributes: {
+  //     required: true,
+  //     accept: 'application/pdf',
+  //   },
+  //   inputPlaceholder: "Insert File to determine the page",
+  //   reverseButtons: false,
+  //   validationMessage: 'This field is required'
+  // });
+  // const values = []
+  // let currentStep
+  //
+  // for (currentStep = 0; currentStep < steps.length;) {
+  //   const result = await swalQueueStep.fire({
+  //     title: data[currentStep][3] + ' - (' + data[currentStep][2] + ')',
+  //     text: data[currentStep][5],
+  //     showCancelButton: true,
+  //     currentProgressStep: currentStep
+  //   })
+  //
+  //   if (result.value) {
+  //       values[currentStep] = result.value
+  //       currentStep++
+  //     } else if (result.dismiss === Swal.DismissReason.cancel) {
+  //       currentStep--
+  //     } else {
+  //       break
+  //     }
+  // }
+  // $.ajax({
+  //   type: "POST",
+  //   data: {
+  //     'data': data,
+  //     'pages':values,
+  //   },
+  //   url: "on-process-document/print-requests",
+  //   success: function(msg){
+  //     Swal.close();
+  //     Swal.fire({
+  //       'icon': 'success',
+  //       'title' : 'Successfully Processed',
+  //     }).then(function(){
+  //       location.reload();
+  //     });
+  //   },
+  //   error: function (request, error) {
+  //     // console.log(arguments);
+  //     alert(" Can't do because: " + error);
+  //   },
+  // });
+}
+
+// $('#process-table tbody').on( 'click', 'tr', function () {
+//   $(this).toggleClass('selected');
+// });
+
+$("#slug").keypress(function (e){
+  if(e.which == 13){
+    const slug = $("#slug").val();
+    $.ajax({
+      type: 'GET',
+      data:{
+        'slug': slug
+      },
+      url: 'printed-requests/get-printed',
+      success: function(data){
+        var form = '';
+        const requests = JSON.parse(data);
+        var value = [];
+        for(var i = 0; i < requests.length; i++) {
+          console.log(requests[i]);
+          form += `<div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="`+requests[i]['id']+`" id="id-`+requests[i]['id']+`">
+                    <label class="form-check-label" for="id-`+requests[i]['id']+`">
+                      `+requests[i]['document']+`
+                    </label>
+                  </div>`;
+        }
+        Swal.fire({
+          title: 'Receive Request',
+          icon: 'question',
+          html: form,
+          text: 'Select the document that will be received',
+          preConfirm: () => {
+            for(var i = 0; i < requests.length; i++) {
+              if(Swal.getPopup().querySelector(`#id-`+requests[i]['id']).checked){
+                value.push(Swal.getPopup().querySelector(`#id-`+requests[i]['id']).value);
+              }
+            }
+            return value;
+          }
+        }).then((result) =>{
+          $.ajax({
+            url: 'printed-requests/scan',
+            type: 'POST',
+            data: {'value': value},
+            success: function(msg){
+              Swal.fire({
+                icon: 'success',
+                title: 'Succesfully Received',
+              });
+              location.reload();
+            }
+          });
+        });
+        console.log(JSON.parse(data));
+      }
+    });
+  }
+});
+
 
 $(document).ready(function(){
   $(".permissions-data").each(function(){
@@ -64,7 +495,7 @@ $(document).ready(function(){
 
 function filter(id){
   $.ajax({
-    url : 'claimed-requests',
+    url : 'claimed-requests/filter',
     type: 'get',
     data: {id: id},
     success: function(html){
@@ -75,7 +506,6 @@ function filter(id){
 }
 
 function displayPermissions(id){
-  alert(id);
   $.ajax({
     url: 'getPermissions',
     type: 'get',
@@ -99,7 +529,6 @@ function script(){
   $(".documents-tag").select2({
     tags: true
   });
-  
 
   $('#type').change(function(){
     var type = 'yearly';
@@ -113,144 +542,16 @@ function script(){
     $('#argument').attr('type', type);
   });
 
-  var adminPendingTable = $('#admin-pending-table').DataTable({
-    "columnDefs" : [{
-      "targets" : [0],
-      "visible" : false,
-      "searchable" : false,
-    }],
-    "bPaginate": true,
-    "bLengthChange": false,
-    "bFilter": true,
-    "bInfo": false,
-    "bAutoWidth": false,
-    "dom": '<"row"<"col-6"<"select-pending mb-3">><"col-6"f>>t<"row"<"col-6"<"action-pending mt-3">><"col-6 float-end mt-3"p>>',
-    fnInitComplete: function(){
-        $('div.select-pending').html('<span class="h2"> Pending Request </span>');
-        $('div.action-pending').html('<button id="confirm-request" class="btn btn-primary">Confirm Selected</button>');
-      }
-  });
 
 
-   $('#admin-pending-table td').on( 'click', 'tr', function () {
-      if($(this).id == 'row'){
-        $(this).toggleClass('selected');
-      }
-   });
 
-   $("#confirm-request").on('click', function(){
-     // alert(approvalTable.rows('.selected').data().length);
-     const data = [];
-     for (var i = 0; i < adminPendingTable.rows('.selected').data().length; i++) {
-       data.push(adminPendingTable.rows('.selected').data()[i]);
-     }
-     // alert(data);
-     $.ajax({
-       type: "POST",
-       data: {data},
-       url: "request-confirm",
-       success: function(msg){
-         // alert(msg);
-         // $(".container").html('');
-         $("#content").html(msg);
-         script();
-       },
-       error: function (request, error) {
-         // console.log(arguments);
-         alert(" Can't do because: " + error);
-       },
-     });
-   });
 
-   var onProcessTable = $('#process-table').DataTable({
-     "columnDefs" : [{
-       "targets" : [0,1],
-       "visible" : false,
-       "searchable" : false,
-     }],
-     "bPaginate": true,
-     "bLengthChange": false,
-     "bFilter": true,
-     "bInfo": false,
-     "bAutoWidth": false,
-     "dom": '<"row"<"col-6"<"select mb-3">><"col-6"f>>t<"row"<"col-6"<"action mt-3">><"col-6 float-end mt-3"p>>',
-     fnInitComplete: function(){
-         $('div.select').html('<span class="h2"> On Process Documents </span>');
-         $('div.action').html('<button id="process-selected" class="btn btn-primary">Process Complete</button>');
-       }
-   });
 
-    $('#process-table tbody').on( 'click', 'tr', function () {
-        $(this).toggleClass('selected');
-    });
-    $('#admin-pending-table tbody').on( 'click', 'tr', function () {
-        $(this).toggleClass('selected');
-    });
 
-   $("#process-selected").on('click', function(){
-     const data = [];
-     for (var i = 0; i < onProcessTable.rows('.selected').data().length; i++) {
-       data.push(onProcessTable.rows('.selected').data()[i]);
-     }
-     $.ajax({
-       type: "POST",
-       data: {data},
-       url: "process",
-       success: function(msg){
-         $("#content").html(msg);
-         script();
-       },
-       error: function (request, error) {
-         // console.log(arguments);
-         alert(" Can't do because: " + error);
-       },
-     });
-   });
 
-   var approvalTable = $('#approval-table').DataTable({
-     "columnDefs" : [{
-       "targets" : [0,1],
-       "visible" : false,
-       "searchable" : false,
-     }],
-     "bPaginate": true,
-     "bLengthChange": false,
-     "bFilter": true,
-     "bInfo": false,
-     "bAutoWidth": false,
-     "dom": '<"row"<"col-6"<"select mb-3">><"col-6"f>>t<"row"<"col-6"<"action mt-3">><"col-6 mt-3 float-end"p>>',
-     fnInitComplete: function(){
-         $('div.select').html('<span class="h2"> Office Approval </span>');
-         $('div.action').html('<button id="approve-selected" class="btn btn-primary">Approve</button>');
-       }
-   });
 
-   $("#approve-selected").on('click', function(){
-     // alert(approvalTable.rows('.selected').data().length);
-     const data = [];
-     for (var i = 0; i < approvalTable.rows('.selected').data().length; i++) {
-       data.push(approvalTable.rows('.selected').data()[i]);
-     }
-     $.ajax({
-       type: "POST",
-       data: {data},
-       url: "approve-request",
-       success: function(msg){
-         // alert(msg);
-         // $(".container").html('');
-         $("#content").html(msg);
-         script();
-       },
-       error: function (request, error) {
-         // console.log(arguments);
-         // alert(" Can't do because: " + error);
-       },
-     });
-   });
 
-   $('#approval-table tbody').on ('click', 'tr', function(){
-     $(this).toggleClass('selected');
-   });
+
 }
 
 function deleteEntry(id, url){
@@ -297,31 +598,40 @@ function activateUser(id, url){
   });
 }
 
-
-  $(".sideLink").click(function(){
-    const page = $(this).children('span').html();
-    window.history.pushState('', 'New Page Title', '/admin/' + page.replace(/\s+/g, '-').toLowerCase());
-    const url = page.replace(/\s+/g, '-').toLowerCase();
-    $.ajax({
-      url: url,
-      type : 'GET',
-      success: function(html){
-        $("#content").html(html);
-        script();
-      }
-    });
-  }).hover(function(){
-    $(this).css('cursor', 'pointer');
+$(".sideLink").click(function(){
+  const page = $(this).children('span').html();
+  window.history.pushState('', 'New Page Title', '/admin/' + page.replace(/\s+/g, '-').toLowerCase());
+  const url = page.replace(/\s+/g, '-').toLowerCase();
+  $.ajax({
+    url: url,
+    type : 'GET',
+    success: function(html){
+      $("#content").html(html);
+      script();
+    }
   });
+}).hover(function(){
+  $(this).css('cursor', 'pointer');
+});
 
-//for active links
-var header = document.getElementById("link");
-var list = header.getElementsByClassName("li");
-
-for (var i = 0; i < list.length; i++) {
-  list[i].addEventListener("click", function() {
-  var current = document.getElementsByClassName("active");
-  current[0].className = current[0].className.replace(" active", "");
-  this.className += " active";
+function filterPermission(){
+  const moduleID = $('#module').val();
+  const typeID = $('#type').val();
+  $.ajax({
+    url : 'permissions/filter',
+    type: 'get',
+    data: {module_id: moduleID, type_id: typeID},
+    success: function(html){
+      $('#permission-table').html(html);
+      script();
+    }
   });
+}
+
+function showOfficerForm(){
+  if ($("#role_id").val() == 5) {
+    $('#officeForm').show();
+  } else {
+    $('#officeForm').css("display","none");
+  }
 }

@@ -13,7 +13,8 @@ $routes->group('permissions', ['namespace' => 'Modules\ModuleManagement\Controll
     $routes->get('/', 'Permissions::index');
     $routes->match(['get', 'post'], 'add', 'Permissions::add');
     $routes->match(['get', 'post'],'edit/(:num)', 'Permissions::edit/$1');
-    $routes->delete('delete/(:num)', 'Permissions::delete/$1');
+    $routes->get('delete/(:num)', 'Permissions::delete/$1');
+    $routes->get('filter', 'Permissions::filter');
 });
 $routes->group('permission-types', ['namespace' => 'Modules\ModuleManagement\Controllers'], function($routes)
 {

@@ -23,7 +23,7 @@
         <div class="row justify-content-center">
           <div class="col-4">
             <div class="form-group mb-3">
-              <label for="slug" class="form-label">Module Type Unique Identifier (Slug)</label>
+              <label for="slug" class="form-label">Module Type Unique Identifier</label>
               <input value="<?=isset($value['slug']) ? esc($value['slug']): ''?>" type="text" name="slug" class="form-control" id="slug">
               <?php if (isset($error['slug'])): ?>
                 <div class="text-danger">

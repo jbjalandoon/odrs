@@ -8,7 +8,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 // User Management Models
-use Modules\UserManagement\Models as UserManagement; 
+use Modules\UserManagement\Models as UserManagement;
 
 // Module Management Models
 use Modules\ModuleManagement\Models as ModuleManagement;
@@ -22,6 +22,9 @@ use Modules\StudentManagement\Models as StudentManagement;
 // Document Manageent odels
 use Modules\DocumentManagement\Models as DocumentManagement;
 
+// Document Requests Models
+use Modules\DocumentRequest\Models as DocumentRequest;
+
 use App\Models\AdminsModel;
 use App\Models\CoursesModel;
 use App\Models\DocumentRequirementsModel;
@@ -29,6 +32,7 @@ use App\Models\DocumentsModel;
 use App\Models\OfficesModel;
 use App\Models\RequestApprovalsModel;
 use App\Models\RequestDetailsModel;
+use App\Models\PermissionTypesModel;
 use App\Models\RequestsModel;
 use App\Models\StudentsModel;
 /**
@@ -64,7 +68,7 @@ class BaseController extends Controller
 	{
 		// Do Not Edit This Line
 		parent::initController($request, $response, $logger);
-		helper(['buttons']);
+		helper(['buttons', 'text']);
 		//--------------------------------------------------------------------
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
@@ -84,7 +88,6 @@ class BaseController extends Controller
 		$this->permissionTypeModel = new ModuleManagement\permissionTypesModel();
 
 		// Student Management Models - StudentManagement\Class();
-		
 		$this->studentModel = new StudentManagement\StudentsModel();
 
 		// System Settings Model - SystemSettings\Class();
@@ -100,19 +103,22 @@ class BaseController extends Controller
 		$this->documentModel = new DocumentManagement\DocumentsModel();
 		$this->documentNoteModel = new DocumentManagement\DocumentNotesModel();
 		$this->documentRequirementModel = new DocumentManagement\DocumentRequirementsModel();
-		
 
-		$this->documentRequirement = new DocumentRequirementsModel();
-		$this->document = new DocumentsModel();
-		$this->requestApproval = new RequestApprovalsModel();
-		$this->requestDetail = new RequestDetailsModel();
-		$this->requestModel = new RequestsModel();
+		// Document Requests models - DocumentRequests\Class();
+
+
+		$this->officeApprovalModel = new DocumentRequest\RequestApprovalsModel();
+		$this->requestDetailModel = new DocumentRequest\RequestDetailsModel();
+		$this->requestModel = new DocumentRequest\RequestsModel();
 
 		$this->session = \Config\Services::session();
 		$this->validation =  \Config\Services::validation();
 		$this->request =  \Config\Services::request();
 		$this->email =  \Config\Services::email();
 		// $this->pdf = \Config\Services::TCPDF();
+
+		$this->data['allModules'] = $this->moduleModel->get();
+		$this->data['allPermissions'] = $this->permissionModel->getDetails();
 		if(isset($_SESSION['role_id'])){
 			$this->data['allModules'] = $this->rolePermissionModel->getModules(['role_permissions.role_id' => $_SESSION['role_id']]);
 			$this->data['allPermissions'] = $this->rolePermissionModel->getDetails(['role_permissions.role_id' => $_SESSION['role_id']]);

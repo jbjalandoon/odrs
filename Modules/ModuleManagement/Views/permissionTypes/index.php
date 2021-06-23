@@ -27,7 +27,7 @@
                 <tr>
                   <th>#</th>
                   <th>Permission Type</th>
-                  <th>Slug</th>
+                  <th>Identifier</th>
                   <th>Action</th>
                 </tr>
               </thead>

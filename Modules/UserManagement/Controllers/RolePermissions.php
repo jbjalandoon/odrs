@@ -6,6 +6,15 @@ use App\Controllers\BaseController;
 class RolePermissions extends BaseController
 {
 
+  function __construct(){
+    $this->session = \Config\Services::session();
+    $this->session->start();
+    if(!isset($_SESSION['user_id'])){
+      header('Location: '.base_url());
+      exit();
+    }
+  }
+
   public function index()
   {
     $this->data['roles'] = $this->roleModel->get();
@@ -71,9 +80,12 @@ class RolePermissions extends BaseController
   }
 
   public function retrieve(){
-    $data['permissions'] = $this->rolePermissionModel->getDetails(['role_permissions.role_id' => $_GET['id']]);
-    $data['permission_types'] = $this->rolePermissionModel->getTypes(['role_permissions.role_id' => $_GET['id']]);
-    $data['modules'] = $this->rolePermissionModel->getModules(['role_permissions.role_id' => $_GET['id']]);
+    $data['permissions'] = $this->permissionModel->getDetails();
+    $data['own_permissions'] = $this->rolePermissionModel->getDetails(['role_permissions.role_id' => $_GET['id']]);
+    $data['permission_types'] = $this->permissionTypeModel->get();
+    // $data['permission_types'] = $this->rolePermissionModel->getTypes(['role_permissions.role_id' => $_GET['id']]);
+    $data['modules'] = $this->moduleModel->get();
+    // $data['modules'] = $this->rolePermissionModel->getModules(['role_permissions.role_id' => $_GET['id']]);
 
     return view('Modules\UserManagement\Views\permissions\permissions', $data);
   }

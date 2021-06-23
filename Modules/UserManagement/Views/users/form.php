@@ -52,7 +52,7 @@
 									<?=esc($error['username'])?>
                 </div>
 							<?php endif; ?>
-            </div>      
+            </div>
           </div>
           <div class="col-3">
             <div class="form-group mb-3">
@@ -103,13 +103,31 @@
           <div class="col-3">
             <div class="form-group mb-3">
               <label for="role_id">Roles</label>
-              <select class="form-select" name="role_id" id="role_id">
+              <select class="form-select" name="role_id" id="role_id" onchange="showOfficerForm()">
                 <?php foreach($roles as $role): ?>
                   <?php $selected = false; ?>
                   <?php if(isset($value['role_id'])):?>
                     <?php $value['role_id'] == $role['id'] ? $selected = true: $selected = false;?>
                   <?php endif; ?>
-                  <option value="<?=esc($role['id'])?>" <?= $selected ? 'selected': ''?>><?=esc(ucwords($role['role']))?></option>
+                  <?php if ($role['identifier'] != 'students'): ?>
+                    <option value="<?=esc($role['id'])?>" <?= $selected ? 'selected': ''?>><?=esc(ucwords($role['role']))?></option>
+                  <?php endif; ?>
+                <?php endforeach; ?>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-3">
+            <div class="form-group mb-3" id="officeForm" style="display:none">
+              <label for="office_id">Office</label>
+              <select class="form-select" name="office_id" id="office_id">
+                <?php foreach($offices as $office): ?>
+                  <?php $selected = false; ?>
+                  <?php if(isset($value['office_id'])):?>
+                    <?php $value['role_id'] == $office['id'] ? $selected = true: $selected = false;?>
+                  <?php endif; ?>
+                  <option value="<?=esc($office['id'])?>" <?= $selected ? 'selected': ''?>><?=esc(ucwords($office['office']))?></option>
                 <?php endforeach; ?>
               </select>
             </div>

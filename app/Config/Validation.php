@@ -41,6 +41,69 @@ class Validation
 	// Rules
 	//--------------------------------------------------------------------
 
+	public $student = [
+		'student_number' => [
+			'rules'=> 'required|exact_length[15]|alpha_dash|regex_match[/[0-9]{4}-[0-9]{5}-TG-0/]|is_unique[users.username]',
+			'label' => 'Student Number',
+			'errors' => [
+				'required' => 'Please enter student number',
+				'exact_length' => 'Please enter a valid length (15)',
+				'alpha_dash' => 'Special characters are not allowed',
+				'regex_match' => 'PLease enter a valid student number',
+				'is_unique' => 'This student number is already registered'
+			]
+		],
+		'email' => [
+			'rules' => 'required|valid_email|is_unique[users.email]',
+			'label' => 'Email',
+			'errors' => [
+				'required' => 'Please enter email',
+				'valid_email' => 'Please enter a valid email',
+				'is_unique' => 'Email is already in used'
+			]
+		],
+		'contact' => [
+			'rules' => 'required|numeric|exact_length[11]',
+			'label' => 'Contact',
+			'errors' => [
+				'required' => 'Please enter contact',
+				'numeric' => 'Please enter numeric only',
+				'exact_length' => 'Enter 11 digits number'
+			]
+		],
+		'firstname' => [
+			'rules' => 'alpha_space|required',
+			'label' => 'First Name',
+			'errors' => [
+				'alpha_dash' => 'Enter valid characters',
+				'required' => 'Please enter first name'
+			]
+		],
+		'lastname' => [
+			'rules' => 'alpha_space|required',
+			'label' => 'Last Name',
+			'errors' => [
+				'alpha_dash' => 'Enter valid characters',
+				'required' => 'Please enter first name'
+			]
+		],
+		'course_id' => [
+			'rules' => 'required',
+			'label' => 'Course',
+			'errors' => [
+				'required' => 'Enter Course'
+			]
+		],
+		'birthdate' => [
+			'rules' => 'required|valid_date',
+			'label' => 'Birthdate',
+			'errors' => [
+				'required' => 'Enter birthdate',
+				'valid_date' => 'Enter valid date'
+			]
+		]
+	];
+
 	public $user = [
 		'firstname' => [
 			'rules' => 'required|alpha',
@@ -74,7 +137,7 @@ class Validation
 			'rules' => 'required',
 			'errors' => [
 				'required' => 'This field is required',
-			]	
+			]
 		],
 		'password' => [
 			'rules' => 'required',
@@ -316,6 +379,12 @@ class Validation
 	public $document = [
 		'document' => 'required',
 		'price' => 'required'
+	];
+
+	public $student_spreadsheet = [
+		'course_id' => 'required',
+		'academic_status' => 'required',
+		'students' => 'uploaded[students]|ext_in[students,xlsx]'
 	];
 
 }

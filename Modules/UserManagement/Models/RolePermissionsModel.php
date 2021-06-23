@@ -19,7 +19,7 @@ class RolePermissionsModel extends BaseModel
 
   public function getDetails($conditions = []){
 
-    $this->select('role_permissions.*, roles.role, permissions.permission, permissions.slug, permission_types.type, permission_types.slug as type_slug, modules.id as module_id, permission_types.id as type_id');
+    $this->select('role_permissions.*, roles.role, permissions.permission,permissions.path, permissions.icon, permissions.slug, permission_types.type, permission_types.slug as type_slug, modules.id as module_id, permission_types.id as type_id');
     $this->join('roles', 'roles.id = role_permissions.role_id');
     $this->join('permissions', 'permissions.id = role_permissions.permission_id');
     $this->join('permission_types', 'permission_types.id = permissions.permission_type');

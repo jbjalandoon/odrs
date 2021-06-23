@@ -19,4 +19,5 @@ $routes->group('users', ['namespace' => 'Modules\UserManagement\Controllers'], f
   $routes->match(['get', 'post'], 'add', 'Users::add');
   $routes->match(['get', 'post'], 'edit/(:num)', 'Users::edit/$1');
   $routes->delete('delete/(:num)', 'Users::delete/$1');
+  $routes->get('retrieve', 'Users::retrieve');
 });

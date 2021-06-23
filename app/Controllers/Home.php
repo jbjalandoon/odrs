@@ -4,8 +4,16 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
+
+	function __construct(){
+	}
+
 	public function index()
 	{
+		if (isset($_SESSION['user_id'])) {
+			header('Location: '.$_SESSION['landing_page']);
+			exit();
+		}
 		return view('home/index');
 	}
 
@@ -24,14 +32,16 @@ class Home extends BaseController
 					if(password_verify($_POST['password'], $user['password']))
 					{
 						if ($user['status'] == 'a') {
-							if ($user['identifier'] == 'student') {
-								$students = $this->student->getStudentByUserId($user['id']);
+							if ($user['identifier'] == 'students') {
+								$students = $this->studentModel->getStudentByUserId($user['id']);
 								$this->session->set([
 									'user_id' => $user['id'],
 									'role_id' => $user['role_id'],
 									'username' => $user['username'],
 									'role' => $user['role'],
+									'identifier' => $user['identifier'],
 									'student_id' => $students[0]['id'],
+									'landing_page' => $user['landing_page'],
 									'student_number' => $students[0]['student_number'],
 									'name' => $students[0]['firstname'] . ' ' . $students[0]['lastname'],
 								]);
@@ -40,13 +50,15 @@ class Home extends BaseController
 								$this->session->set([
 									'user_id' => $user['id'],
 									'username' => $user['username'],
+									'identifier' => $user['identifier'],
 									'role_id' => $user['role_id'],
+									'office_id' => $user['office_id'],
 									'role' => $user['role'],
 									'admin_id' => $admins[0]['id'],
+									'landing_page' => $user['landing_page'],
 									'name' => $admins[0]['firstname'] . ' ' . $admins[0]['lastname'],
 								]);
 							}
-							// $this->session->setFlashdata('error_login', 'Correct');
 							return redirect()->to(base_url($user['landing_page']));
 						} else {
 							$this->session->setFlashdata('error_login', 'This account is inactive');

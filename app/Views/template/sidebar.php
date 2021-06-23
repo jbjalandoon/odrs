@@ -9,7 +9,7 @@
 <!-- <div class="page-wrapper chiller-theme toggled">
   <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content">
-      //sidebar-header 
+      //sidebar-header
       <div class="sidebar-menu mt-5"> -->
       <ul class="link">
           <?php foreach ($allModules as $module): ?>
@@ -20,7 +20,7 @@
               <?php if ($permission['module_id'] == $module['id'] && $permission['type_slug'] == 'view'): ?>
                 <li tabindex="0">
                   <a href="<?=esc(base_url($permission['slug']))?>">
-                    <i class="fas fa-cogs"></i>
+                    <i class="fa fa-<?=$permission['icon'] == NULL ? 'exclamation-triangle': esc($permission['icon'])?>"></i>
                     <span><?=esc(ucwords($permission['permission']))?></span>
                   </a>
                 </li>

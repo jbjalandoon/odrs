@@ -6,6 +6,15 @@ use App\Controllers\BaseController;
 class AcademicStatus extends BaseController
 {
 
+  function __construct(){
+    $this->session = \Config\Services::session();
+    $this->session->start();
+    if(!isset($_SESSION['user_id'])){
+      header('Location: '.base_url());
+      exit();
+    }
+  }
+
   public function index()
   {
     $this->data['academic_statuses'] = $this->academicStatusModel->get();
@@ -27,12 +36,12 @@ class AcademicStatus extends BaseController
           $this->session->setFlashData('success_message', 'Successfully added Academic Status');
           return redirect()->to(base_url('academic-status'));
         }
-        else 
+        else
         {
           die("Something Went Wrong!");
         }
       }
-      else 
+      else
       {
         $this->data['value'] = $_POST;
         $this->data['error'] = $this->validation->getErrors();
@@ -74,7 +83,7 @@ class AcademicStatus extends BaseController
     {
       $this->session->setFlash('success_message', 'Successfully deleted');
     }
-    else 
+    else
     {
       die('Something Went Wrong!');
     }

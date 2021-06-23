@@ -6,8 +6,10 @@
       <?=ucwords($type['type'] . ': ')?>
       <br>
       <?php foreach ($permissions as $permission): ?>
-        <?php if ($permission['module_id'] == $module['id'] && $type['id'] == $permission['type_id']): ?>
-          <span class="badge bg-success"><?=ucwords(esc($permission['permission']))?></span>
+        <?php if (in_array($own_permissions, $permission)): ?>
+          <?php if ($permission['module_id'] == $module['id'] && $type['id'] == $permission['permission_type']): ?>
+              <span class="badge bg-success"><?=ucwords(esc($permission['permission']))?></span>
+          <?php endif; ?>
         <?php endif; ?>
       <?php endforeach; ?>
       <br>

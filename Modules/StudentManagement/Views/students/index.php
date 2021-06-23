@@ -39,23 +39,17 @@
                   <th>Name</th>
                   <th>Courses</th>
                   <th>Academic Status</th>
-                  <th>Level</th>
-                  <th>Year Graduated</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                <?php if (!empty($permissions)): ?>
-                  <?php foreach ($permissions as $permission): ?>
+                <?php if (!empty($students)): ?>
+                  <?php foreach ($students as $student): ?>
                     <tr>
                       <td>#</td>
-                      <td><?=ucwords(esc($permission['permission']))?></td>
-                      <td><?=esc($permission['module'])?></td>
-                      <td><?=esc($permission['icon'])?></td>
-                      <td><?=esc($permission['path'])?></td>
-                      <td><?=ucwords(esc($permission['type']))?></td>
-                      <td><?=esc($permission['slug'])?></td>
-                      <td><?=esc($permission['description'])?></td>
+                      <td><?=ucwords(esc($student['firstname'] . ' ' . esc($student['lastname'])))?></td>
+                      <td><?=ucwords(esc($student['course']))?></td>
+                      <td><?=ucwords(esc($student['status']))?></td>
                       <td class="text-center">
                         #
                       </td>
