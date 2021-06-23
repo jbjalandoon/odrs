@@ -1,6 +1,32 @@
 const server = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '/')
 
+function deleteRequest(id){
+  Swal.fire({
+    icon: 'warning',
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) =>{
+    if(result.isConfirmed){
+      $.ajax({
+        type: 'DELETE',
+        url: 'requests/delete/' + id,
+        success: function(html){
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully cancelled request'
+          });
+        }
+      })
+    }
+  });;
+}
+
 $(document).ready(function() {
+
     $('.data-table').DataTable({
       dom: 'frtp',
     });
@@ -15,6 +41,26 @@ function showDetail(checkbox){
   }
 }
 
+function changePassword(){
+  const oldPassword = $("#old_password").val();
+  const newPassword = $("#new_password").val();
+  const repeatPassword = $("#repeat_password").val();
+  $.ajax({
+    url  : 'users/edit-password',
+    type : 'post',
+    data : {
+      'old_password' : oldPassword,
+      'new_password' : newPassword,
+      'repeat_password' : repeatPassword
+    },
+    success : function(html)
+    {
+      $("#passwordContainer").html(html);
+      var myModal = new bootstrap.Modal(document.getElementById("passwordForm"), {});
+      myModal.show();
+    }
+  });
+}
 
 function deleteEntry(id, url){
   $.ajax({

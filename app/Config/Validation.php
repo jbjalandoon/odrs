@@ -41,6 +41,18 @@ class Validation
 	// Rules
 	//--------------------------------------------------------------------
 
+	public $password = [
+		'old_password' => 'required',
+		'new_password' => 'required',
+		'repeat_password' => [
+			'rules' => 'required|matches[password]',
+			'errors' => [
+				'matches' => 'Passwords Not Match'
+			],
+		],
+
+	];
+
 	public $student = [
 		'student_number' => [
 			'rules'=> 'required|exact_length[15]|alpha_dash|regex_match[/[0-9]{4}-[0-9]{5}-TG-0/]|is_unique[users.username]',

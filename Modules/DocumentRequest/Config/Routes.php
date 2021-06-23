@@ -14,11 +14,13 @@ $routes->group('document-requests', ['namespace' => 'Modules\DocumentRequest\Con
     $routes->get('/', 'DocumentRequests::index');
     $routes->post('request-confirm', 'DocumentRequests::confirmRequest');
     $routes->post('deny-request', 'DocumentRequests::denyRequest');
+    $routes->get('goodmoral/(:num)', 'DocumentRequests::goodmoral/$1');
 });
 
 $routes->group('on-process-document', ['namespace' => 'Modules\DocumentRequest\Controllers'], function($routes)
 {
     $routes->get('/', 'DocumentRequests::onProcess');
+    $routes->get('filter', 'DocumentRequests::filterOnProcess');
     $routes->post('print-requests', 'DocumentRequests::printRequest');
 });
 
@@ -32,6 +34,7 @@ $routes->group('approval', ['namespace' => 'Modules\DocumentRequest\Controllers'
 $routes->group('printed-requests', ['namespace' => 'Modules\DocumentRequest\Controllers'], function($routes)
 {
     $routes->get('/', 'DocumentRequests::printed');
+    $routes->get('filter', 'DocumentRequests::filterPrinted');
     $routes->get('get-printed', 'DocumentRequests::getPrinted');
     $routes->post('scan', 'DocumentRequests::claimRequest');
 });
@@ -41,5 +44,5 @@ $routes->group('claimed-requests', ['namespace' => 'Modules\DocumentRequest\Cont
     $routes->get('/', 'DocumentRequests::claimed');
     $routes->get('filter', 'DocumentRequests::claimFilter');
     $routes->get('report', 'DocumentRequests::report');
-    
+
 });

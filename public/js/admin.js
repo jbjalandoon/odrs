@@ -19,6 +19,7 @@ var adminPendingTable = $('#admin-pending-table').DataTable({
     }
 });
 
+
 $('#admin-pending-table tbody').on( 'click', 'tr', function () {
   $(this).toggleClass('selected');
 });
@@ -245,14 +246,27 @@ var onProcessTable = $('#process-table').DataTable({
     }
 });
 
+var processedTable = $('#processed-table').DataTable({
+  "bPaginate": true,
+  "bLengthChange": false,
+  "bFilter": true,
+  "bInfo": false,
+  "bAutoWidth": false,
+  "dom": '<"row"<"col-6"<"select mb-3">><"col-6"f>>t<"row"<"col-6"<"action mt-3">><"col-6 float-end mt-3"p>>',
+  fnInitComplete: function(){
+      $('div.select').html('<span class="h2"> Ready to Claim Documents </span>');
+      // $('div.action').html('<button onClick="printRequest()" id="process-selected" class="btn btn-primary">Process Complete</button>');
+    }
+});
+
 async function printRequest(id, per_page, template)
 {
-  if(per_page == 0 && template == null){
+  if(template == null && per_page == 0){
     Swal.fire({
       icon: 'warning',
       title: 'This request will mark as printed.',
       showCancelButton: true,
-      text: `You will not be able to undo the action`,
+      html: `You will not be able to undo the action`,
       confirmButtonText: `Yes`,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
@@ -279,34 +293,94 @@ async function printRequest(id, per_page, template)
       }
     })
   } else {
-    if(per_page == 1 && template != null){
-
-    } else if (per_page == 1 && template == null) {
+    if (template != null && per_page == 0) {
       Swal.fire({
-        title: 'Please Upload a File',
         icon: 'warning',
-        html: `<form method='post' id='form' enctype='multipart/form-data'><input type='hidden' name='id' value`+id+`><input type='file' name='file' id='file' class='form-control' accept='application/pdf'></form>`,
+        title: 'This request will mark as printed.',
         showCancelButton: true,
-        confirmButtonText: `Confirm`,
+        html: `You will not be able to undo the action <br><a href='`+server+`/document-requests/`+template+`/`+id+`' target="_blank">CLICK HERE TO DOWNLOAD</a>`,
+        confirmButtonText: `Yes`,
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           $.ajax({
-            url: `on-process-document/print-requests`,
-            type: `POST`,
-            data: new FormData(document.getElementById('form')),
-            contentType: false,
-            processData:false,
-            success: function(resp){
-              console.log(resp);
-            }
+            type: "POST",
+            data: {
+              'id': id,
+            },
+            url: "on-process-document/print-requests",
+            success: function(msg){
+              Swal.close();
+              Swal.fire({
+                'icon': 'success',
+                'title' : 'Successfully Processed',
+              }).then(function(){
+                location.reload();
+              });
+            },
+            error: function (request, error) {
+              alert(" Can't do because: " + error);
+            },
           });
-          Swal.fire('Saved!', '', 'success')
         }
       })
     } else {
+      Swal.fire({
+        title: 'Please Upload a File',
+        icon: 'warning',
+        html: `<form method='post' id='form' enctype='multipart/form-data'><input type='hidden' name='id' value=`+id+`><input type='file' name='file' id='file' class='form-control' accept='application/pdf' required></form> <Br>`,
+        showCancelButton: true,
+        confirmButtonText: `Confirm`,
+        preConfirm: () => {
+          if (document.getElementById("file").files.length != 0) {
+            var filePath = document.getElementById("file").value;
+              // Allowing file type
+            var allowedExtensions = /(\.pdf)$/i;
+            if (allowedExtensions.exec(filePath)) {
+              return [
+                 document.getElementById('file').value
+              ]
+            } else {
+              Swal.showValidationMessage('Wrong Format!')
 
+            }
+          } else {
+            Swal.showValidationMessage('Missing!')
+          }
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          data = new FormData(document.getElementById('form'))
+          Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes,'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              $.ajax({
+                url: `on-process-document/print-requests`,
+                type: `POST`,
+                data: data,
+                contentType: false,
+                processData:false,
+                success: function(resp){
+                  Swal.fire({
+                    text: 'Page Count: ' + resp,
+                    icon: 'success',
+                    title: 'Success!'
+                  })
+                  location.reload();
+                }
+              });
+
+            }
+          })
+        }
+      })
     }
+
   }
 
   // const data = [];
@@ -390,8 +464,10 @@ $("#slug").keypress(function (e){
         var form = '';
         const requests = JSON.parse(data);
         var value = [];
+        var request_id;
         for(var i = 0; i < requests.length; i++) {
           console.log(requests[i]);
+          request_id = requests[i]['request_id']
           form += `<div class="form-check">
                     <input class="form-check-input" type="checkbox" value="`+requests[i]['id']+`" id="id-`+requests[i]['id']+`">
                     <label class="form-check-label" for="id-`+requests[i]['id']+`">
@@ -416,13 +492,14 @@ $("#slug").keypress(function (e){
           $.ajax({
             url: 'printed-requests/scan',
             type: 'POST',
-            data: {'value': value},
+            data: {'value': value, 'request_id': request_id},
             success: function(msg){
+              console.log(msg);
               Swal.fire({
                 icon: 'success',
                 title: 'Succesfully Received',
               });
-              location.reload();
+              // location.reload();
             }
           });
         });
@@ -494,14 +571,18 @@ $(document).ready(function(){
   });
 });
 
-function filter(id){
+function filterClaimed(){
+  const documentID = $('#document').val();
   $.ajax({
     url : 'claimed-requests/filter',
     type: 'get',
-    data: {id: id},
+    data: {document_id: documentID},
     success: function(html){
-      $("#content").html(html);
-      script();
+      $("#claimedRequest").html(html);
+      $('.dataTable').DataTable({
+        pageLength: 9,
+        dom: 'frtp',
+      });
     }
   });
 }
@@ -543,16 +624,6 @@ function script(){
     }
     $('#argument').attr('type', type);
   });
-
-
-
-
-
-
-
-
-
-
 
 }
 
@@ -626,6 +697,59 @@ function filterPermission(){
     success: function(html){
       $('#permission-table').html(html);
       script();
+    }
+  });
+}
+
+function filterProcessDocument(){
+  const documentID = $('#document').val();
+  $.ajax({
+    url : 'on-process-document/filter',
+    type: 'get',
+    data: {document_id: documentID},
+    success: function(html){
+      $('#processTable').html(html);
+      $('#process-table').DataTable({
+        "columnDefs" : [{
+          "targets" : [0,1],
+          "visible" : false,
+          "searchable" : false,
+        }],
+        "bPaginate": true,
+        "bLengthChange": false,
+        "bFilter": true,
+        "bInfo": false,
+        "bAutoWidth": false,
+        "dom": '<"row"<"col-6"<"select mb-3">><"col-6"f>>t<"row"<"col-6"<"action mt-3">><"col-6 float-end mt-3"p>>',
+        fnInitComplete: function(){
+            $('div.select').html('<span class="h2"> On Process Documents </span>');
+            // $('div.action').html('<button onClick="printRequest()" id="process-selected" class="btn btn-primary">Process Complete</button>');
+          }
+      });
+    }
+  });
+}
+
+function filterPrintedDocument(){
+  const documentID = $('#document').val();
+  $.ajax({
+    url : 'printed-requests/filter',
+    type: 'get',
+    data: {document_id: documentID},
+    success: function(html){
+      $('#processedTable').html(html);
+      $('#processed-table').DataTable({
+        "bPaginate": true,
+        "bLengthChange": false,
+        "bFilter": true,
+        "bInfo": false,
+        "bAutoWidth": false,
+        "dom": '<"row"<"col-6"<"select mb-3">><"col-6"f>>t<"row"<"col-6"<"action mt-3">><"col-6 float-end mt-3"p>>',
+        fnInitComplete: function(){
+            $('div.select').html('<span class="h2"> Ready to Claim Documents </span>');
+            // $('div.action').html('<button onClick="printRequest()" id="process-selected" class="btn btn-primary">Process Complete</button>');
+          }
+      });
     }
   });
 }

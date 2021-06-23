@@ -19,7 +19,6 @@ class Requests extends BaseController
   public function index()
   {
 
-		// $this->data['documents'] = $this->document->get();
 		$this->data['office_approvals'] = $this->officeApprovalModel->getOwnRequest($_SESSION['student_id']);
 		$this->data['request_details_ready'] = $this->requestDetailModel->getDetails(['requests.student_id' => $_SESSION['student_id'], 'request_details.status' => 'r', 'requests.status' => 'c']);
 		$this->data['request_details_process'] = $this->requestDetailModel->getDetails(['requests.student_id' => $_SESSION['student_id'], 'request_details.status' => 'p', 'requests.status' => 'c']);
@@ -55,6 +54,12 @@ class Requests extends BaseController
 
 			// $request_details['request_id'] = $this->requestModel->input($requests, 'id');
 			foreach ($_POST['document_id'] as $index => $document_id) {
+        $request_details['free'] = 0;
+        $documents = $this->documentModel->get(['id' => $document_id])[0];
+        $history = $this->requestDetailModel->getDetails(['documents.id' => $document_id, 'documents.is_free_on_first' => 1, 'requests.student_id' => $_SESSION['student_id']]);
+        if (empty($history) && $documents['is_free_on_first'] == 1) {
+          $request_details['free'] = 1;
+        }
 				$request_details['document_id'] = $document_id;
 				$request_details['quantity'] = $_POST['quantity'][$index];
 				array_push($data['request_document'], $request_details);
@@ -80,7 +85,7 @@ class Requests extends BaseController
 				$data['value'] = $_POST;
 			}
 		}
-    return view('userTemplate/index', $this->data);
+    return view('template/index', $this->data);
   }
 
 	public function delete($id)
@@ -161,7 +166,7 @@ class Requests extends BaseController
 
     // $pdf->MultiCell(90  , '', view('report/voucher', $data), 0, 'L', 0, 0, '', '', true, 0, true);
     // $pdf->MultiCell(80, '', $pdf->write1DBarcode('Bernadette', 'C39', 110, '', '', 18, .4, $style, 'N'), 0, 'R', 0, 1, '', '', true);
-    $pdf->writeHTML(view('student/request/stub', $data), true, false, true, false, '');
+    $pdf->writeHTML(view('Modules\DocumentRequest\Views\requests\stub', $data), true, false, true, false, '');
     $pdf->write1DBarcode($data['requests'][0]['slug'], 'C39', '', '', '', 18, .4, $style, 'N');
     $pdf->Ln(4);
 

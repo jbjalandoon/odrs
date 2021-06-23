@@ -15,7 +15,7 @@
                 <tbody>
                   <tr>
                     <td>
-                      <a href="requests/new" class="btn" disabled><i class="fas fa-plus"></i> Request document here</a>
+                      <a href="requests/new" class="btn <?=empty($requests) ? '': 'disabled'?>" ><i class="fas fa-plus" ></i> Request document here</a>
                       <br><br><br>
                       <span>Request for a copy of your academic related documents.</span>
                     </td>
@@ -79,7 +79,7 @@
                     </tbody>
                   </table>
                 </div>
-                
+
                 <div id="forOfficeApproval" class="tabcontent">
                   <h3>Office Approval</h3>
                   <table class="table table-striped">
@@ -106,7 +106,7 @@
                           </tr>
                         <?php endforeach; ?>
                       <?php endif; ?>
-                      </tbody>    
+                      </tbody>
                   </table>
                 </div>
 
@@ -132,10 +132,10 @@
                           </tr>
                         <?php endforeach; ?>
                       <?php endif; ?>
-                      </tbody>    
+                      </tbody>
                   </table>
                 </div>
-                
+
                 <div id="tobeRelease" class="tabcontent">
                   <h3>Documents For Claiming</h3>
                   <table class="table table-striped">
@@ -158,15 +158,13 @@
                           </tr>
                         <?php endforeach; ?>
                       <?php endif; ?>
-                      </tbody>    
+                      </tbody>
                   </table>
                 </div>
             </div>
           </div>
-        </div>                      
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-

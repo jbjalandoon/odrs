@@ -40,7 +40,7 @@ class DocumentRequests extends BaseController
     $this->email->setSubject('Document Request Update');
     $this->email->setFrom('ODRS', 'PUP');
     $this->email->setMessage('Your Request has been denied : ' . $_POST['remark']);
-    if($this->requestModel->denyRequest($_POST))
+    if($this->requestModel->cancelRequest($_POST['id']))
       $this->email->send();
     return $this->index();
   }
@@ -99,23 +99,43 @@ class DocumentRequests extends BaseController
 
   public function onProcess()
   {
+    $this->data['documents'] = $this->documentModel->get();
     $this->data['request_details'] = $this->requestDetailModel->getDetails(['request_details.status' => 'p', 'requests.status' => 'c']);
     $this->data['view'] = 'Modules\DocumentRequest\Views\requests\process';
     return view('template/index', $this->data);
   }
 
+  public function filterOnProcess()
+  {
+    if($_GET['document_id'] == 0){
+      $this->data['request_details'] = $this->requestDetailModel->getDetails(['request_details.status' => 'p', 'requests.status' => 'c']);
+    } else {
+      $this->data['request_details'] = $this->requestDetailModel->getDetails(['request_details.status' => 'p', 'requests.status' => 'c', 'documents.id' => $_GET['document_id']]);
+    }
+    return view('Modules\DocumentRequest\Views\requests\tables\process', $this->data);
+  }
+
   public function printed()
   {
-
+    $this->data['documents'] = $this->documentModel->get();
     $this->data['request_details_release'] = $this->requestDetailModel->getDetails(['request_details.status' => 'r', 'requests.status' => 'c']);
     $this->data['view'] = 'Modules\DocumentRequest\Views\requests\printed';
     return view('template/index', $this->data);
   }
 
+  public function filterPrinted(){
+    if($_GET['document_id'] == 0){
+      $this->data['request_details_release'] = $this->requestDetailModel->getDetails(['request_details.status' => 'r', 'requests.status' => 'c']);
+    } else {
+      $this->data['request_details_release'] = $this->requestDetailModel->getDetails(['request_details.status' => 'r', 'requests.status' => 'c', 'documents.id' => $_GET['document_id']]);
+    }
+    return view('Modules\DocumentRequest\Views\requests\tables\printed', $this->data);
+  }
+
   public function printRequest()
   {
     // return print_r($_FILES);
-    if(!isset($_FILES)){
+    if($this->request->getFile('file') == null){
       $data = [
         'status' => 'r',
         'printed_at' => date('Y-m-d H:i:s'),
@@ -135,11 +155,12 @@ class DocumentRequests extends BaseController
       $data = [
         'status' => 'r',
         'printed_at' => date('Y-m-d H:i:s'),
-        'file' => $newName,
         'page' => $num,
       ];
+      if($this->requestDetailModel->printRequest($_POST['id'] ,$data)){
 
-      return $num  . '';
+        return $num . '';
+      }
     }
 
     return $this->printed();
@@ -147,8 +168,8 @@ class DocumentRequests extends BaseController
 
   public function claimRequest()
   {
-    if (count($this->requestDetailModel->get(['request_id' => $id])) == count($this->requestDetailModel->get(['request_id' => $id, 'status' => 'c']))) {
-      $this->requestModel->edit(['completed_at' => date('Y-m-d h:i:s')], $id);
+    if (count($this->requestDetailModel->get(['request_id' => $_POST['request_id']])) == count($this->requestDetailModel->get(['request_id' => $_POST['request_id'], 'status' => 'c']))) {
+      $this->requestModel->edit(['completed_at' => date('Y-m-d h:i:s')], $_POST['request_id']);
     }
     return $this->requestDetailModel->claimRequest($_POST['value']);
   }
@@ -173,17 +194,16 @@ class DocumentRequests extends BaseController
   }
 
   public function claimFilter(){
-    $data['documents'] = $this->documentModel->get();
-    if($_GET['id'] == 0){
-      $data['request_details'] = $this->requestDetailModel->getDetails(['request_details.status' => 'c', 'requests.status' => 'c']);
+    if($_GET['document_id'] == 0){
+      $this->data['request_details'] = $this->requestDetailModel->getDetails(['request_details.status' => 'c', 'requests.status' => 'c']);
     }else{
-      $data['request_details'] = $this->requestDetailModel->getDetails(['request_details.status' => 'c', 'requests.status' => 'c', 'document_id' => $_GET['id']]);
+      $this->data['request_details'] = $this->requestDetailModel->getDetails(['request_details.status' => 'c', 'requests.status' => 'c', 'document_id' => $_GET['document_id']]);
     }
-    return view('Modules\DocumentRequest\Views\requests\claimed', $data);
+    return view('Modules\DocumentRequest\Views\requests\tables\claimed', $this->data);
   }
 
   public function report(){
-    $pdf = new Pdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+    $pdf = new Pdf('L', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 		// set document information
 		$pdf->SetCreator(PDF_CREATOR);
@@ -231,7 +251,9 @@ class DocumentRequests extends BaseController
 
 		// -----------------------------------------------------------------------------
 		$data['documents'] = $this->requestDetailModel->getReports($_GET['t'], $_GET['a'], $_GET['d']);
-		$reportTable = view('admin/request/report',$data);
+
+    $data['document'] = $this->documentModel->get(['id' => $_GET['d']])[0]['document'];
+		$reportTable = view('Modules\DocumentRequest\Views\requests\report',$data);
 
 		$pdf->writeHTML($reportTable, true, false, false, false, '');
 
@@ -244,6 +266,117 @@ class DocumentRequests extends BaseController
 		// END OF FILE
 		//============================================================+
 		die();
+  }
+
+  public function goodmoral($request_id){
+    $pdf = new Pdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+    // set document information
+    $pdf->SetCreator(PDF_CREATOR);
+    $pdf->SetAuthor('Nicola Asuni');
+    $pdf->SetTitle('TCPDF Example 048');
+    $pdf->SetSubject('TCPDF Tutorial');
+    $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+
+    // set default header data
+    $pdf->SetHeaderData('header.png', '130', '', '');
+
+    // set header and footer fonts
+    $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+    $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+    // set default monospaced font
+    $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+    // set margins
+    $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+    $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
+    // set auto page breaks
+    $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+
+    // set image scale factor
+    $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+    // set some language-dependent strings (optional)
+    if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+        require_once(dirname(__FILE__).'/lang/eng.php');
+        $pdf->setLanguageArray($l);
+    }
+    $details = $this->requestDetailModel->getDetails(['request_details.id' => $request_id])[0];
+    // ---------------------------------------------------------
+
+    // set font
+
+    // add a page
+    $pdf->AddPage();
+
+
+    $pdf->SetFont('helvetica', '', 10);
+
+    // -----------------------------------------------------------------------------
+    $txt = <<<EOD
+                  Office of the Branch Registrar
+    EOD;
+    // print a block of text using Write()
+    $pdf->Write(0, $txt, '', 0, 'L', true, 0, false, false, 0);
+    $date = date('F d, Y');
+    $txt = <<<EOD
+                  $date
+    EOD;
+    // print a block of text using Write()
+    $pdf->Write(0, $txt, '', 0, 'R', true, 0, false, false, 0);
+    $txt = <<<EOD
+    CERTIFICATION
+    EOD;
+    // print a block of text using Write()
+    $pdf->Write(0, $txt, '', 0, 'C', true, 0, false, false, 0);
+    $txt = <<<EOD
+    To Whom It May Concern:
+    EOD;
+    // print a block of text using Write()
+    $pdf->Write(0, $txt, '', 0, 'L', true, 0, false, false, 0);
+    $prefix = $details['gender'] == 'm' ? 'Mr': 'Ms';
+    $name =  $prefix .'. '.$details['firstname'] . ' ' . $details['lastname'];
+    $pronoun['subjective'] = $details['gender'] == 'm' ? 'he': 'she';
+    $pronoun['possesive'] = $details['gender'] == 'm' ? 'his': 'hers';
+    $pronoun['objective'] = $details['gender'] == 'm' ? 'him': 'her';
+    $html = '<span style="text-align:justify; text-indent: 50px;"><p> This is to certify that <b>'. $name .'</b> is a student of this University and that '.$pronoun['subjective'].' shows good moral character and has not been disciplined for any violation of the rules and regulations of the University.</p></span>';
+
+// output the HTML content
+    $pdf->writeHTML($html, true, 0, true, false, '');
+
+    $html = '<span style="text-align:justify; text-indent: 50px;"><p>This certification is being issued upon '.$pronoun['possesive'].' request for whatever legitimate purpose it may serve '.$pronoun['objective'].'.</p></span>';
+
+    $pdf->writeHTML($html, true, 0, true, false, '');
+
+    $tbl = <<<EOD
+    <table border="0" cellpadding="2" cellspacing="2" align="center">
+     <tr nobr="true">
+      <td></td>
+      <td>MHEL P. GARCIA <br />Head of Admission & Registration Office</td>
+     </tr>
+    </table>
+    EOD;
+
+    $pdf->writeHTML($tbl, true, false, false, false, '');
+
+    $txt = <<<EOD
+    shgs/20
+    EOD;
+    // print a block of text using Write()
+    $pdf->Write(0, $txt, '', 0, 'L', true, 0, false, false, 0);
+// output the HTML content
+    // -----------------------------------------------------------------------------
+
+    //Close and output PDF document
+    $pdf->Output('example_048.pdf', 'I');
+
+    //============================================================+
+    // END OF FILE
+    //============================================================+
+    die('here');
   }
 
 }

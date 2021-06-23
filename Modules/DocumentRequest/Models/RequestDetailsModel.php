@@ -11,7 +11,7 @@ class RequestDetailsModel extends BaseModel
 
   protected $table = 'request_details';
 
-  protected $allowedFields = ['id', 'request_id', 'document_id', 'remark', 'status', 'quantity' , 'page','printed_at', 'received_at'];
+  protected $allowedFields = ['id', 'request_id','free', 'document_id', 'remark', 'status', 'quantity' , 'page','printed_at', 'received_at'];
 
   function __construct(){
     parent::__construct();
@@ -19,7 +19,7 @@ class RequestDetailsModel extends BaseModel
 
   public function getDetails($conditions = [], $id = null){
 
-    $this->select('request_details.*, documents.price,requests.created_at as requested_at, requests.reason, documents.document,documents.per_page_payment,documents.template, documents.price, students.firstname, students.lastname, students.student_number, courses.course, courses.abbreviation');
+    $this->select('request_details.*, documents.price,requests.created_at as requested_at, requests.reason, documents.document,documents.per_page_payment,documents.template, documents.price, students.firstname, students.lastname, students.student_number, students.gender ,courses.course, courses.abbreviation');
     $this->join('requests', 'request_id = requests.id');
     $this->join('documents', 'document_id = documents.id');
     $this->join('students', 'requests.student_id = students.id');

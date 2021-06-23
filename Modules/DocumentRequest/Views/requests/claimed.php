@@ -50,45 +50,54 @@
           </div>
           <div class="row">
             <div class="col-12">
-              <div class="btn-group" role="group" aria-label="document">
-                  <button type="button" onClick="filter(0)" class="btn btn-secondary me-1"> All </button>
-                <?php foreach ($documents as $document): ?>
-                  <button onClick="filter(<?=esc($document['id'])?>)" type="button" class="btn btn-secondary me-1"><?=ucwords(esc($document['document']))?></button>
-                <?php endforeach; ?>
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="document">Filter by Documents: </label>
+                <select class="form-select" id="document" onchange="filterClaimed()">
+                  <?php if (empty($documents)): ?>
+                    <option value="" disabled selected>--No Documents Found--</option>
+                  <?php else: ?>
+                    <option value="0" selected>All</option>
+                    <?php foreach($documents as $document): ?>
+                      <option value="<?=esc($document['id'])?>"><?=esc(ucwords($document['document']))?></option>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+                </select>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-12">
-              <table class="table table-striped table-bordered mt-3 dataTables" style="width:100%">
-                <thead>
-                  <tr>
-                    <th>Student Number</th>
-                    <th>Name</th>
-                    <th>Course</th>
-                    <th>Document</th>
-                    <th>Reason</th>
-                    <th>Date Requested</th>
-                    <th>Date Received</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach ($request_details as $request_detail): ?>
+              <div class="table-responsive" id="claimedRequest">
+                <table class="table table-striped table-bordered mt-3 dataTable" style="width:100%">
+                  <thead>
                     <tr>
-                      <td><?=esc($request_detail['student_number'])?></td>
-                      <td><?=ucwords(esc($request_detail['firstname']) . ' ' . esc($request_detail['lastname']))?></td>
-                      <td><?=ucwords(esc($request_detail['course']))?></td>
-                      <td><?=ucwords(esc($request_detail['document']))?></td>
-                      <td><?=ucwords(esc($request_detail['reason']))?></td>
-                      <td><?=date('F d, Y - H:i A', strtotime(esc($request_detail['requested_at'])))?></td>
-                      <td><?=date('F d, Y - H:i A', strtotime(esc($request_detail['received_at'])))?></td>
+                      <th>Student Number</th>
+                      <th>Name</th>
+                      <th>Course</th>
+                      <th>Document</th>
+                      <th>Reason</th>
+                      <th>Date Requested</th>
+                      <th>Date Received</th>
                     </tr>
-                  <?php endforeach; ?>
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($request_details as $request_detail): ?>
+                      <tr>
+                        <td><?=esc($request_detail['student_number'])?></td>
+                        <td><?=ucwords(esc($request_detail['firstname']) . ' ' . esc($request_detail['lastname']))?></td>
+                        <td><?=ucwords(esc($request_detail['course']))?></td>
+                        <td><?=ucwords(esc($request_detail['document']))?></td>
+                        <td><?=ucwords(esc($request_detail['reason']))?></td>
+                        <td><?=date('F d, Y - H:i A', strtotime(esc($request_detail['requested_at'])))?></td>
+                        <td><?=date('F d, Y - H:i A', strtotime(esc($request_detail['received_at'])))?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>                      
+        </div>
       </div>
     </div>
   </div>

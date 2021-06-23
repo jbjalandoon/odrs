@@ -36,7 +36,7 @@ class RequestsModel extends BaseModel
     foreach ($data as $index){
       $this->update($index[0], ['status' => 'c']);
     }
-    
+
     $this->transComplete();
 
     return $this->transStatus();
@@ -48,7 +48,7 @@ class RequestsModel extends BaseModel
       $details = new RequestDetailsModel();
       $approvals = new RequestApprovalsModel();
       $details->set(['status' => 'd']);
-      $details->select('id'); 
+      $details->select('id');
       $details->where('request_id', $data['id']);
       $approvals->set(['status' => 'd']);
       foreach($details->findAll() as $detail)
@@ -58,7 +58,7 @@ class RequestsModel extends BaseModel
       if(!empty($approvals->findAll()))
         $approvals->update();
       $details->update();
-      
+
       $this->update($data['id'], ['status' => 'd' , 'remark' => $data['remark']]);
 
     $this->transComplete();
@@ -71,13 +71,13 @@ class RequestsModel extends BaseModel
     $this->transStart();
       $details = new RequestDetailsModel();
       $approvals = new RequestApprovalsModel();
-      $details->select('id'); 
+      $details->select('id');
       foreach($details->findAll() as $detail)
       {
         $approvals->where('request_detail_id', $detail['id'])->delete();
       }
       $details->where('request_id', $id)->delete();
-      
+
       $this->delete($id);
 
     $this->transComplete();
@@ -89,7 +89,7 @@ class RequestsModel extends BaseModel
   {
     $this->transStart();
 
-      $requestData = 
+      $requestData =
       [
         'slug' => $data['request']['slug'],
         'student_id' => $data['request']['student_id'],
@@ -104,14 +104,15 @@ class RequestsModel extends BaseModel
       $documentRequirementModel = new documentRequirementsModel();
       foreach($data['request_document'] as $details)
       {
-        
+
         $documentRequirements = $documentRequirementModel->get(['document_id' => $details['document_id']]);
         $requestDetailData = [
           'request_id' => $requestID,
           'document_id' => $details['document_id'],
           'remark' => null,
           'status' => empty($documentRequirements) ? 'p' : 'a',
-          'quantity' => $details['quantity']
+          'quantity' => $details['quantity'],
+          'free' => $details['free']
         ];
         $requestDetail->insert($requestDetailData);
         $detailID = $requestDetail->getInsertID();
