@@ -12,10 +12,10 @@
         </div>
       <?php endif; ?>
       <div class="row mb-3">
-        <div class="col-2">
+        <div class="col-10">
           <span class="h2">Academic Status</span>
         </div>
-        <div class="col-10">
+        <div class="col-2">
           <?=esc(buttons($allPermissions, ['add-academic-status'], 'academic-status'))?>
         </div>
       </div>

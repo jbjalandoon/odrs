@@ -208,13 +208,13 @@ body #content .container .row .card .card-body .request tbody .btn:hover {
 body #content .container .row .card .card-body .tab {
   width: 100%;
   overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #800000;
+  border: 1px solid #2e2e2e;
+  background-color: #ccc;
 }
 
 body #content .container .row .card .card-body .tab button {
   background-color: inherit;
-  color: white;
+  color: black;
   float: left;
   border: none;
   outline: none;
@@ -224,17 +224,17 @@ body #content .container .row .card .card-body .tab button {
   transition: 0.3s;
   font-size: 17px;
   border-radius: 0 10px 0 0;
-  border-right: 1px solid rgba(255, 255, 255, 0.651);
+  border-right: 1px solid rgba(15, 14, 14, 0.651);
 }
 
 body #content .container .row .card .card-body .tab button:hover {
-  background-color: rgba(148, 49, 49, 0.774);
+  background-color: rgba(87, 68, 68, 0.774);
   color: #fff;
 }
 
 body #content .container .row .card .card-body .tab button.active {
-  background-color: #ccc;
-  color: #2e2e2e;
+  background-color: #800000;
+  color: #fff;
 }
 
 body #content .container .row .card .card-body .tabcontent {

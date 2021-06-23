@@ -183,12 +183,12 @@ body{
                         .tab {
                             width: 100%;
                             overflow: hidden;
-                            border: 1px solid #ccc;
-                            background-color: $maroonColor;
+                            border: 1px solid $darkcolor;
+                            background-color: #ccc;
     
                             button {
                                 background-color: inherit;
-                                color: white;
+                                color: black;
                                 float: left;
                                 border: none;
                                 outline: none;
@@ -197,16 +197,16 @@ body{
                                 transition: 0.3s;
                                 font-size: 17px;
                                 border-radius: 0 10px 0 0;
-                                border-right: 1px solid rgba(255, 255, 255, 0.651);
+                                border-right: 1px solid rgba(15, 14, 14, 0.651);
     
                                 &:hover {
-                                    background-color: rgba(148, 49, 49, 0.774);
+                                    background-color: rgba(87, 68, 68, 0.774);
                                     color: $white;
                                 }
     
                                 &.active {
-                                    background-color: #ccc;
-                                    color: $darkcolor;
+                                    background-color: $maroonColor;
+                                    color: $white;
                                   }
                             }
                         } 

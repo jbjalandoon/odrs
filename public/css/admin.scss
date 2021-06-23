@@ -34,6 +34,7 @@ body{
 	font-family: "Raleway", sans-serif;
 	color: $darkcolor;
 	padding-left: $menu-width-desktop;
+	
 
 	footer{
 		color: $darkcolor;
@@ -54,17 +55,16 @@ body{
 
 		.logout{
 			font-size: 1em;
-			text-decoration: none!important;
-			img{max-width: 22px;}
-			span{padding-left: 10px;}
 			
 			li{
-				position: relative; 
-				width: 150px;
-				color: $white;
-
 				i{padding-left: 50px;}
-				a{color: $white;}
+				a{
+					color: $white;
+					&.dropdown-item:active{
+						background: rgb(168, 11, 11);
+						color: white;
+					}
+				}
 				ul{
 					border-radius: 3px;
 					a{color: $darkcolor;}
@@ -188,6 +188,10 @@ body{
   .card{
 	  max-width: 95%;
 	  margin: auto;
+	  .breadcrumb{
+		  i{color: maroon}
+	  }
+	  
 
 	  .btn{@include btn_admin();}
 	  .btn-edit{@include editbtn();}
@@ -227,7 +231,6 @@ body{
 			// 	color: $tb_active;
 			// }
 		}
-
 	}
   }
 }
