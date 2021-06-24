@@ -49,8 +49,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" id="changePassword" onclick="changePassword()" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn" style="background-color: gray;" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="changePassword" onclick="changePassword()" class="btn" style="background-color: rgb(0, 80, 184);">Save changes</button>
       </div>
     </div>
   </div>

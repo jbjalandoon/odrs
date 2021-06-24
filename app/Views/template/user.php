@@ -31,8 +31,8 @@
                   </a>
                   <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
                       <!-- <li><hr class="dropdown-divider"></li> -->
-                      <li><a class="dropdown-item" href="#" id="passwordModal" data-bs-toggle="modal" data-bs-target="#passwordForm" >Change Password <i class="fas fa-lock"></i></a></li>
-                      <li><a class="dropdown-item" href="/logout">Logout <i class="fas fa-sign-out-alt"></i></a></li>
+                      <li><a class="dropdown-item" style="color: black;"  href="#" id="passwordModal" data-bs-toggle="modal" data-bs-target="#passwordForm" >Change Password <i class="fas fa-lock"></i></a></li>
+                      <li><a class="dropdown-item" style="color: black;"  href="/logout">Logout <i class="fas fa-sign-out-alt"></i></a></li>
                   </ul>
               </li>
           </ul>

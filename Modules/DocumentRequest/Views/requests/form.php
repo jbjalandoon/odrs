@@ -37,8 +37,7 @@
                   </div>
                 <?php endif; ?>
 
-                </div>
-                <div class="col-md-6">
+              <div class="col-md-6">
                 <label for="reasonInput" class="form-label" required><h5>Reason/s for Requesting</h5></label>
                   <div class="form-check" id="reasonInput">
                     <input class="form-check-input" type="radio" value="scholarship" name="reason" id="scholarship" required checked>
