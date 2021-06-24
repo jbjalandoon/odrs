@@ -31,7 +31,7 @@
           <div class="col-4">
             <div class="form-group mb-3">
               <label for="description" class="form-label">Description</label>
-              <textarea name="description" class="form-control" id="description" rows="5"><?=isset($value['slug']) ? esc($value['slug']): ''?></textarea>
+              <textarea name="description" class="form-control" id="description" rows="5"><?=isset($value['description']) ? esc($value['description']): ''?></textarea>
               <?php if (isset($error['description'])): ?>
                 <div class="text-danger">
                   <?=esc($error['description'])?>

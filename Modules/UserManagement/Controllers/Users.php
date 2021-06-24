@@ -52,9 +52,19 @@ class Users extends BaseController
     return view('template\index', $this->data);
   }
 
-  public function edit($id)
+  public function delete($id)
   {
-
+    if($this->adminModel->softDeleteByUserId($id))
+    {
+      if ($this->userModel->softDelete($id)) {
+        $this->session->setFlashData('success_message', 'Successfully deleted user');
+      }
+    }
+    else
+    {
+      die('Something went wrong');
+    }
+    return redirect()->to(base_url('users'));
   }
 
   public function updatePassword()

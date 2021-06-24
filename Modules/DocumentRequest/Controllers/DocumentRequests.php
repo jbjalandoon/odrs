@@ -89,7 +89,7 @@ class DocumentRequests extends BaseController
       $this->email->setFrom('ODRS', 'PUP');
       $this->email->setMessage('You dont have any sanctions your request ' . $_POST['data'][$key][5] . ' is now to be processed');
 
-      // $this->email->send();
+      $this->email->send();
 
     }
     if($this->officeApprovalModel->approveRequest($_POST['data']))
@@ -157,13 +157,18 @@ class DocumentRequests extends BaseController
         'printed_at' => date('Y-m-d H:i:s'),
         'page' => $num,
       ];
-      if($this->requestDetailModel->printRequest($_POST['id'] ,$data)){
+      $this->requestDetailModel->printRequest($_POST['id'] ,$data);
 
-        return $num . '';
-      }
     }
-
-    return $this->printed();
+    $request = $this->requestDetailModel->getDetails(['request_details.id' => $_POST['id']])[0];
+    // return print_r($request);
+    $mail = \Config\Services::email();
+    $mail->setTo($_POST['email']);
+    $mail->setSubject('Ready to claim Document');
+    $mail->setFrom('ODRS', 'PUP');
+    $mail->setMessage('Your document is ready to claim:  ' . $request['document']);
+    $mail->send();
+    return $num . '';
   }
 
   public function claimRequest()
@@ -255,7 +260,7 @@ class DocumentRequests extends BaseController
 
 		// -----------------------------------------------------------------------------
 		$data['documents'] = $this->requestDetailModel->getReports($_GET['t'], $_GET['a'], $_GET['d']);
-
+    $data['types'] = $_GET;
     $data['document'] = $this->documentModel->get(['id' => $_GET['d']])[0]['document'];
 		$reportTable = view('Modules\DocumentRequest\Views\requests\report',$data);
 

@@ -3,7 +3,7 @@ $routes->group('notes', ['namespace' => 'Modules\DocumentManagement\Controllers'
   $routes->get('/', 'Notes::index');
   $routes->match(['get', 'post'], 'add', 'Notes::add');
   $routes->match(['get', 'post'], 'edit/(:num)', 'Notes::edit/$1');
-  $routes->delete('delete/(:num)', 'Notes::delete/$1');
+  $routes->get('delete/(:num)', 'Notes::delete/$1');
 });
 
 $routes->group('documents', ['namespace' => 'Modules\DocumentManagement\Controllers'], function($routes){

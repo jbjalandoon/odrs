@@ -13,7 +13,7 @@ class UsersModel extends BaseModel
 
   protected $table = 'users';
 
-  protected $allowedFields = ['id', 'username', 'password', 'email', 'status', 'role_id', 'token'];
+  protected $allowedFields = ['id', 'username', 'password', 'email', 'status', 'office_id','role_id', 'token'];
 
   function __construct()
   {

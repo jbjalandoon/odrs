@@ -13,7 +13,7 @@
           <span class="h2"><?=esc($edit) ? 'Editing': 'Adding'?> Course Type</span>
         </div>
       </div>
-      <form class="form-floating" action="<?=esc($edit) ? $value['type']: 'add'?>" method="post" autocomplete="off">
+      <form class="form-floating" action="<?=esc($edit) ? $id: 'add'?>" method="post" autocomplete="off">
         <div class="row justify-content-center">
           <div class="col-4">
             <div class="form-group mb-3">

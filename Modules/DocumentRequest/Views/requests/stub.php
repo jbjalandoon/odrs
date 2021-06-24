@@ -41,8 +41,8 @@
             <?=(esc($request_detail['page'] == null ? 'N/A': $request_detail['page']))?>
         </td>
         <td>
-          <?php $document_price += $request_detail['free'] ? 0 : $request_detail['price']?>
-          P <?=$request_detail['free'] ? '0 (Free)' : esc($request_detail['price'])?>
+          <?php $document_price += $request_detail['free'] ? 0 : $request_detail['price'] * $request_detail['page']?>
+          P <?=$request_detail['free'] ? '0 (Free)' : esc($request_detail['price'] * $request_detail['page'])?>
         </td>
       </tr>
     <?php endforeach; ?>

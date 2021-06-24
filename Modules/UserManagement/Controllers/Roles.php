@@ -44,12 +44,46 @@ class Roles extends BaseController
 
   public function edit($id)
   {
+    $this->data['edit'] = true;
+    $this->data['value'] = $this->roleModel->get(['id' => $id])[0];
+    $this->data['id'] = $id;
+    $this->data['view'] = 'Modules\UserManagement\Views\roles\form';
+    if($this->request->getMethod() == 'post')
+    {
+      if($this->validate('role'))
+      {
+        if($this->roleModel->edit($_POST, $id))
+        {
+          $this->session->setFlashData('success_message', 'Successfully edited role');
+          return redirect()->to(base_url('roles'));
+        }
+        else
+        {
+          die('Something went wrong!');
+        }
+      }
+      else
+      {
+        $this->data['value'] = $_POST;
+        $this->data['error'] = $this->validation->getErrors();
+      }
+    }
 
+    return view('template/index', $this->data);
   }
 
   public function delete($id)
   {
-
+    if($this->roleModel->softDelete($id))
+    {
+      $this->session->setFlashData('success_message', 'Successfully deleted role');
+    }
+    else
+    {
+      die('Something went wrong');
+    }
+    return redirect()->to(base_url('roles'));
   }
+
 
 }

@@ -97,9 +97,10 @@ class StudentsModel extends BaseModel
 
   public function getDetail($condition = []){
 
-    $this->select('students.*, courses.course, academic_status.status');
+    $this->select('students.*, courses.course, academic_status.status, users.id as user_id');
     $this->join('courses', 'students.course_id = courses.id');
     $this->join('academic_status', 'students.academic_status = academic_status.id');
+    $this->join('users', 'students.user_id = users.id');
     foreach ($condition as $condition => $value) {
       $this->where($condition, $value);
     }
@@ -108,7 +109,8 @@ class StudentsModel extends BaseModel
   }
 
   public function softDeleteByUserId($id){
-    return $this->delete(['user_id' => $id]);
+    $this->where('user_id', $id);
+    return $this->delete();
   }
 
   public function getStudentByUserId($id){

@@ -19,7 +19,7 @@
           <a href="students/add" class="float-end btn"> Add Student</a>
         </div>
       </div>
-      <form action="students/insert-spreadsheet" method="post" enctype="multipart/form-data">
+      <!-- <form action="students/insert-spreadsheet" method="post" enctype="multipart/form-data">
         <div class="row">
           <div class="col-5">
             <input type="file" name="students" class="form-control" required>
@@ -30,7 +30,7 @@
           <p style="font-style: italic;">*Upload an excel file that contains list of students</p>
 
         </div>
-      </form>
+      </form> -->
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
@@ -53,7 +53,7 @@
                       <td><?=ucwords(esc($student['course']))?></td>
                       <td><?=ucwords(esc($student['status']))?></td>
                       <td class="text-center">
-                        <?=esc(buttons($allPermissions, ['edit-students', 'delete-students'], 'students', $student['id']))?>
+                        <?=esc(buttons($allPermissions, ['delete-students'], 'students', $student['user_id']))?>
                       </td>
                     </tr>
                   <?php endforeach; ?>

@@ -45,7 +45,7 @@
                     <td><?=ucwords(esc($request_detail['document']))?></td>
                     <td><?=date('F d, Y - H:i A', strtotime(esc($request_detail['requested_at'])))?></td>
                     <td>
-                      <button type="button" onClick="printRequest(<?=$request_detail['id']?>, <?=$request_detail['per_page_payment']?>, <?=$request_detail['template'] == null ? 'null': "'".$request_detail['template']."'"?>)" class="btn btn-primary" name="button">Complete</button>
+                      <button type="button" onClick="printRequest(<?=$request_detail['id']?>, <?=$request_detail['per_page_payment']?>, <?=$request_detail['template'] == null ? 'null': "'".$request_detail['template']."'"?>, '<?=$request_detail['email']?>')" class="btn btn-primary" name="button">Complete</button>
                     </td>
                   </tr>
                 <?php endforeach; ?>

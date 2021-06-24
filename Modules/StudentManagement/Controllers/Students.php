@@ -54,49 +54,19 @@ class Students extends BaseController
       return view('template/index', $this->data);
     }
 
-    public function edit($id)
-    {
-      $this->data['edit'] = true;
-      $this->data['value'] = $this->studentModel->getDetail(['students.id' => $id])[0];
-      $this->data['id'] = $id;
-      $this->data['courses'] = $this->courseModel->get();
-      $this->data['academic_status'] = $this->academicStatusModel->get();
-      $this->data['view'] = 'Modules\StudentManagement\Views\students\form';
-      if($this->request->getMethod() == 'post')
-      {
-        if($this->validate('student'))
-        {
-          if($this->documentModel->editDocument($_POST, $id))
-          {
-            $this->session->setFlashData('success_message', 'Successfully edited document');
-            return redirect()->to(base_url('documents'));
-          }
-          else
-          {
-            die('Something went wrong!');
-          }
-        }
-        else
-        {
-          $this->data['value'] = $_POST;
-          $this->data['error'] = $this->validation->getErrors();
-        }
-      }
-
-      return view('template/index', $this->data);
-    }
-
     public function delete($id)
     {
-      if($this->documentModel->softDelete($id))
+      if($this->studentModel->softDeleteByUserId($id))
       {
-        $this->session->setFlashData('success_message', 'Successfully deleted document');
+        if ($this->userModel->softDelete($id)) {
+          $this->session->setFlashData('success_message', 'Successfully deleted student');
+        }
       }
       else
       {
         die('Something went wrong');
       }
-      return redirect()->to(base_url('documents'));
+      return redirect()->to(base_url('students'));
     }
 
     public function insertSpreadsheet()

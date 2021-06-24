@@ -16,7 +16,7 @@
           <span class="h2">Role Permissions</span>
         </div>
         <div class="col-2">
-          <a href="#" class="btn btn-primary float-end"> Edit Permissions </a>
+          <!-- <a href="#" class="btn btn-primary float-end"> Edit Permissions </a> -->
         </div>
       </div>
       <div class="row">
@@ -40,7 +40,7 @@
                       <td><?=ucwords(esc($role['role']))?></td>
                       <td><?=ucfirst(esc($role['description']))?></td>
                       <td class="permissions-data" id="<?=$role['id']?>">test</td>
-                      <td>">
+                      <td>
                         <?=esc(buttons($allPermissions, ['edit-role-permission'], 'role-permissions', $role['id']))?>
                       </td>
                     </tr>

@@ -84,7 +84,7 @@ class Courses extends BaseController
   {
     if($this->courseModel->softDelete($id))
     {
-      $this->session->setFlash('success_message', 'Successfully deleted course');
+      $this->session->setFlashData('success_message', 'Successfully deleted course');
     }
     else
     {

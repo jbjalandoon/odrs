@@ -259,7 +259,7 @@ var processedTable = $('#processed-table').DataTable({
     }
 });
 
-async function printRequest(id, per_page, template)
+async function printRequest(id, per_page, template, email)
 {
   if(template == null && per_page == 0){
     Swal.fire({
@@ -275,6 +275,7 @@ async function printRequest(id, per_page, template)
           type: "POST",
           data: {
             'id': id,
+            'email': email
           },
           url: "on-process-document/print-requests",
           success: function(msg){
@@ -307,6 +308,7 @@ async function printRequest(id, per_page, template)
             type: "POST",
             data: {
               'id': id,
+              'email': email
             },
             url: "on-process-document/print-requests",
             success: function(msg){
@@ -328,7 +330,7 @@ async function printRequest(id, per_page, template)
       Swal.fire({
         title: 'Please Upload a File',
         icon: 'warning',
-        html: `<form method='post' id='form' enctype='multipart/form-data'><input type='hidden' name='id' value=`+id+`><input type='file' name='file' id='file' class='form-control' accept='application/pdf' required></form> <Br>`,
+        html: `<form method='post' id='form' enctype='multipart/form-data'><input type='hidden' name='email' value=`+email+`><input type='hidden' name='id' value=`+id+`><input type='file' name='file' id='file' class='form-control' accept='application/pdf' required></form> <Br>`,
         showCancelButton: true,
         confirmButtonText: `Confirm`,
         preConfirm: () => {
@@ -366,12 +368,17 @@ async function printRequest(id, per_page, template)
                 contentType: false,
                 processData:false,
                 success: function(resp){
+                  console.log(resp);
                   Swal.fire({
-                    text: 'Page Count: ' + resp,
+                    title: 'Upload Sucess',
+                    text: "Page: " + resp,
                     icon: 'success',
-                    title: 'Success!'
+                    confirmButtonText: 'Ok'
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      location.reload();
+                    }
                   })
-                  location.reload();
                 }
               });
 

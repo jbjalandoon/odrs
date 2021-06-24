@@ -54,7 +54,7 @@ class AcademicStatus extends BaseController
   public function edit($id)
   {
     $this->data['edit'] = true;
-    $this->data['value'] = $this->academicStatusModel->get(['id' => $id]);
+    $this->data['value'] = $this->academicStatusModel->get(['id' => $id])[0];
     $this->data['view'] = 'Modules\SystemSettings\Views\academicstatus\form';
 
     if($this->request->getMethod() == 'post')
@@ -74,14 +74,14 @@ class AcademicStatus extends BaseController
       }
     }
 
-    return view('template\data', $this->data);
+    return view('template\index', $this->data);
   }
 
   public function delete($id)
   {
     if($this->academicStatusModel->softDelete($id))
     {
-      $this->session->setFlash('success_message', 'Successfully deleted');
+      $this->session->setFlashData('success_message', 'Successfully deleted');
     }
     else
     {

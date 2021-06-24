@@ -41,7 +41,7 @@
                       <td><?=strtoupper(esc($course['abbreviation']))?></td>
                       <td><?=ucwords(esc($course['type']))?></td>
                       <td class="text-center">
-                        <?=esc(buttons($allPermissions, ['edit-role', 'delete-role'], 'roles', $course['id']))?>
+                        <?=esc(buttons($allPermissions, ['edit-course', 'delete-course'], 'courses', $course['id']))?>
                       </td>
                     </tr>
                   <?php endforeach; ?>

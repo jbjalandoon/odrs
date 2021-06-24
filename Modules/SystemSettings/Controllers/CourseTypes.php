@@ -52,7 +52,8 @@ class CourseTypes extends BaseController
   public function edit($id)
   {
     $this->data['edit'] = true;
-    $this->date['value'] = $this->courseTypeModel->get(['id' => $id]);
+    $this->data['value'] = $this->courseTypeModel->get(['id' => $id])[0];
+    $this->data['id'] = $id;
     $this->data['view'] = 'Modules\SystemSettings\Views\coursetypes\form';
     if($this->request->getMethod() == 'post')
     {
@@ -74,7 +75,7 @@ class CourseTypes extends BaseController
         $this->data['error'] = $this->validation->getErrors();
       }
     }
-    return $this->view('template/index', $this->data);
+    return view('template/index', $this->data);
   }
 
   public function delete($id)

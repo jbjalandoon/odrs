@@ -1,5 +1,7 @@
 <br>
-<h2><?=esc($document)?> - <?=esc(count($documents))?></h2>
+<h1>Total: <?=esc(count($documents))?></h1>
+<br>
+<h2><?=esc($document)?> -  (<?=esc(ucwords($types['t']))?> | <?=esc($types['a'])?>)</h2>
 <table cellspacing="0" cellpadding="5" border="1">
   <tr style="text-align: center;">
     <td width="5%"> <b>#</b> </td>

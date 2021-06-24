@@ -109,7 +109,7 @@
                                 <td><?= esc($office_approval['document']) ?></td>
                                 <td><?= esc($office_approval['office']) ?></td>
                                 <td><?= esc($office_approval['status']) == 'p' ? 'Pending for Approval': 'On Hold'?></td>
-                                <td><?= esc(!empty($office_approval['remark'])) ? 'qwe'.  esc($office_approval['remark']) : 'N/A' ?></td>
+                                <td><?= esc(!empty($office_approval['remark'])) ? esc($office_approval['remark']) : 'N/A' ?></td>
                                 <td><?= date('F d, Y - h:i A', strtotime(esc($office_approval['created_at'])))?></td>
                               </tr>
                             <?php endforeach; ?>
