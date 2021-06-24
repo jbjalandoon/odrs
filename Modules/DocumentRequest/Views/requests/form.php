@@ -34,24 +34,24 @@
                 <?php endif; ?>
                 <?php foreach ($documents as $document): ?>
                 <?php endforeach; ?>
+              </div>
 
-                </div>
-                <div class="col-md-6">
+              <div class="col-md-6">
                 <label for="reasonInput" class="form-label" required><h5>Reason/s for Requesting</h5></label>
                   <div class="form-check" id="reasonInput">
-                    <input class="form-check-input" type="checkbox" value="" id="scholarship" required>
+                    <input class="form-check-input" type="radio" value="" name="reason" id="scholarship" required>
                     <label class="form-check-label" for="scholarship">
                       Scholarship Requirement
                     </label>
                   </div>
                   <div class="form-check" id="reasonInput">
-                    <input class="form-check-input" type="checkbox" value="" id="employment" required>
+                    <input class="form-check-input" type="radio" value="" name="reason" id="employment" required>
                     <label class="form-check-label" for="employment">
                       Employment
                     </label>
                   </div>
                   <div class="form-check" id="reasonInput">
-                    <input class="form-check-input" type="checkbox" value="" id="others" required>
+                    <input class="form-check-input" type="radio" value="" name="reason" id="others" required>
                     <label class="form-check-label" for="others">
                       Others
                     </label>

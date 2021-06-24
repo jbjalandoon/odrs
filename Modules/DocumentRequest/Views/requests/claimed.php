@@ -6,45 +6,47 @@
           <div class="row">
             <div class="col-12 mb-3">
               <span class="h2">Claimed Request</span>
-              <button class="float-end btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              <button class="float-end btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                 Generate Report
               </button>
             </div>
           </div>
           <div class="row mb-3">
             <div class="collapse" id="collapseExample">
-              <div class="card card-body">
-                <form  action="claimed-requests/report" method="get">
-                  <div class="row mb-3">
-                    <div class="col-4">
-                      <label for="document" class="form-label">Document</label>
-                      <select id="document" class="form-select" name="d">
-                        <?php if (!empty($documents)): ?>
-                          <?php foreach ($documents as $document): ?>
-                            <option value="<?=esc($document['id'])?>"><?=ucwords(esc($document['document']))?></option>
-                          <?php endforeach; ?>
-                        <?php endif; ?>
-                      </select>
+              <div class="card">
+                <div class="card-body">
+                  <form  action="claimed-requests/report" method="get">
+                    <div class="row mb-3">
+                      <div class="col-4">
+                        <label for="document" class="form-label">Document</label>
+                        <select id="document" class="form-select" name="d">
+                          <?php if (!empty($documents)): ?>
+                            <?php foreach ($documents as $document): ?>
+                              <option value="<?=esc($document['id'])?>"><?=ucwords(esc($document['document']))?></option>
+                            <?php endforeach; ?>
+                          <?php endif; ?>
+                        </select>
+                      </div>
+                      <div class="col-4">
+                        <label  for="type" class="form-label">Type</label>
+                        <select id="type" class="form-select" name="t">
+                          <option value="yearly">Yearly</option>
+                          <option value="monthly">Monthy</option>
+                          <option value="daily">Daily</option>
+                        </select>
+                      </div>
+                      <div class="col-4">
+                        <label for="argument" class="form-label"> # </label>
+                        <input type="year" id="argument" class="form-control" name="a" required>
+                      </div>
                     </div>
-                    <div class="col-4">
-                      <label  for="type" class="form-label">Type</label>
-                      <select id="type" class="form-select" name="t">
-                        <option value="yearly">Yearly</option>
-                        <option value="monthly">Monthy</option>
-                        <option value="daily">Daily</option>
-                      </select>
+                    <div class="row">
+                      <div class="col-12">
+                        <button type="submit" class="float-end btn" formtarget="_blank"> Generate </button>
+                      </div>
                     </div>
-                    <div class="col-4">
-                      <label for="argument" class="form-label"> # </label>
-                      <input type="year" id="argument" class="form-control" name="a" required>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-12">
-                      <button type="submit" class="float-end btn btn-primary" formtarget="_blank"> Generate </button>
-                    </div>
-                  </div>
-                </form>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

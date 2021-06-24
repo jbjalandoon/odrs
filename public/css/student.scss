@@ -8,7 +8,7 @@
 
 @mixin btn{
     padding: 8px;
-    border-radius: 0;
+    border-radius: 2px;
     font-size: 1em;
     box-shadow: 0 0 5px rgba(100, 15, 15, 0.418);
 }
@@ -57,6 +57,49 @@ body{
         }
         
     }
+
+    .btn{
+        @include btn();
+        background: $maroonColor;
+        color: white;
+
+        &:hover{
+            color: white;
+        }    
+    }
+    
+    .btn-danger{
+        @include btn();
+        background-color: rgb(233, 0, 0);
+        color: white;
+    }
+
+    .table{
+        border-collapse: collapse;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 0.89em;
+        width: 100%;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        
+        th, td{
+            padding: 12px 15px;
+        }
+    
+        thead{
+            border-radius: 10px 10px 0 0;
+            tr{
+                background-color: #cb3737;
+                color: $white;
+                text-align: left;
+            }
+        }
+    
+        tbody{
+            border-bottom: 1px solid #dddddd;
+            
+        }
+      }
 
     #content{
         h1, h2, h3, h4, h5, h6{
