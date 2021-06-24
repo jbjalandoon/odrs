@@ -37,10 +37,35 @@ class PermissionTypes extends BaseController
       } else {
         $this->data['value'] = $_POST;
         $this->data['error'] = $this->validation->getErrors();
-        $this->data['view'] = 'Modules\ModuleManagement\Views\permissionTypes\form';
       }
     }
     return view('template\index', $this->data);
+  }
+
+  public function edit($id){
+    $this->data['edit'] = true;
+    $this->data['view'] = 'Modules\ModuleManagement\Views\permissionTypes\form';
+    $this->data['value'] = $this->permissionTypeModel->get(['id' => $id])[0];
+    if ($this->request->getMethod() === 'post') {
+      if ($this->validate('permissionType')) {
+        if ($this->permissionTypeModel->edit($id, $_POST)) {
+          $this->session->setFlashData('success_message', 'Successfully edited a permission type!');
+          return redirect()->to(base_url('permission-types'));
+        } else {
+          die('Something Went Wrong!');
+        }
+      } else {
+        $this->data['value'] = $_POST;
+        $this->data['error'] = $this->validation->getErrors();
+      }
+    }
+    return view('template\index', $this->data);
+  }
+
+  public function delete($id)
+  {
+    if($this->moduleModel->softDelete($id))
+    return redirect()->to(base_url('modules'));
   }
 
 }

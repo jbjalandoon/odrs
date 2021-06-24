@@ -179,12 +179,6 @@ class Validation
 				'greater_than' => 'Please input a valid Quantity'
 			]
 		],
-		'reason' => [
-			'rules' => 'required',
-			'errors' => [
-				'required' => 'Please input the reason'
-			]
-		]
 	];
 
 	public $report = [

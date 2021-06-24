@@ -54,6 +54,36 @@ class StudentsModel extends BaseModel
 
   }
 
+  public function editStudents($data)
+  {
+    $this->transBegin();
+
+      $user = new UsersModel();
+      $userData = [
+        'email' => $data['email'],
+      ];
+
+      $user->insert($userData);
+      $id = $user->getInsertID();
+
+      $data['user_id'] = $id;
+
+      $this->insert($data);
+
+      $student = new Students();
+      if($student->sendPassword($password, $data['email']))
+      {
+        $this->transCommit();
+        return true;
+      }
+      else
+      {
+        $this->transRollback();
+        return false;
+      }
+
+  }
+
   public function getStudentByStatus($status, $role){
     $this->select('students.id, students.firstname, students.lastname, students.middlename, students.student_number, students.user_id, students.contact, users.status, users.username,users.email, roles.role');
     $this->join('users', 'users.id = students.user_id');

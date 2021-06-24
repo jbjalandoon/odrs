@@ -81,8 +81,8 @@ class Requests extends BaseController
 				}
 			}
 			else {
-				$data['error'] = $this->validation->getErrors();
-				$data['value'] = $_POST;
+				$this->data['error'] = $this->validation->getErrors();
+				$this->data['value'] = $_POST;
 			}
 		}
     return view('template/index', $this->data);
@@ -96,7 +96,8 @@ class Requests extends BaseController
 
   public function history()
   {
-		$this->data['request_details'] = $this->requestDetailModel->getDetails(['requests.id' => 5]);
+    $this->data['request_documents'] = $this->requestDetailModel->getDetails();
+    $this->data['requests'] = $this->requestModel->getDetails(['student_id' => $_SESSION['student_id'], 'requests.completed_at !=' => null, 'status !=' => 'd']);
 	  $this->data['view'] = 'Modules\DocumentRequest\Views\requests\history';
 	  return view('template/index', $this->data);
   }

@@ -8,31 +8,53 @@
                     <li class="breadcrumb-item"><a href="/student"><i class="fas fa-home"></i></a></li>
                     <li class="breadcrumb-item active" aria-current="page">Request History</li>
                   </ol>
-                </nav> 
+                </nav>
                 <hr>
                 <!-- <h2>Request History</h2> -->
                     <table class="table table-striped history">
                         <thead>
-                            <th>#</th>
+                            <th>Code</th>
                             <th>Document Requested</th>
                             <th>Reason</th>
                             <th>Date Requested</th>
-                            <th>Date Received</th>
+                            <th>Date Completed</th>
                         </thead>
                         <tbody>
-                        <?php foreach ($request_details as $request_detail): ?>
-                          <tr>
-                            <td><?=ucwords(esc($request_detail['document']))?></td>
-                            <td><?=ucwords(esc($request_detail['reason']))?></td>
-                            <td><?=date('F d, Y - H:i A', strtotime(esc($request_detail['requested_at'])))?></td>
-                            <td><?=date('F d, Y - H:i A', strtotime(esc($request_detail['received_at'])))?></td>
-                          </tr>
-                        <?php endforeach; ?>
+                          <?php if (!empty($requests)): ?>
+                            <?php foreach ($requests as $request): ?>
+                              <tr>
+                                <td><?= esc($request['slug']) ?></td>
+                                <td>
+                                  <ul>
+                                    <?php
+                                    $ctr = 0;
+                                    $ctrDocument = 0
+                                    ?>
+                                    <?php foreach ($request_documents as $request_document): ?>
+                                      <?php if (esc($request_document['request_id']) == esc($request['id'])): ?>
+                                        <?php $ctrDocument++; ?>
+                                        <li  class="text-<?=$request_document['status'] == 'c' ?'success':'danger'?>"><?=esc($request_document['document'])?>
+                                        </li>
+                                        <?php
+                                        if (esc($request_document['status']) == 'r') {
+                                          $ctr++;
+                                        } ?>
+                                      <?php endif; ?>
+                                    <?php endforeach; ?>
+                                  </ul>
+                                </td>
+                                <td><?= esc($request['reason']) ?></td>
+                                <td><?=date('F d, Y - h:i A', strtotime(esc($request['created_at'])))?></td>
+                                <td><?=date('F d, Y - h:i A', strtotime(esc($request['completed_at'])))?></td>
+                              </tr>
+                            <?php endforeach; ?>
+                            <?php else: ?>
+                              <td colspan="4" class="text-center">You don't have active request</td>
+                          <?php endif; ?>
                         </tbody>
-                    </table>  
-                </div>                  
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
-

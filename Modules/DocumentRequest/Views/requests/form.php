@@ -8,7 +8,7 @@
               <li class="breadcrumb-item"><a href="/requests"><i class="fas fa-home"></i></a></li>
               <li class="breadcrumb-item active" aria-current="page">Request Document</li>
             </ol>
-          </nav> 
+          </nav>
           <hr>
 
           <form class="" action="new" method="post">
@@ -26,32 +26,34 @@
                     <input type="number" name="quantity[]" value="1" class="form-control quantity-form" id="qty-form-<?=trim(str_replace(' ', '', $document['document']))?>" disabled required>
                   </div>
                 <?php endforeach; ?>
-
-                <?php if (isset($error['quantity'])): ?>
+                <?php if (isset($error['document_id'])): ?>
                   <div class="text-danger">
-                    <?=esc($error['quantity'])?>
+                    <?=esc($error['document_id'])?>
                   </div>
                 <?php endif; ?>
-                <?php foreach ($documents as $document): ?>
-                <?php endforeach; ?>
+                <?php if (isset($error['quantity.*']) && !isset($error['document_id'])): ?>
+                  <div class="text-danger">
+                    <?=esc($error['quantity.*'])?>
+                  </div>
+                <?php endif; ?>
 
                 </div>
                 <div class="col-md-6">
                 <label for="reasonInput" class="form-label" required><h5>Reason/s for Requesting</h5></label>
                   <div class="form-check" id="reasonInput">
-                    <input class="form-check-input" type="checkbox" value="" id="scholarship" required>
+                    <input class="form-check-input" type="radio" value="scholarship" name="reason" id="scholarship" required checked>
                     <label class="form-check-label" for="scholarship">
                       Scholarship Requirement
                     </label>
                   </div>
                   <div class="form-check" id="reasonInput">
-                    <input class="form-check-input" type="checkbox" value="" id="employment" required>
+                    <input class="form-check-input" type="radio" value="employment" name="reason" id="employment" required>
                     <label class="form-check-label" for="employment">
                       Employment
                     </label>
                   </div>
                   <div class="form-check" id="reasonInput">
-                    <input class="form-check-input" type="checkbox" value="" id="others" required>
+                    <input class="form-check-input" type="radio" value="others" name="reason" id="others" required>
                     <label class="form-check-label" for="others">
                       Others
                     </label>

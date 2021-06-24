@@ -32,7 +32,7 @@ class CourseTypes extends BaseController
       {
         if($this->courseTypeModel->input($_POST))
         {
-          $this->session->setFlash('success_message', 'Successfully Added Course Type');
+          $this->session->setFlashData('success_message', 'Successfully Added Course Type');
           return redirect()->to(base_url('course-types'));
         }
         else

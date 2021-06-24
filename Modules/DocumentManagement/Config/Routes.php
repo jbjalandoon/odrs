@@ -12,5 +12,5 @@ $routes->group('documents', ['namespace' => 'Modules\DocumentManagement\Controll
   $routes->get('requirements', 'Documents::fetchRequirements');
   $routes->match(['get', 'post'], 'add', 'Documents::add');
   $routes->match(['get', 'post'], 'edit/(:num)', 'Documents::edit/$1');
-  $routes->delete('delete/(:num)', 'Documents::delete/$1');
+  $routes->get('delete/(:num)', 'Documents::delete/$1');
 });

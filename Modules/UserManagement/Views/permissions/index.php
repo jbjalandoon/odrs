@@ -27,8 +27,9 @@
                 <tr>
                   <th width="5%">#</th>
                   <th width="25%">Role</th>
-                  <th width="20%">Description</th>
-                  <th width="50%">Permissions</th>
+                  <th width="30%">Description</th>
+                  <th width="30%">Permissions</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -39,6 +40,9 @@
                       <td><?=ucwords(esc($role['role']))?></td>
                       <td><?=ucfirst(esc($role['description']))?></td>
                       <td class="permissions-data" id="<?=$role['id']?>">test</td>
+                      <td>">
+                        <?=esc(buttons($allPermissions, ['edit-role-permission'], 'role-permissions', $role['id']))?>
+                      </td>
                     </tr>
                   <?php endforeach; ?>
                 <?php endif; ?>

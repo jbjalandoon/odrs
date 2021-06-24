@@ -53,7 +53,7 @@
                       <td><?=ucwords(esc($student['course']))?></td>
                       <td><?=ucwords(esc($student['status']))?></td>
                       <td class="text-center">
-                        #
+                        <?=esc(buttons($allPermissions, ['edit-students', 'delete-students'], 'students', $student['id']))?>
                       </td>
                     </tr>
                   <?php endforeach; ?>

@@ -39,7 +39,7 @@
                   <?php endif; ?>
                 </div>
               </div>
-            </div>    
+            </div>
           </div>
         </div>
         <div class="col-md-12">
@@ -66,7 +66,7 @@
                 <?php endif; ?>
               </div>
             </div>
-          </div>  
+          </div>
         </div>
         <div class="col-12">
             <div class="row">
@@ -86,12 +86,18 @@
                     <label for="permission_type" class="form-label">Permission Type</label>
                     <select class="form-select" name="permission_type" id="permission_type">
                       <?php foreach ($permissionTypes as $permissionType): ?>
-                        <option value="<?=esc($permissionType['id'])?>"><?=ucwords(esc($permissionType['type']))?></option>
+                        <?php $selected = false; ?>
+                        <?php if (isset($value['permission_type'])): ?>
+                          <?php if ($value['permission_type'] == $permissionType['id']): ?>
+                            <?php $selected = true; ?>
+                          <?php endif; ?>
+                        <?php endif; ?>
+                        <option value="<?=esc($permissionType['id'])?>" <?=$selected ? 'selected': ''?>><?=ucwords(esc($permissionType['type']))?></option>
                       <?php endforeach; ?>
                     </select>
-                    <?php if (isset($error['description'])): ?>
+                    <?php if (isset($error['permission_type'])): ?>
                       <div class="text-danger">
-                        <?=esc($error['description'])?>
+                        <?=esc($error['permission_type'])?>
                       </div>
                     <?php endif; ?>
                   </div>
@@ -99,7 +105,13 @@
                     <label for="module_id" class="form-label">Module</label>
                     <select class="form-select" name="module_id" id="module_id">
                       <?php foreach ($modules as $module): ?>
-                        <option value="<?=esc($module['id'])?>"><?=ucwords(esc($module['module']))?></option>
+                        <?php $selected = false; ?>
+                        <?php if (isset($value['module_id'])): ?>
+                          <?php if ($value['module_id'] == $module['id']): ?>
+                            <?php $selected = true; ?>
+                          <?php endif; ?>
+                        <?php endif; ?>
+                        <option value="<?=esc($module['id'])?>" <?=$selected ? 'selected': ''?>><?=ucwords(esc($module['module']))?></option>
                       <?php endforeach; ?>
                     </select>
                     <?php if (isset($error['module_id'])): ?>

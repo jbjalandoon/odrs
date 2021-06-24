@@ -57,6 +57,7 @@ class Documents extends BaseController
   {
     $this->data['edit'] = true;
     $this->data['value'] = $this->documentModel->get(['id' => $id])[0];
+    $this->data['id'] = $id;
     $this->data['notes'] = $this->noteModel->get();
     $this->data['offices'] = $this->officeModel->get();
     $this->data['document_requirements'] = $this->documentRequirementModel->get(['document_id' => $id]);
@@ -90,7 +91,7 @@ class Documents extends BaseController
   {
     if($this->documentModel->softDelete($id))
     {
-      $this->session->setFlash('success_message', 'Successfully deleted document');
+      $this->session->setFlashData('success_message', 'Successfully deleted document');
     }
     else
     {

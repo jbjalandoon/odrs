@@ -59,7 +59,7 @@ class DocumentRequests extends BaseController
 
   public function approval()
   {
-    $this->data['request_approvals'] = $this->officeApprovalModel->getDetails(['office_id' => $_SESSION['office_id'], 'request_approvals.status' => 'p']);
+    $this->data['request_approvals'] = $this->officeApprovalModel->getDetails(['office_id' => $_SESSION['office_id'], 'request_approvals.status' => 'p', 'requests.status !=' => 'p']);
     $this->data['request_approvals_hold'] = $this->officeApprovalModel->getDetails(['office_id' => $_SESSION['office_id'], 'request_approvals.status' => 'h']);
     $this->data['view'] = 'Modules\DocumentRequest\Views\requests\approval';
 
@@ -168,10 +168,14 @@ class DocumentRequests extends BaseController
 
   public function claimRequest()
   {
-    if (count($this->requestDetailModel->get(['request_id' => $_POST['request_id']])) == count($this->requestDetailModel->get(['request_id' => $_POST['request_id'], 'status' => 'c']))) {
-      $this->requestModel->edit(['completed_at' => date('Y-m-d h:i:s')], $_POST['request_id']);
+
+    if ($this->requestDetailModel->claimRequest($_POST['value'])) {
+      if (count($this->requestDetailModel->get(['request_id' => $_POST['request_id']])) == count($this->requestDetailModel->get(['request_id' => $_POST['request_id'], 'status' => 'c']))) {
+        return $this->requestModel->edit(['completed_at' => date('Y-m-d h:i:s')], $_POST['request_id']);
+      }
     }
-    return $this->requestDetailModel->claimRequest($_POST['value']);
+    return false;
+
   }
 
   public function getPrinted()
