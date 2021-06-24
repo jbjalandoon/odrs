@@ -11,34 +11,10 @@
           </nav> 
           <hr>
 
-          <h3>Request Document</h3>
-          
           <form class="" action="new" method="post">
             <div class="row">
-              <div class="col-md-3">
-                <table class="table">
-                  <thead>
-                    <th>User Profile<i class="far fa-id-card"></i></th>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Student Number : 2018-00293-TG-0</td>
-                    </tr>
-                    <tr>
-                      <td>Name : Jerome B. Jalandoon</td>
-                    </tr>
-                    <tr>
-                      <td>Course : DICT</td>
-                    </tr>
-                    <tr>
-                      <td>Email : email@email.com</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div class="col-md-9">
-                <label for="Document" class="form-label">Documents</label>
+              <div class="col-md-6">
+                <label for="Document" class="form-label"><h5>List of Documents</h5></label>
                 <?php foreach ($documents as $document): ?>
                   <div class="input-group mb-2">
                     <div class="input-group-text">
@@ -56,17 +32,37 @@
                     <?=esc($error['quantity'])?>
                   </div>
                 <?php endif; ?>
-
                 <?php foreach ($documents as $document): ?>
                 <?php endforeach; ?>
-                  <label for="reasonInput" class="form-label">Reason</label>
-                  <div class="input-group mb-3">
-                    <textarea id="reasonInput" name="reason" rows="3" class="form-control" placeholder="e.g (Scholarship, Job)" required></textarea>
+
+                </div>
+                <div class="col-md-6">
+                <label for="reasonInput" class="form-label" required><h5>Reason/s for Requesting</h5></label>
+                  <div class="form-check" id="reasonInput">
+                    <input class="form-check-input" type="checkbox" value="" id="scholarship" required>
+                    <label class="form-check-label" for="scholarship">
+                      Scholarship Requirement
+                    </label>
                   </div>
-                  <div class="input-group mb-3">
-                    <button type="submit" class="btn" name="button">Submit <i class="fas fa-paper-plane"></i></button>
+                  <div class="form-check" id="reasonInput">
+                    <input class="form-check-input" type="checkbox" value="" id="employment" required>
+                    <label class="form-check-label" for="employment">
+                      Employment
+                    </label>
                   </div>
+                  <div class="form-check" id="reasonInput">
+                    <input class="form-check-input" type="checkbox" value="" id="others" required>
+                    <label class="form-check-label" for="others">
+                      Others
+                    </label>
+                  </div>
+                  <br>
+                </div>
               </div>
+              <br>
+              <div class="input-group mb-3">
+                    <br><button type="submit" class="btn" name="button">Submit <i class="fas fa-paper-plane"></i></button>
+                  </div>
             </div>
           </form>
         </div>

@@ -4,7 +4,6 @@
 
 @mixin headings {
     color: $maroonColor;
-    font-size: 1.5em;
 }
 
 @mixin btn{
@@ -170,34 +169,21 @@ body{
                                     float: left;
                                     @include btn();
                                     width: 100%;
-                                    background-color: $gold;
-                                    font-weight: bolder;
+                                    background-color: $maroonColor;
+                                    // font-weight: bolder;
+                                    color: white;
                                     
                                     &:hover{
-                                        background: #e4a301ad;
+                                        background: rgba(87, 68, 68, 0.774);
+                                        
                                     }
                                 }
                             }
                         }
 
-                        .tab {
-                            width: 100%;
-                            overflow: hidden;
-                            border: 1px solid $darkcolor;
-                            background-color: #ccc;
-    
+                        #tab {
                             button {
-                                background-color: inherit;
                                 color: black;
-                                float: left;
-                                border: none;
-                                outline: none;
-                                cursor: pointer;
-                                padding: 10px 16px;
-                                transition: 0.3s;
-                                font-size: 17px;
-                                border-radius: 0 10px 0 0;
-                                border-right: 1px solid rgba(15, 14, 14, 0.651);
     
                                 &:hover {
                                     background-color: rgba(87, 68, 68, 0.774);
@@ -211,12 +197,7 @@ body{
                             }
                         } 
     
-                        .tabcontent {
-                            display: none;
-                            padding: 6px 12px;
-                            border: 1px solid #ccc;
-                            border-top: none;
-    
+                        .tab-content {    
                             table{
                                 border-collapse: collapse;
                                 margin-left: auto;

@@ -62,7 +62,6 @@ body .navbar a .active, body .navbar a:hover {
 
 body #content h1, body #content h2, body #content h3, body #content h4, body #content h5, body #content h6 {
   color: #800000;
-  font-size: 1.5em;
   padding: 5px 0 10px 0;
 }
 
@@ -197,54 +196,29 @@ body #content .container .row .card .card-body .request tbody .btn {
   -webkit-box-shadow: 0 0 5px rgba(100, 15, 15, 0.418);
           box-shadow: 0 0 5px rgba(100, 15, 15, 0.418);
   width: 100%;
-  background-color: #DAA520;
-  font-weight: bolder;
+  background-color: #800000;
+  color: white;
 }
 
 body #content .container .row .card .card-body .request tbody .btn:hover {
-  background: #e4a301ad;
+  background: rgba(87, 68, 68, 0.774);
 }
 
-body #content .container .row .card .card-body .tab {
-  width: 100%;
-  overflow: hidden;
-  border: 1px solid #2e2e2e;
-  background-color: #ccc;
-}
-
-body #content .container .row .card .card-body .tab button {
-  background-color: inherit;
+body #content .container .row .card .card-body #tab button {
   color: black;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 10px 16px;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-  font-size: 17px;
-  border-radius: 0 10px 0 0;
-  border-right: 1px solid rgba(15, 14, 14, 0.651);
 }
 
-body #content .container .row .card .card-body .tab button:hover {
+body #content .container .row .card .card-body #tab button:hover {
   background-color: rgba(87, 68, 68, 0.774);
   color: #fff;
 }
 
-body #content .container .row .card .card-body .tab button.active {
+body #content .container .row .card .card-body #tab button.active {
   background-color: #800000;
   color: #fff;
 }
 
-body #content .container .row .card .card-body .tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
-
-body #content .container .row .card .card-body .tabcontent table {
+body #content .container .row .card .card-body .tab-content table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
@@ -254,32 +228,32 @@ body #content .container .row .card .card-body .tabcontent table {
           box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-body #content .container .row .card .card-body .tabcontent table th, body #content .container .row .card .card-body .tabcontent table td {
+body #content .container .row .card .card-body .tab-content table th, body #content .container .row .card .card-body .tab-content table td {
   padding: 12px 15px;
 }
 
-body #content .container .row .card .card-body .tabcontent table thead {
+body #content .container .row .card .card-body .tab-content table thead {
   border-radius: 10px 10px 0 0;
 }
 
-body #content .container .row .card .card-body .tabcontent table thead tr {
+body #content .container .row .card .card-body .tab-content table thead tr {
   background-color: #cb3737;
   color: #fff;
   text-align: left;
 }
 
-body #content .container .row .card .card-body .tabcontent table tbody {
+body #content .container .row .card .card-body .tab-content table tbody {
   border-bottom: 1px solid #dddddd;
 }
 
-body #content .container .row .card .card-body .tabcontent table tbody .btn-danger {
+body #content .container .row .card .card-body .tab-content table tbody .btn-danger {
   border-radius: 0;
   font-size: 1em;
   -webkit-box-shadow: 0 0 5px rgba(100, 15, 15, 0.418);
           box-shadow: 0 0 5px rgba(100, 15, 15, 0.418);
 }
 
-body #content .container .row .card .card-body .tabcontent table tbody .btn-success {
+body #content .container .row .card .card-body .tab-content table tbody .btn-success {
   border-radius: 0;
   font-size: 1em;
   -webkit-box-shadow: 0 0 5px rgba(100, 15, 15, 0.418);
