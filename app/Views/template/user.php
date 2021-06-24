@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg">
   <div class="container">
-      <img src="img/pupt-logo.png" alt="">
+      <img src="<?=base_url()?>/img/pupt-logo.png" alt="">
       <!-- hindi ko alam bakit sa isang page hindi nagview ang logo hmpk -->
       <a class="navbar-brand" href="/<?=$_SESSION['landing_page']?>">
           PUP Taguig | Online Document Request

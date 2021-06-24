@@ -550,7 +550,6 @@ $(document).ready(function(){
     });
   });
 
-
   $(".document-requirements").each(function(){
     var element = $(this);
     $.ajax({
@@ -611,7 +610,6 @@ function script(){
   $(".documents-tag").select2({
     tags: true
   });
-
 
   $('#type').change(function(){
     var type = 'yearly';

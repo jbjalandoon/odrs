@@ -12,11 +12,11 @@
         </div>
       <?php endif; ?>
       <div class="row mb-3">
-        <div class="col-10">
+        <div class="col-9">
           <span class="h2">Permission Types</span>
         </div>
-        <div class="col-2">
-          <a href="permission-types/add" class="float-end btn btn-success"> Add </a>
+        <div class="col-3">
+          <a href="permission-types/add" class="float-end btn"> Add Permission Type </a>
         </div>
       </div>
       <div class="row">

@@ -3,164 +3,181 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
-          <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="/requests"><i class="fas fa-home"></i></a></li>
-            </ol>
-          </nav>
-          <hr>
           <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-8">
+              <h3>Hello, <?=esc($_SESSION['name'])?>!</h3>
+              <p style="font-style: italic; font-size: .9em;">Request for a copy of your academic related documents.</p>
+            </div>
+            <div class="col-md-4">
               <table class="table request">
                 <tbody>
                   <tr>
                     <td>
-                      <a href="requests/new" class="btn <?=empty($requests) ? '': 'disabled'?>" ><i class="fas fa-plus" ></i> Request document here</a>
-                      <br><br><br>
-                      <span>Request for a copy of your academic related documents.</span>
+                      <a href="requests/new" class="btn <?=empty($requests) ? '': 'disabled'?>" disabled><i class="fas fa-plus"></i> Request document here</a>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div class="col-md-9">
-              <div class="tab">
-                <button class="tablinks" onclick="opentab(event, 'myRequest')" id="defaultOpen">My Requests</button>
-                <button class="tablinks" onclick="opentab(event, 'forOfficeApproval')">For Office Approval</button>
-                <button class="tablinks" onclick="opentab(event, 'onProcess')">On Process Document/s</button>
-                <button class="tablinks" onclick="opentab(event, 'tobeRelease')">Document/s to be Released</button>
-              </div>
-                <div id="myRequest" class="tabcontent">
-                  <h3>My Requested Documents</h3>
-                  <table class="table table-striped">
-                    <thead>
-                        <th>Request Code</th>
-                        <th>Document</th>
-                        <th>Date Requested</th>
-                        <th>Action</th>
-                    </thead>
-                    <tbody>
-                      <?php if (!empty($requests)): ?>
-                        <?php foreach ($requests as $request): ?>
-                          <tr>
-                            <td><?= esc($request['slug']) ?></td>
-                            <td>
-                              <ul>
-                                <?php
-                                $ctr = 0;
-                                $ctrDocument = 0
-                                ?>
-                                <?php foreach ($request_documents as $request_document): ?>
-                                  <?php if (esc($request_document['request_id']) == esc($request['id'])): ?>
-                                    <?php $ctrDocument++; ?>
-                                    <li  class="text-<?=$request_document['status'] == 'c' ?'success':'danger'?>"><?=esc($request_document['document'])?>
-                                    </li>
+            <hr>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12" id="tab">
+              <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <button class="nav-link active" id="nav-requests-tab" data-bs-toggle="tab" data-bs-target="#nav-requests" type="button" role="tab" aria-controls="nav-requests" aria-selected="true">My Requests</button>
+                  <button class="nav-link" id="nav-approval-tab" data-bs-toggle="tab" data-bs-target="#nav-approval" type="button" role="tab" aria-controls="nav-approval" aria-selected="false">For Office Approval</button>
+                  <button class="nav-link" id="nav-process-tab" data-bs-toggle="tab" data-bs-target="#nav-process" type="button" role="tab" aria-controls="nav-process" aria-selected="false">On Process Document/s</button>
+                  <button class="nav-link" id="nav-released-tab" data-bs-toggle="tab" data-bs-target="#nav-released" type="button" role="tab" aria-controls="nav-released" aria-selected="false">Document/s to be Released</button>
+                </div>
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-requests" role="tabpanel" aria-labelledby="nav-home-tab">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4>My Requested Documents</h4>
+                      <table class="table table-striped">
+                        <thead>
+                            <th>Request Code</th>
+                            <th>Document</th>
+                            <th>Date Requested</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                          <?php if (!empty($requests)): ?>
+                            <?php foreach ($requests as $request): ?>
+                              <tr>
+                                <td><?= esc($request['slug']) ?></td>
+                                <td>
+                                  <ul>
                                     <?php
-                                    if (esc($request_document['status']) == 'r') {
-                                      $ctr++;
-                                    } ?>
+                                    $ctr = 0;
+                                    $ctrDocument = 0
+                                    ?>
+                                    <?php foreach ($request_documents as $request_document): ?>
+                                      <?php if (esc($request_document['request_id']) == esc($request['id'])): ?>
+                                        <?php $ctrDocument++; ?>
+                                        <li  class="text-<?=$request_document['status'] == 'c' ?'success':'danger'?>"><?=esc($request_document['document'])?>
+                                        </li>
+                                        <?php
+                                        if (esc($request_document['status']) == 'r') {
+                                          $ctr++;
+                                        } ?>
+                                      <?php endif; ?>
+                                    <?php endforeach; ?>
+                                  </ul>
+                                </td>
+                                <td><?=date('F d, Y - h:i A', strtotime(esc($request['created_at'])))?></td>
+                                <td>
+                                  <?php if ($request['status'] == 'p'): ?>
+                                    <a href="#" onclick="deleteRequest(<?=esc($request['id'])?>)" class="btn btn-danger btn-sm">Cancel Request</a>
+                                  <?php else: ?>
+                                    <a target="_blank" href="<?=base_url()?>/requests/stub/<?=esc($request['id'])?>" class="btn btn-success btn-sm">Download Stub</a>
                                   <?php endif; ?>
-                                <?php endforeach; ?>
-                              </ul>
-                            </td>
-                            <td><?=date('F d, Y - h:i A', strtotime(esc($request['created_at'])))?></td>
-                            <td>
-                              <?php if ($request['status'] == 'p'): ?>
-                                <a href="#" onclick="deleteRequest(<?=esc($request['id'])?>)" class="btn btn-danger btn-sm">Cancel Request</a>
-                              <?php else: ?>
-                                <a target="_blank" href="<?=base_url()?>/requests/stub/<?=esc($request['id'])?>" class="btn btn-success btn-sm">Download Stub</a>
-                              <?php endif; ?>
-                            </td>
-                          </tr>
-                        <?php endforeach; ?>
-                        <?php else: ?>
-                          <td colspan="4" class="text-center">You don't have active request</td>
-                      <?php endif; ?>
-                    </tbody>
-                  </table>
+                                </td>
+                              </tr>
+                            <?php endforeach; ?>
+                            <?php else: ?>
+                              <td colspan="4" class="text-center">You don't have active request</td>
+                          <?php endif; ?>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
-
-                <div id="forOfficeApproval" class="tabcontent">
-                  <h3>Office Approval</h3>
-                  <table class="table table-striped">
-                      <thead>
-                          <th>Document</th>
-                          <th>Office</th>
-                          <th>Status</th>
-                          <th>Remark</th>
-                          <th>Date Requested</th>
-                      </thead>
-                      <tbody>
-                      <?php if (empty($office_approvals)): ?>
-                        <tr>
-                          <td colspan="6" class="text-center">You have no on process document request</td>
-                        </tr>
-                      <?php else: ?>
-                        <?php foreach ($office_approvals as $office_approval): ?>
-                          <tr>
-                            <td><?= esc($office_approval['document']) ?></td>
-                            <td><?= esc($office_approval['office']) ?></td>
-                            <td><?= esc($office_approval['status']) == 'p' ? 'Pending for Approval': 'On Hold'?></td>
-                            <td><?= esc(!empty($office_approval['remark'])) ? 'qwe'.  esc($office_approval['remark']) : 'N/A' ?></td>
-                            <td><?= date('F d, Y - h:i A', strtotime(esc($office_approval['created_at'])))?></td>
-                          </tr>
-                        <?php endforeach; ?>
-                      <?php endif; ?>
-                      </tbody>
-                  </table>
+                <div class="tab-pane fade" id="nav-approval" role="tabpanel" aria-labelledby="nav-profile-tab">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4>Office Approval</h4>
+                      <table class="table table-striped">
+                          <thead>
+                              <th>Document</th>
+                              <th>Office</th>
+                              <th>Status</th>
+                              <th>Remark</th>
+                              <th>Date Requested</th>
+                          </thead>
+                          <tbody>
+                          <?php if (empty($office_approvals)): ?>
+                            <tr>
+                              <td colspan="6" class="text-center">You have no on process document request</td>
+                            </tr>
+                          <?php else: ?>
+                            <?php foreach ($office_approvals as $office_approval): ?>
+                              <tr>
+                                <td><?= esc($office_approval['document']) ?></td>
+                                <td><?= esc($office_approval['office']) ?></td>
+                                <td><?= esc($office_approval['status']) == 'p' ? 'Pending for Approval': 'On Hold'?></td>
+                                <td><?= esc(!empty($office_approval['remark'])) ? 'qwe'.  esc($office_approval['remark']) : 'N/A' ?></td>
+                                <td><?= date('F d, Y - h:i A', strtotime(esc($office_approval['created_at'])))?></td>
+                              </tr>
+                            <?php endforeach; ?>
+                          <?php endif; ?>
+                          </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
-
-                <div id="onProcess" class="tabcontent">
-                  <h3>On Process Documents (To Be Print)</h3>
-                  <table class="table table-striped">
-                      <thead>
-                          <th>Document</th>
-                          <th>Date Requested</th>
-                          <th>Remark</th>
-                      </thead>
-                      <tbody>
-                      <?php if (empty($request_details_process)): ?>
-                        <tr>
-                          <td colspan="3" class="text-center">You have no on process document request</td>
-                        </tr>
-                      <?php else: ?>
-                        <?php foreach ($request_details_process as $request_detail): ?>
-                          <tr>
-                            <td><?= esc($request_detail['document']) ?></td>
-                            <td><?= date('F d, Y - h:i A', strtotime(esc($request_detail['created_at'])))?></td>
-                            <td><?= esc(empty($request_detail['remark']) ? 'N/A': esc($request_detail['remark'])) ?></td>
-                          </tr>
-                        <?php endforeach; ?>
-                      <?php endif; ?>
-                      </tbody>
-                  </table>
+                <div class="tab-pane fade" id="nav-process" role="tabpanel" aria-labelledby="nav-contact-tab">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4>On Process Documents (To Be Print)</h4>
+                      <table class="table table-striped">
+                          <thead>
+                              <th>Document</th>
+                              <th>Date Requested</th>
+                              <th>Remark</th>
+                          </thead>
+                          <tbody>
+                          <?php if (empty($request_details_process)): ?>
+                            <tr>
+                              <td colspan="3" class="text-center">You have no on process document request</td>
+                            </tr>
+                          <?php else: ?>
+                            <?php foreach ($request_details_process as $request_detail): ?>
+                              <tr>
+                                <td><?= esc($request_detail['document']) ?></td>
+                                <td><?= date('F d, Y - h:i A', strtotime(esc($request_detail['created_at'])))?></td>
+                                <td><?= esc(empty($request_detail['remark']) ? 'N/A': esc($request_detail['remark'])) ?></td>
+                              </tr>
+                            <?php endforeach; ?>
+                          <?php endif; ?>
+                          </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
-
-                <div id="tobeRelease" class="tabcontent">
-                  <h3>Documents For Claiming</h3>
-                  <table class="table table-striped">
-                      <thead>
-                          <th>Document</th>
-                          <th>Date Finished</th>
-                          <th>Price</th>
-                      </thead>
-                      <tbody>
-                      <?php if (empty($request_details_ready)): ?>
-                        <tr>
-                          <td colspan="3" class="text-center">You have no to be release document request</td>
-                        </tr>
-                      <?php else: ?>
-                        <?php foreach ($request_details_ready as $request_detail): ?>
-                          <tr>
-                            <td><?= esc($request_detail['document']) ?></td>
-                            <td><?= date('F d, Y - h:i A', strtotime(esc($request_detail['updated_at'])))?></td>
-                            <td>₱ <?= (esc($request_detail['price']) * esc($request_detail['quantity'])) * esc($request_detail['page'])?></td>
-                          </tr>
-                        <?php endforeach; ?>
-                      <?php endif; ?>
-                      </tbody>
-                  </table>
+                <div class="tab-pane fade" id="nav-released" role="tabpanel" aria-labelledby="nav-contact-tab">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4>Documents For Claiming</h4>
+                      <table class="table table-striped">
+                          <thead>
+                              <th>Document</th>
+                              <th>Date Finished</th>
+                              <th>Price</th>
+                          </thead>
+                          <tbody>
+                          <?php if (empty($request_details_ready)): ?>
+                            <tr>
+                              <td colspan="3" class="text-center">You have no to be release document request</td>
+                            </tr>
+                          <?php else: ?>
+                            <?php foreach ($request_details_ready as $request_detail): ?>
+                              <tr>
+                                <td><?= esc($request_detail['document']) ?></td>
+                                <td><?= date('F d, Y - h:i A', strtotime(esc($request_detail['updated_at'])))?></td>
+                                <td>₱ <?= (esc($request_detail['price']) * esc($request_detail['quantity'])) * esc($request_detail['page'])?></td>
+                              </tr>
+                            <?php endforeach; ?>
+                          <?php endif; ?>
+                          </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
           </div>
         </div>

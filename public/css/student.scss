@@ -4,7 +4,6 @@
 
 @mixin headings {
     color: $maroonColor;
-    font-size: 1.5em;
 }
 
 @mixin btn{
@@ -170,53 +169,35 @@ body{
                                     float: left;
                                     @include btn();
                                     width: 100%;
-                                    background-color: $gold;
-                                    font-weight: bolder;
+                                    background-color: $maroonColor;
+                                    // font-weight: bolder;
+                                    color: white;
                                     
                                     &:hover{
-                                        background: #e4a301ad;
+                                        background: rgba(87, 68, 68, 0.774);
+                                        
                                     }
                                 }
                             }
                         }
 
-                        .tab {
-                            width: 100%;
-                            overflow: hidden;
-                            border: 1px solid #ccc;
-                            background-color: $maroonColor;
-    
+                        #tab {
                             button {
-                                background-color: inherit;
-                                color: white;
-                                float: left;
-                                border: none;
-                                outline: none;
-                                cursor: pointer;
-                                padding: 10px 16px;
-                                transition: 0.3s;
-                                font-size: 17px;
-                                border-radius: 0 10px 0 0;
-                                border-right: 1px solid rgba(255, 255, 255, 0.651);
+                                color: black;
     
                                 &:hover {
-                                    background-color: rgba(148, 49, 49, 0.774);
+                                    background-color: rgba(87, 68, 68, 0.774);
                                     color: $white;
                                 }
     
                                 &.active {
-                                    background-color: #ccc;
-                                    color: $darkcolor;
+                                    background-color: $maroonColor;
+                                    color: $white;
                                   }
                             }
                         } 
     
-                        .tabcontent {
-                            display: none;
-                            padding: 6px 12px;
-                            border: 1px solid #ccc;
-                            border-top: none;
-    
+                        .tab-content {    
                             table{
                                 border-collapse: collapse;
                                 margin-left: auto;

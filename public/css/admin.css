@@ -43,21 +43,6 @@ body .navbar a {
 
 body .navbar .logout {
   font-size: 1em;
-  text-decoration: none !important;
-}
-
-body .navbar .logout img {
-  max-width: 22px;
-}
-
-body .navbar .logout span {
-  padding-left: 10px;
-}
-
-body .navbar .logout li {
-  position: relative;
-  width: 150px;
-  color: #fff;
 }
 
 body .navbar .logout li i {
@@ -66,6 +51,11 @@ body .navbar .logout li i {
 
 body .navbar .logout li a {
   color: #fff;
+}
+
+body .navbar .logout li a.dropdown-item:active {
+  background: #a80b0b;
+  color: white;
 }
 
 body .navbar .logout li ul {
@@ -195,6 +185,10 @@ body ::-webkit-scrollbar-thumb:hover {
 body .card {
   max-width: 95%;
   margin: auto;
+}
+
+body .card .breadcrumb i {
+  color: maroon;
 }
 
 body .card .btn {

@@ -98,7 +98,7 @@ class Requests extends BaseController
   {
 		$this->data['request_details'] = $this->requestDetailModel->getDetails(['requests.id' => 5]);
 	  $this->data['view'] = 'Modules\DocumentRequest\Views\requests\history';
-	  return view('userTemplate/index', $this->data);
+	  return view('template/index', $this->data);
   }
 
 	public function stub($id){

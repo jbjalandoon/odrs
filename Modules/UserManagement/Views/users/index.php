@@ -26,10 +26,10 @@
               <thead>
                 <tr>
                   <th width="5%">#</th>
-                  <th width="10%">Name</th>
-                  <th width="20%">Role</th>
-                  <th width="20%">Email</th>
-                  <th width="5%">Actions</th>
+                  <th width="15%">Name</th>
+                  <th width="15%">Role</th>
+                  <th width="15%">Email</th>
+                  <th width="10%">Actions</th>
                 </tr>
               </thead>
               <tbody>

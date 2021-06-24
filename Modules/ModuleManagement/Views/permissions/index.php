@@ -1,4 +1,4 @@
-<div class="card mt-5 me-3">
+<div class="card mt-5 me-4">
   <div class="card-body">
     <div class="container-fluid p-1">
       <?php if (isset($_SESSION['success_message'])): ?>
@@ -16,7 +16,7 @@
           <span class="h2">Permissions</span>
         </div>
         <div class="col-10">
-          <a href="permissions/add" class="float-end btn btn-success"> Add </a>
+          <a href="permissions/add" class="float-end btn"> Add Permission </a>
         </div>
       </div>
       <div class="row mt-3 mb-3">

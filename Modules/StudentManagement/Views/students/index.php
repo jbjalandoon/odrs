@@ -12,11 +12,11 @@
         </div>
       <?php endif; ?>
       <div class="row mb-3">
-        <div class="col-2">
+        <div class="col-10">
           <span class="h2">Students</span>
         </div>
         <div class="col-2">
-          <a href="students/add" class="float-end btn btn-success"> Add </a>
+          <a href="students/add" class="float-end btn"> Add Student</a>
         </div>
       </div>
       <form action="students/insert-spreadsheet" method="post" enctype="multipart/form-data">
@@ -25,8 +25,10 @@
             <input type="file" name="students" class="form-control" required>
           </div>
           <div class="col-2">
-            <button type="submit" class="btn btn-primary">Upload</button>
+            <button type="submit" class="btn">Upload file</button>
           </div>
+          <p style="font-style: italic;">*Upload an excel file that contains list of students</p>
+
         </div>
       </form>
       <div class="row">

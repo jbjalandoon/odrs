@@ -86,5 +86,4 @@ class StudentsModel extends BaseModel
     return $this->findAll();
   }
 
-
 }

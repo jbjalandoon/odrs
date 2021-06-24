@@ -88,7 +88,6 @@ class BaseController extends Controller
 		$this->permissionTypeModel = new ModuleManagement\permissionTypesModel();
 
 		// Student Management Models - StudentManagement\Class();
-
 		$this->studentModel = new StudentManagement\StudentsModel();
 
 		// System Settings Model - SystemSettings\Class();
