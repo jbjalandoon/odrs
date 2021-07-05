@@ -134,7 +134,6 @@ class DocumentRequests extends BaseController
 
   public function printRequest()
   {
-    // return print_r($_FILES);
     if($this->request->getFile('file') == null){
       $data = [
         'status' => 'r',
@@ -161,14 +160,14 @@ class DocumentRequests extends BaseController
 
     }
     $request = $this->requestDetailModel->getDetails(['request_details.id' => $_POST['id']])[0];
-    // return print_r($request);
+    // return $request['document'];
     $mail = \Config\Services::email();
     $mail->setTo($_POST['email']);
     $mail->setSubject('Ready to claim Document');
     $mail->setFrom('ODRS', 'PUP');
-    $mail->setMessage('Your document is ready to claim:  ' . $request['document']);
+    $mail->setMessage('Your document is ready to claim: ' . $request['document']);
     $mail->send();
-    return $num . '';
+    return $data['page'].'';
   }
 
   public function claimRequest()

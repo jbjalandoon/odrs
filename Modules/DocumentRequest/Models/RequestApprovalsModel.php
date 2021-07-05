@@ -64,7 +64,7 @@ class RequestApprovalsModel extends BaseModel
         $this->update($index[0], ['status' => 'c']);
         $details->update($index[1], ['status' => 'p']);
       }
-    
+
     $this->transComplete();
     return $this->transStatus();
   }

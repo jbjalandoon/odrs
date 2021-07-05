@@ -279,6 +279,7 @@ async function printRequest(id, per_page, template, email)
           },
           url: "on-process-document/print-requests",
           success: function(msg){
+            console.log(msg)
             Swal.close();
             Swal.fire({
               'icon': 'success',
@@ -312,6 +313,7 @@ async function printRequest(id, per_page, template, email)
             },
             url: "on-process-document/print-requests",
             success: function(msg){
+              console.log(msg)
               Swal.close();
               Swal.fire({
                 'icon': 'success',
