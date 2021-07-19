@@ -40,7 +40,7 @@ class DocumentRequests extends BaseController
     $this->email->setSubject('Document Request Update');
     $this->email->setFrom('ODRS', 'PUP');
     $this->email->setMessage('Your Request has been denied : ' . $_POST['remark']);
-    if($this->requestModel->cancelRequest($_POST['id']))
+    if($this->requestModel->denyRequest($_POST))
       $this->email->send();
     return $this->index();
   }

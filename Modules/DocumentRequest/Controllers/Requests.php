@@ -98,6 +98,10 @@ class Requests extends BaseController
   {
     $this->data['request_documents'] = $this->requestDetailModel->getDetails();
     $this->data['requests'] = $this->requestModel->getDetails(['student_id' => $_SESSION['student_id'], 'requests.completed_at !=' => null, 'status !=' => 'd']);
+    $this->data['office_approvals'] = $this->officeApprovalModel->getDetails(['requests.student_id' => $_SESSION['student_id'], 'requests.completed_at !=' => null, 'request_details.status !=' => 'd']);
+    // echo "<pre>";
+    // print_r($this->data['office_approvals']);
+    // die();
 	  $this->data['view'] = 'Modules\DocumentRequest\Views\requests\history';
 	  return view('template/index', $this->data);
   }
