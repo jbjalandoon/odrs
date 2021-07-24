@@ -1,6 +1,6 @@
 <footer class="footer p-3 bg-transparent">
         <div class="container-fluid text-center align-items-center">
-          <small>
+          <small class="text-muted">
             © 2021 made by - <img src="/img/logo.png" alt=""> Mitsu Tech
           </small>
         </div>
