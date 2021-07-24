@@ -511,6 +511,7 @@ $("#slug").keypress(function (e){
 
 
 $(document).ready(function(){
+
   $(".permissions-data").each(function(){
     var element = $(this);
     $.ajax({

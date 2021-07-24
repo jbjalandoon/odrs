@@ -388,8 +388,6 @@ class Validation
 	];
 
 	public $student_spreadsheet = [
-		'course_id' => 'required',
-		'academic_status' => 'required',
 		'students' => 'uploaded[students]|ext_in[students,xlsx]'
 	];
 

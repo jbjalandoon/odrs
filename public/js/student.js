@@ -26,6 +26,172 @@ function deleteRequest(id){
 }
 
 $(document).ready(function() {
+  $.ajax({
+    url: 'students/setup',
+    type: 'get',
+    dataType: 'JSON',
+    success: async function(data){
+      if (data.students.length != 0) {
+
+            var steps = []
+            var ctr = 0
+            var courses = {}
+            var questions = [{}]
+            var key;
+            var course;
+            const values = []
+            for(var i = 0; i < data.courses.length; i++) {
+              key = data.courses[i][`id`]
+              course = data.courses[i]['course']
+              courses[key] = course
+            }
+            Object.keys(data.students).forEach(function(key) {
+              switch (key) {
+                case 'contact':
+                  questions.push({
+                    input: `text`,
+                    title: `First Time Setup`,
+                    html: `Please enter <strong>CONTACT NUMBER </strong>`,
+                    showCancelButton: ctr > 0,
+                    currentProgressStep: ctr,
+                    preConfirm: (value) => {
+                      if (value == '') {
+                        Swal.showValidationMessage('First input missing')
+                      }
+                    }
+                  })
+                break;
+                case 'gender':
+                questions.push({
+                  input: `radio`,
+                  inputOptions: {
+                    'm': 'Male',
+                    'f': 'Female',
+                  },
+                  title: `First Time Setup`,
+                  html: `Please enter <strong>GENDER</strong>`,
+                  showCancelButton: ctr > 0,
+                  currentProgressStep: ctr,
+                  preConfirm: (value) => {
+                    if (value == null) {
+                      Swal.showValidationMessage('Please Select Gender')
+                    }
+                  }
+                })
+                break;
+                case 'course_id':
+                questions.push({
+                  inputOptions: courses,
+                  input: `select`,
+                  title: `First Time Setup`,
+                  html: `Please enter <strong>COURSE</strong>`,
+                  showCancelButton: ctr > 0,
+                  currentProgressStep: ctr,
+                })
+                break;
+                case 'status':
+                questions.push({
+                  input: `radio`,
+                  inputOptions: {
+                    'alumni': 'Alumni',
+                    'enrolled': 'Currently Enrolled',
+                    'drop': 'Dropout',
+                  },
+                  title: `First Time Setup`,
+                  html: `Please enter <strong>STATUS</strong>`,
+                  showCancelButton: ctr > 0,
+                  preConfirm: (value) => {
+                    if (value == 'alumni') {
+                      questions.push({
+                        input: `text`,
+                        title: `First Time Setup`,
+                        html: `Please enter <strong>YEAR GRADUATED</strong>`,
+                        showCancelButton: ctr > 0,
+                        currentProgressStep: ctr,
+                      })
+                      steps.push(++ctr);
+                    }
+                    else if (value == 'enrolled') {
+                      questions.push({
+                        input: `number`,
+                        title: `First Time Setup`,
+                        html: `Please enter <strong>YEAR LEVEL</strong>`,
+                        showCancelButton: ctr > 0,
+                        currentProgressStep: ctr,
+                      })
+                      steps.push(++ctr);
+                    }
+                    else {
+                      values[4] = null
+                    }
+                  },
+                  currentProgressStep: ctr,
+                })
+                break;
+              }
+              steps.push(++ctr);
+            })
+            const swalQueueStep = Swal.mixin({
+              confirmButtonText: 'Forward',
+              allowOutsideClick: false,
+              cancelButtonText: 'Back',
+              progressSteps: steps,
+              inputAttributes: {
+                required: true
+              },
+              reverseButtons: true,
+              validationMessage: 'This field is required'
+            })
+
+            let currentStep
+            for (currentStep = 0; currentStep < steps.length;) {
+              const result = await swalQueueStep.fire(questions[currentStep + 1])
+              if (result.value) {
+                values[currentStep] = result.value
+                currentStep++
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+                if (ctr > 4) {
+                  ctr--
+                  steps.pop()
+                }
+                currentStep--
+              } else {
+                break
+              }
+            }
+
+            if (currentStep === steps.length) {
+              $.ajax({
+                url: 'students/setup',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                  'contact' : values[0],
+                  'gender' : values[1],
+                  'course_id' : values[2],
+                  'status' : values[3],
+                  'level' : values[4],
+                },
+                success: function(data){
+                  if (data.status == 'success') {
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Successfully Updated',
+                      text: 'Your profile has been Updated',
+                    })
+                  } else {
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: 'Something went wrong!',
+                    })
+                  }
+                }
+              })
+            }
+      }
+    }
+  });
 
     $('.data-table').DataTable({
       dom: 'frtp',
@@ -152,18 +318,18 @@ jQuery(function ($) {
 });
 
 //ui tab in requests
-function opentab(evt, tabName) {
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
-}
+// function opentab(evt, tabName) {
+//   var i, tabcontent, tablinks;
+//   tabcontent = document.getElementsByClassName("tabcontent");
+//   for (i = 0; i < tabcontent.length; i++) {
+//     tabcontent[i].style.display = "none";
+//   }
+//   tablinks = document.getElementsByClassName("tablinks");
+//   for (i = 0; i < tablinks.length; i++) {
+//     tablinks[i].className = tablinks[i].className.replace(" active", "");
+//   }
+//   document.getElementById(tabName).style.display = "block";
+//   evt.currentTarget.className += " active";
+// }
 
-document.getElementById("defaultOpen").click();
+// document.getElementById("defaultOpen").click();

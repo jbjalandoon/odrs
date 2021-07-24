@@ -3,6 +3,7 @@
 namespace Modules\UserManagement\Models;
 use App\Models\BaseModel;
 use Modules\StudentManagement\Models\StudentsModel;
+use Modules\StudentManagement\Controllers\Students;
 // use Modules\UserManagement\Models\AdminsModel;
 
 /**
@@ -56,15 +57,18 @@ class UsersModel extends BaseModel
   }
 
   public function inputDetailBulk($data){
-    $this->transStart();
+
+    $student = new Students();
+    $this->transBegin();
 
     foreach($data as $key => $value)
     {
+      $password = random_string('alnum', 8);
       $userData = [
         'username' => $data[$key]['student_number'],
-        'password' => password_hash('password', PASSWORD_DEFAULT),
+        'password' => password_hash($password, PASSWORD_DEFAULT),
         'email' =>  $data[$key]['email'],
-        'token' => md5(random_bytes(16)),
+        'token' => null,
         'role_id' => 4
       ];
         $this->insert($userData);
@@ -72,9 +76,19 @@ class UsersModel extends BaseModel
 
         $StudentsModel = new StudentsModel();
         $StudentsModel->insert($data[$key]);
+
+        if($student->sendPassword($data[$key]['student_number'] ,$password, $data[$key]['email']))
+        {
+          $this->transCommit();
+          return true;
+        }
+        else
+        {
+          $this->transRollback();
+          return false;
+        }
     }
-    $this->transComplete();
-    return $this->transStatus();
+
   }
 
 }
