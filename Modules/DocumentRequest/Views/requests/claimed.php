@@ -1,6 +1,4 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
+    <section class="content">
       <div class="card">
         <div class="card-body">
           <div class="row">
@@ -101,6 +99,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </div>

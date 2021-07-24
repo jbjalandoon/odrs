@@ -21,6 +21,19 @@ body{
         width: 2em;
         padding-right: .5em;
     }
+    button{
+        padding-right: 1.5em;
+        padding-left: 1.5em;
+        &:hover{
+            background-color: rgb(218, 166, 166);
+            color: rgb(51, 51, 51);
+            i{color: rgb(22, 14, 1)!important;}
+        }
+    }
+    .report{
+        margin-right: 6em!important;
+        margin-left: .6em;
+    }
 }
 
 #menu{
@@ -28,22 +41,24 @@ body{
     box-shadow: 0 2px 9px 0 rgba(110, 110, 110, 0.5); 
     font-family: 'Open Sans', sans-serif;
     color: rgb(168, 90, 90);
-    padding: 0!;
+    padding: 0;
     li{
         a{
+            padding-right: 5em;
+            padding-left: 5em;
             border-radius: 0;
             i{color: rgb(43, 43, 43);}
             &:hover{
                 background-color: rgb(82, 11, 11);
                 color: white;
-                i{color: blanchedalmond;}
+                i{color: blanchedalmond!important;}
             }
         }
     }
     .active {
         background-color: maroon;
         color: white;
-        // i{color: blanchedalmond;}
+        i{color: blanchedalmond!important;}
     }
 }
 
