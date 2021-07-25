@@ -263,4 +263,35 @@ body section .header-top .card .table tbody tr {
   border-bottom: 1px solid #dddddd;
   color: black !important;
 }
+
+body #dashboard .card.activity-log {
+  border-top: 0.35em solid #484892;
+}
+
+body #dashboard .card.chart {
+  border-top: 0.35em solid #803300;
+}
+
+body #dashboard .card.setup {
+  border-left: 0.35em solid #da0000 !important;
+  border-right: 0.35em solid #da0000 !important;
+}
+
+body #dashboard .card.registered {
+  border-left: 0.35em solid green !important;
+  border-right: 0.35em solid green !important;
+}
+
+body #dashboard .chart-bar {
+  position: relative;
+  height: 10rem;
+  width: 100%;
+  color: #965252;
+}
+
+@media (min-width: 768px) {
+  body #dashboard .chart-bar {
+    height: 20rem;
+  }
+}
 /*# sourceMappingURL=admin.css.map */
