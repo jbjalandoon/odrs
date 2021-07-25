@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
 body {
-  background: #c9c9c9;
+  background: #eeeeee !important;
   margin: 0;
   font-family: "Raleway", sans-serif;
   color: #2e2e2e;
@@ -27,8 +27,8 @@ body nav.sticky {
 
 body .navbar {
   padding: 12px;
-  background: #800000;
-  color: #fff !important;
+  background: #fff !important;
+  color: #2e2e2e !important;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -39,6 +39,7 @@ body .navbar i {
 
 body .navbar a {
   text-align: right;
+  color: #2e2e2e !important;
 }
 
 body .navbar .logout {
@@ -72,7 +73,9 @@ body main {
 }
 
 body .menu {
-  background: #e7e7e7;
+  background: #f0f0f0;
+  -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   height: 100vh;
   width: 240px;
   position: fixed;
@@ -117,7 +120,7 @@ body .menu ul .header-menu {
 
 body .menu ul .header-menu:hover {
   text-decoration: none;
-  background-color: #e7e7e7;
+  background-color: #f0f0f0;
   cursor: default;
 }
 
@@ -167,11 +170,11 @@ body .menu ul .active i, body .menu ul li:hover i {
 }
 
 body ::-webkit-scrollbar {
-  width: 1px;
+  width: .01em;
 }
 
 body ::-webkit-scrollbar-track {
-  background: #800000;
+  background: transparent;
 }
 
 body ::-webkit-scrollbar-thumb {
@@ -182,53 +185,81 @@ body ::-webkit-scrollbar-thumb:hover {
   background: transparent;
 }
 
-body .card {
-  max-width: 95%;
+body section .header-top {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+body section .header-top .btn-upload {
+  color: white !important;
+}
+
+body section .header-top button {
+  color: #800000;
+}
+
+body section .header-top button:hover {
+  color: #a07407;
+}
+
+body section .header-top button.active {
+  background-color: #800000 !important;
+}
+
+body section .header-top .card {
+  max-width: 98%;
   margin: auto;
 }
 
-body .card .breadcrumb i {
+body section .header-top .card .breadcrumb i {
   color: maroon;
 }
 
-body .card .btn {
+body section .header-top .card .btn-add {
   background-color: #a51a1a;
   border-radius: 2px;
   color: #fff;
+  padding-left: 2em;
+  padding-right: 2em;
 }
 
-body .card .btn-edit {
+body section .header-top .card .btn-edit {
   background: #002147;
   border-radius: 2px;
 }
 
-body .card .btn-delete {
+body section .header-top .card .btn-delete {
   background: #d80101;
   border-radius: 2px;
 }
 
-body .card .table {
+body section .header-top .card .btn-restore {
+  background: #3b6e00;
+  border-radius: 2px;
+}
+
+body section .header-top .card .table {
   font-size: 0.9em;
   font-family: sans-serif;
   -webkit-box-shadow: 0 0 20px #00000026;
           box-shadow: 0 0 20px #00000026;
 }
 
-body .card .table thead tr {
+body section .header-top .card .table thead tr {
   background-color: #a51a1a;
   color: #ffffff;
   text-align: left;
 }
 
-body .card .table th, body .card .table td {
+body section .header-top .card .table th, body section .header-top .card .table td {
   padding: 12px 15px;
 }
 
-body .card .table tbody {
+body section .header-top .card .table tbody {
   font-size: .9em;
 }
 
-body .card .table tbody tr {
+body section .header-top .card .table tbody tr {
   border-bottom: 1px solid #dddddd;
   color: black !important;
 }
