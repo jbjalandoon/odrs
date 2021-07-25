@@ -16,12 +16,13 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/sl-1.3.1/datatables.min.css"/>
 
     <?php if($_SESSION['role'] == 'Superadmin'): ?>
-      <link rel="stylesheet" href="/css/superadmin/admin.css">
+      <link rel="stylesheet" href="/css/superadmin/style.css">
     <?php elseif($_SESSION['role'] == 'Admin'): ?>
       <link rel="stylesheet" href="/css/admin/admin.css">
     <?php else: ?>
     <link rel="stylesheet" href="/css/student/student.css">
     <?php endif; ?>
+    
     <title>ODRS</title>
 
   </head>

@@ -15,14 +15,7 @@
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.23/sl-1.3.1/datatables.min.js"></script>
     
-    <!-- Charts -->
-      <!-- <script src="/js/Chart.js"></script>
-
-    <?php if($_SESSION['role'] = 'Admin'): ?>
-      <script src="/js/admin/admin.js"></script>
-    <?php elseif($_SESSION['role'] = 'Superadmin'): ?>
-      <script src="/js/student.js" charset="utf-8"></script>
-    <?php endif; ?> -->
+  
 
 
     

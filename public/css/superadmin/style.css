@@ -274,12 +274,10 @@ body #dashboard .card.chart {
 
 body #dashboard .card.setup {
   border-left: 0.35em solid #da0000 !important;
-  border-right: 0.35em solid #da0000 !important;
 }
 
 body #dashboard .card.registered {
   border-left: 0.35em solid green !important;
-  border-right: 0.35em solid green !important;
 }
 
 body #dashboard .chart-bar {
@@ -294,4 +292,4 @@ body #dashboard .chart-bar {
     height: 20rem;
   }
 }
-/*# sourceMappingURL=admin.css.map */
+/*# sourceMappingURL=style.css.map */
