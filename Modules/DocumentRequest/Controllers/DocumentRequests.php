@@ -33,33 +33,36 @@ class DocumentRequests extends BaseController
 
   public function denyRequest()
   {
-    // return print_r($this->requestModel->denyRequest($_POST));
     $student = $this->userModel->get(['username' => $_POST['student_number']]);
 
     $this->email->setTo($student[0]['email']);
     $this->email->setSubject('Document Request Update');
     $this->email->setFrom('ODRS', 'PUP');
-    $this->email->setMessage('Your Request has been denied : ' . $_POST['remark']);
-    if($this->requestModel->cancelRequest($_POST['id']))
+    $this->email->setMessage('Your Request has been denied (' . $_POST['remark'] .')');
+    if($this->requestModel->denyRequest($_POST))
       $this->email->send();
     return $this->index();
   }
 
   public function confirmRequest(){
+    foreach($_POST['data'] as $key => $value){
+      $student = $this->userModel->get(['username' => $_POST['data'][$key][1]]);
+      $this->email->setTo($student[0]['email']);
+      $this->email->setSubject('Document Request Update');
+      $this->email->setFrom('ODRS', 'PUP');
+      $this->email->setMessage('Your Request has been confirmed, your request is now being process');
+      if($this->requestModel->confirmRequest($_POST['data']))
+        $this->email->send();
+    }
     // return print_r($this->requestModel->denyRequest($_POST));
-    $student = $this->userModel->get(['username' => $_POST['data'][0][1]]);
-    $this->email->setTo($student[0]['email']);
-    $this->email->setSubject('Document Request Update');
-    $this->email->setFrom('ODRS', 'PUP');
-    $this->email->setMessage('Your Request has been confirmed');
-    if($this->requestModel->confirmRequest($_POST['data']))
-      $this->email->send();
+
+
     return $this->index();
   }
 
   public function approval()
   {
-    $this->data['request_approvals'] = $this->officeApprovalModel->getDetails(['office_id' => $_SESSION['office_id'], 'request_approvals.status' => 'p']);
+    $this->data['request_approvals'] = $this->officeApprovalModel->getDetails(['office_id' => $_SESSION['office_id'], 'request_approvals.status' => 'p', 'requests.status !=' => 'p']);
     $this->data['request_approvals_hold'] = $this->officeApprovalModel->getDetails(['office_id' => $_SESSION['office_id'], 'request_approvals.status' => 'h']);
     $this->data['view'] = 'Modules\DocumentRequest\Views\requests\approval';
 
@@ -89,7 +92,7 @@ class DocumentRequests extends BaseController
       $this->email->setFrom('ODRS', 'PUP');
       $this->email->setMessage('You dont have any sanctions your request ' . $_POST['data'][$key][5] . ' is now to be processed');
 
-      // $this->email->send();
+      $this->email->send();
 
     }
     if($this->officeApprovalModel->approveRequest($_POST['data']))
@@ -134,7 +137,6 @@ class DocumentRequests extends BaseController
 
   public function printRequest()
   {
-    // return print_r($_FILES);
     if($this->request->getFile('file') == null){
       $data = [
         'status' => 'r',
@@ -157,21 +159,30 @@ class DocumentRequests extends BaseController
         'printed_at' => date('Y-m-d H:i:s'),
         'page' => $num,
       ];
-      if($this->requestDetailModel->printRequest($_POST['id'] ,$data)){
+      $this->requestDetailModel->printRequest($_POST['id'] ,$data);
 
-        return $num . '';
-      }
     }
-
-    return $this->printed();
+    $request = $this->requestDetailModel->getDetails(['request_details.id' => $_POST['id']])[0];
+    // return $request['document'];
+    $mail = \Config\Services::email();
+    $mail->setTo($_POST['email']);
+    $mail->setSubject('Ready to claim Document');
+    $mail->setFrom('ODRS', 'PUP');
+    $mail->setMessage('Your document is ready to claim: ' . $request['document']);
+    $mail->send();
+    return $data['page'].'';
   }
 
   public function claimRequest()
   {
-    if (count($this->requestDetailModel->get(['request_id' => $_POST['request_id']])) == count($this->requestDetailModel->get(['request_id' => $_POST['request_id'], 'status' => 'c']))) {
-      $this->requestModel->edit(['completed_at' => date('Y-m-d h:i:s')], $_POST['request_id']);
+
+    if ($this->requestDetailModel->claimRequest($_POST['value'])) {
+      if (count($this->requestDetailModel->get(['request_id' => $_POST['request_id']])) == count($this->requestDetailModel->get(['request_id' => $_POST['request_id'], 'status' => 'c']))) {
+        return $this->requestModel->edit(['completed_at' => date('Y-m-d h:i:s')], $_POST['request_id']);
+      }
     }
-    return $this->requestDetailModel->claimRequest($_POST['value']);
+    return false;
+
   }
 
   public function getPrinted()
@@ -251,7 +262,7 @@ class DocumentRequests extends BaseController
 
 		// -----------------------------------------------------------------------------
 		$data['documents'] = $this->requestDetailModel->getReports($_GET['t'], $_GET['a'], $_GET['d']);
-
+    $data['types'] = $_GET;
     $data['document'] = $this->documentModel->get(['id' => $_GET['d']])[0]['document'];
 		$reportTable = view('Modules\DocumentRequest\Views\requests\report',$data);
 

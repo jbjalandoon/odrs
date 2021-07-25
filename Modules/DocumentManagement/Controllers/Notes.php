@@ -56,15 +56,16 @@ class Notes extends BaseController
   {
     $this->data['edit'] = true;
     $this->data['value'] = $this->noteModel->get(['id' => $id]);
+    $this->data['id'] = $id;
     $this->data['view'] = 'Modules\DocumentManagement\Views\notes\form';
 
-    if($this->request->getMethod == 'post')
+    if($this->request->getMethod() == 'post')
     {
       if($this->validate('note'))
       {
         if($this->noteModel->edit($_POST, $id))
         {
-          $this->session->setFlash('success_message', 'Successfully edited note');
+          $this->session->setFlashData('success_message', 'Successfully edited note');
           return redirect()->to(base_url('documents'));
         }
         else
@@ -79,7 +80,7 @@ class Notes extends BaseController
       }
     }
 
-    return view('tempalte/index', $this->data);
+    return view('template/index', $this->data);
   }
 
   function delete($id)

@@ -13,7 +13,7 @@ class StudentsModel extends BaseModel
 
   protected $table = 'students';
 
-  protected $allowedFields = ['id', 'student_number', 'firstname', 'lastname', 'middlename', 'gender', 'birthdate', 'contact', 'academic_status', 'course_id', 'user_id', 'status', 'level'];
+  protected $allowedFields = ['id', 'student_number', 'firstname', 'lastname', 'middlename', 'gender', 'birthdate', 'contact', 'status','year_graduated', 'course_id', 'user_id', 'status', 'level'];
 
   function __construct(){
     parent::__construct();
@@ -28,9 +28,39 @@ class StudentsModel extends BaseModel
       $userData = [
         'username' => $data['student_number'],
         'password' => password_hash($password, PASSWORD_DEFAULT),
-        'token' => md5($data['student_number']),
+        'token' => null,
         'email' => $data['email'],
         'role_id' => 4
+      ];
+
+      $user->insert($userData);
+      $id = $user->getInsertID();
+
+      $data['user_id'] = $id;
+
+      $this->insert($data);
+
+      $student = new Students();
+      if($student->sendPassword($data['student_number'], $password, $data['email']))
+      {
+        $this->transCommit();
+        return true;
+      }
+      else
+      {
+        $this->transRollback();
+        return false;
+      }
+
+  }
+
+  public function editStudents($data)
+  {
+    $this->transBegin();
+
+      $user = new UsersModel();
+      $userData = [
+        'email' => $data['email'],
       ];
 
       $user->insert($userData);
@@ -67,9 +97,9 @@ class StudentsModel extends BaseModel
 
   public function getDetail($condition = []){
 
-    $this->select('students.*, courses.course, academic_status.status');
+    $this->select('students.*, courses.course, users.id as user_id');
     $this->join('courses', 'students.course_id = courses.id');
-    $this->join('academic_status', 'students.academic_status = academic_status.id');
+    $this->join('users', 'students.user_id = users.id');
     foreach ($condition as $condition => $value) {
       $this->where($condition, $value);
     }
@@ -78,11 +108,18 @@ class StudentsModel extends BaseModel
   }
 
   public function softDeleteByUserId($id){
-    return $this->delete(['user_id' => $id]);
+    $this->where('user_id', $id);
+    return $this->delete();
   }
 
   public function getStudentByUserId($id){
     $this->where('user_id', $id);
+    return $this->findAll();
+  }
+
+  public function getNull($id){
+    $this->select('contact, gender,course_id, status');
+    $this->where('id', $id);
     return $this->findAll();
   }
 

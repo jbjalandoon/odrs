@@ -19,10 +19,11 @@ class RequestDetailsModel extends BaseModel
 
   public function getDetails($conditions = [], $id = null){
 
-    $this->select('request_details.*, documents.price,requests.created_at as requested_at, requests.reason, documents.document,documents.per_page_payment,documents.template, documents.price, students.firstname, students.lastname, students.student_number, students.gender ,courses.course, courses.abbreviation');
+    $this->select('request_details.*, documents.price,requests.created_at as requested_at, requests.reason, documents.document,documents.per_page_payment,documents.template, documents.price, students.firstname, students.lastname, students.student_number, students.gender ,courses.course, courses.abbreviation, users.email');
     $this->join('requests', 'request_id = requests.id');
     $this->join('documents', 'document_id = documents.id');
     $this->join('students', 'requests.student_id = students.id');
+    $this->join('users', 'users.id = students.user_id');
     $this->join('courses', 'students.course_id = courses.id');
     foreach ($conditions as $condition => $value) {
       $this->where($condition , $value);

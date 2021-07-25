@@ -22,7 +22,7 @@ class Requests extends BaseController
 		$this->data['office_approvals'] = $this->officeApprovalModel->getOwnRequest($_SESSION['student_id']);
 		$this->data['request_details_ready'] = $this->requestDetailModel->getDetails(['requests.student_id' => $_SESSION['student_id'], 'request_details.status' => 'r', 'requests.status' => 'c']);
 		$this->data['request_details_process'] = $this->requestDetailModel->getDetails(['requests.student_id' => $_SESSION['student_id'], 'request_details.status' => 'p', 'requests.status' => 'c']);
-		$this->data['requests'] = $this->requestModel->getDetails(['student_id' => $_SESSION['student_id'], 'requests.completed_at' => null, 'status !=' => 'd']);
+		$this->data['requests'] = $this->requestModel->getDetails(['student_id' => $_SESSION['student_id'], 'requests.completed_at' => null, 'requests.status !=' => 'd']);
 		$this->data['request_documents'] = $this->requestDetailModel->getDetails();
 
     $this->data['view'] = 'Modules\DocumentRequest\Views\requests\index';
@@ -81,8 +81,8 @@ class Requests extends BaseController
 				}
 			}
 			else {
-				$data['error'] = $this->validation->getErrors();
-				$data['value'] = $_POST;
+				$this->data['error'] = $this->validation->getErrors();
+				$this->data['value'] = $_POST;
 			}
 		}
     return view('template/index', $this->data);
@@ -96,7 +96,12 @@ class Requests extends BaseController
 
   public function history()
   {
-		$this->data['request_details'] = $this->requestDetailModel->getDetails(['requests.id' => 5]);
+    $this->data['request_documents'] = $this->requestDetailModel->getDetails();
+    $this->data['requests'] = $this->requestModel->getDetails(['student_id' => $_SESSION['student_id'], 'requests.completed_at !=' => null, 'status !=' => 'd']);
+    $this->data['office_approvals'] = $this->officeApprovalModel->getDetails(['requests.student_id' => $_SESSION['student_id'], 'requests.completed_at !=' => null, 'request_details.status !=' => 'd']);
+    // echo "<pre>";
+    // print_r($this->data['office_approvals']);
+    // die();
 	  $this->data['view'] = 'Modules\DocumentRequest\Views\requests\history';
 	  return view('template/index', $this->data);
   }

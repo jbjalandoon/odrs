@@ -19,7 +19,7 @@ class AdminsModel extends BaseModel
 
   public function getDetails($conditions = [])
   {
-    $this->select('admins.*, users.email, roles.role, roles.identifier');
+    $this->select('admins.*, users.email, roles.role, roles.identifier, users.id as user_id');
     $this->join('users', 'users.id = admins.user_id');
     $this->join('roles', 'roles.id = users.role_id');
 
@@ -33,6 +33,11 @@ class AdminsModel extends BaseModel
   public function getAdminByUserId($id){
     $this->where('user_id', $id);
     return $this->findAll();
+  }
+
+  public function softDeleteByUserId($id){
+    $this->where('user_id', $id);
+    return $this->delete();
   }
 
 }

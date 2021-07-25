@@ -47,7 +47,13 @@
               <select name="course_type" id="course_type" class="form-select">
                 <?php if (!empty($types)): ?>
                   <?php foreach($types as $type): ?>
-                    <option value="<?=esc($type['id'])?>"><?=esc($type['type'])?></option>
+                    <?php $selected = false; ?>
+                    <?php if (isset($value['course_type'])): ?>
+                      <?php if ($value['course_type'] == $type['id']): ?>
+                        <?php $selected = true; ?>
+                      <?php endif; ?>
+                    <?php endif; ?>
+                    <option value="<?=esc($type['id'])?>" <?=$selected ? 'selected':''?>><?=esc($type['type'])?></option>
                   <?php endforeach; ?>
                 <?php endif;?>
               </select>

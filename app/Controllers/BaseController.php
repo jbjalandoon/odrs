@@ -117,8 +117,8 @@ class BaseController extends Controller
 		$this->email =  \Config\Services::email();
 		// $this->pdf = \Config\Services::TCPDF();
 
-		$this->data['allModules'] = $this->moduleModel->get();
-		$this->data['allPermissions'] = $this->permissionModel->getDetails();
+		// $this->data['allModules'] = $this->moduleModel->get();
+		// $this->data['allPermissions'] = $this->permissionModel->getDetails();
 		if(isset($_SESSION['role_id'])){
 			$this->data['allModules'] = $this->rolePermissionModel->getModules(['role_permissions.role_id' => $_SESSION['role_id']]);
 			$this->data['allPermissions'] = $this->rolePermissionModel->getDetails(['role_permissions.role_id' => $_SESSION['role_id']]);

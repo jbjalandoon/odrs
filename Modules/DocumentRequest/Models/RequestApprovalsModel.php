@@ -11,14 +11,14 @@ class RequestApprovalsModel extends BaseModel
 
   protected $table = 'request_approvals';
 
-  protected $allowedFields = ['id', 'request_detail_id','status', 'remark','office_id', 'status'];
+  protected $allowedFields = ['id', 'request_detail_id','status', 'hold_at','approved_at','remark','office_id', 'status'];
 
   function __construct(){
     parent::__construct();
   }
 
   public function getDetails($conditions = [], $id = null){
-    $this->select('request_approvals.id,request_approvals.remark,request_details.document_id, request_approvals.status, request_approvals.request_detail_id, offices.office, students.student_number, students.firstname, students.lastname, courses.course, documents.document, requests.created_at, offices.id as office_id');
+    $this->select('request_approvals.id,request_approvals.approved_at,request_approvals.hold_at,request_approvals.remark,request_details.document_id, request_approvals.status, request_approvals.request_detail_id, offices.office, students.student_number, students.firstname, students.lastname, courses.course, documents.document, requests.created_at, offices.id as office_id, requests.completed_at');
     $this->join('offices', 'office_id = offices.id');
     $this->join('request_details', 'request_detail_id = request_details.id');
     $this->join('documents', 'request_details.document_id = documents.id');
@@ -61,10 +61,10 @@ class RequestApprovalsModel extends BaseModel
       $details = new RequestDetailsModel();
 
       foreach ($data as $index){
-        $this->update($index[0], ['status' => 'c']);
+        $this->update($index[0], ['status' => 'c', 'approved_at' => date("Y-m-d H:i:s")]);
         $details->update($index[1], ['status' => 'p']);
       }
-    
+
     $this->transComplete();
     return $this->transStatus();
   }
@@ -75,7 +75,7 @@ class RequestApprovalsModel extends BaseModel
 
       $details = new RequestDetailsModel();
       $details->update($data['request_detail_id'], ['status' => 'h']);
-      $this->update($data['id'], ['status' => 'h' , 'remark' => $data['remark']]);
+      $this->update($data['id'], ['status' => 'h' , 'remark' => $data['remark'], 'hold_at' => date("Y-m-d H:i:s")]);
     $this->transComplete();
 
     return $this->transStatus();

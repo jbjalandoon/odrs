@@ -70,9 +70,7 @@ function denyRequest(id, student_number)
       'aria-label': 'Type your message here'
     },
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
+    confirmButtonText: 'Yes, deny it!'
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
@@ -89,6 +87,7 @@ function denyRequest(id, student_number)
             'icon': 'success',
             'title' : 'Successfully Denied',
           });
+          location.reload()
         }
       });
     }
@@ -146,8 +145,6 @@ function approveSelect()
     text: "You won't be able to revert this!",
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
     confirmButtonText: 'Yes'
   }).then((result) => {
     if(result.isConfirmed){
@@ -259,7 +256,7 @@ var processedTable = $('#processed-table').DataTable({
     }
 });
 
-async function printRequest(id, per_page, template)
+async function printRequest(id, per_page, template, email)
 {
   if(template == null && per_page == 0){
     Swal.fire({
@@ -275,9 +272,11 @@ async function printRequest(id, per_page, template)
           type: "POST",
           data: {
             'id': id,
+            'email': email
           },
           url: "on-process-document/print-requests",
           success: function(msg){
+            console.log(msg)
             Swal.close();
             Swal.fire({
               'icon': 'success',
@@ -307,9 +306,11 @@ async function printRequest(id, per_page, template)
             type: "POST",
             data: {
               'id': id,
+              'email': email
             },
             url: "on-process-document/print-requests",
             success: function(msg){
+              console.log(msg)
               Swal.close();
               Swal.fire({
                 'icon': 'success',
@@ -328,7 +329,7 @@ async function printRequest(id, per_page, template)
       Swal.fire({
         title: 'Please Upload a File',
         icon: 'warning',
-        html: `<form method='post' id='form' enctype='multipart/form-data'><input type='hidden' name='id' value=`+id+`><input type='file' name='file' id='file' class='form-control' accept='application/pdf' required></form> <Br>`,
+        html: `<form method='post' id='form' enctype='multipart/form-data'><input type='hidden' name='email' value=`+email+`><input type='hidden' name='id' value=`+id+`><input type='file' name='file' id='file' class='form-control' accept='application/pdf' required></form> <Br>`,
         showCancelButton: true,
         confirmButtonText: `Confirm`,
         preConfirm: () => {
@@ -366,12 +367,17 @@ async function printRequest(id, per_page, template)
                 contentType: false,
                 processData:false,
                 success: function(resp){
+                  console.log(resp);
                   Swal.fire({
-                    text: 'Page Count: ' + resp,
+                    title: 'Upload Sucess',
+                    text: "Page: " + resp,
                     icon: 'success',
-                    title: 'Success!'
+                    confirmButtonText: 'Ok'
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      location.reload();
+                    }
                   })
-                  location.reload();
                 }
               });
 
@@ -511,6 +517,7 @@ $("#slug").keypress(function (e){
 
 
 $(document).ready(function(){
+
   $(".permissions-data").each(function(){
     var element = $(this);
     $.ajax({

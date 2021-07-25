@@ -6,7 +6,7 @@
           <span class="h2"><?=esc($edit) ? 'Editing': 'Adding'?> Document</span>
         </div>
       </div>
-      <form class="form-floating" action="<?=esc($edit) ? esc($value['id']) : 'add'?>" method="post" autocomplete="off">
+      <form class="form-floating" action="<?=esc($edit) ? esc($id) : 'add'?>" method="post" autocomplete="off">
       <div class="row justify-content-center">
           <div class="col-4">
             <div class="form-group mb-3">
@@ -28,6 +28,19 @@
               <?php if (isset($error['price'])): ?>
                 <div class="text-danger">
                   <?=esc($error['price'])?>
+                </div>
+              <?php endif; ?>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <div class="form-group mb-3">
+              <label for="template" class="form-label">Template</label>
+              <input value="<?=isset($value['template']) ? esc($value['template']): ''?>" type="text" name="template" class="form-control" id="template">
+              <?php if (isset($error['template'])): ?>
+                <div class="text-danger">
+                  <?=esc($error['template'])?>
                 </div>
               <?php endif; ?>
             </div>
@@ -101,6 +114,27 @@
               <?php if (isset($error['is_free_on_first'])): ?>
                 <div class="text-danger">
                   <?=esc($error['is_free_on_first'])?>
+                </div>
+              <?php endif; ?>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <div class="form-group mb-3">
+              <label for="">Per Page Payment</label>
+              <br>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="per_page_payment" id="inlineRadio3" value="1" checked>
+                <label class="form-check-label" for="inlineRadio3">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="per_page_payment" id="inlineRadio4" value="0" <?=isset($value['per_page_payment']) && !$value['per_page_payment'] ? 'checked': ''?>>
+                <label class="form-check-label" for="inlineRadio4">No</label>
+              </div>
+              <?php if (isset($error['per_page_payment'])): ?>
+                <div class="text-danger">
+                  <?=esc($error['per_page_payment'])?>
                 </div>
               <?php endif; ?>
             </div>
