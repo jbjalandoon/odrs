@@ -1,18 +1,19 @@
-<?php if (!empty($permissions)): ?>
+
+<?php if (!empty($modules)): ?>
   <?php foreach ($modules as $module): ?>
-    <b><?=esc($module['module'])?></b>
-    <br>
-    <?php foreach ($permission_types as $type): ?>
-      <?=ucwords($type['type'] . ': ')?>
-      <br>
+    <h6><?=esc($module['module'])?></h6>
+    <?php foreach ($permission_types as $permission_type): ?>
+        <?=esc($permission_type['type'])?>:
+        <br>
       <?php foreach ($permissions as $permission): ?>
-        <?php if ($permission['module_id'] == $module['id'] && $type['id'] == $permission['permission_type']): ?>
+        <?php if ($permission['module_id'] == $module['id'] && $permission['permission_type'] == $permission_type['id']): ?>
           <span class="badge bg-success"><?=ucwords(esc($permission['permission']))?></span>
         <?php endif; ?>
       <?php endforeach; ?>
-      <br>
+      <hr>
     <?php endforeach; ?>
   <?php endforeach; ?>
+
 <?php else: ?>
-  <b>No Permissions</b>
+  This roles has no permissions
 <?php endif; ?>

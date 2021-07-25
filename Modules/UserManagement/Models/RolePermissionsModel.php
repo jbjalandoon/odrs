@@ -31,7 +31,7 @@ class RolePermissionsModel extends BaseModel
   }
 
   public function getModules($conditions = []){
-    $this->select('modules.module, modules.id as module_id, permissions.permission_type');
+    $this->select('modules.module, modules.id as id, permissions.permission_type');
     $this->join('permissions', 'permissions.id = role_permissions.permission_id');
     $this->join('modules', 'modules.id = permissions.module_id');
     $this->groupBy('permissions.module_id');

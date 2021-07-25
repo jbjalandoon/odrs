@@ -85,39 +85,67 @@ class Students extends BaseController
                     'firstname' =>  $value[1],
                     'lastname' =>  $value[2],
                     'middlename' =>  $value[3],
-                    'gender' =>  strtolower($value[4]) == 'male' ? 'm' : 'f',
-                    'birthdate' =>  date($value[5]),
-                    'email' =>  $value[6],
-                    'contact' =>  $value[7],
-                    'level' =>  $value[8],
-                    'academic_status' => $_POST['academic_status'],
-                    'course_id' => $_POST['course_id'],
+                    'email' =>  $value[4],
 
                 ];
                 array_push($data, $temp);
             }
+
             if($this->userModel->inputDetailBulk($data)){
                 return redirect()->to(base_url('students'));
             } else {
                 die('Something Went Wrong!');
             }
         } else {
-            $this->data['error'] = $this->validation->getErrors();
-            $this->data['value'] = $_POST;
-            $this->data['courses'] = $this->courseModel->get();
-            $this->data['academic_status'] = $this->academicStatusModel->get();
-            $this->data['view'] = 'Modules\StudentManagement\Views\students\index';
-            return view('template/index', $this->data);
+          return redirect()->to(base_url('students'));
+            // $this->data['error'] = $this->validation->getErrors();
+            // $this->data['view'] = 'Modules\StudentManagement\Views\students\index';
+            // return view('template/index', $this->data);
         }
     }
 
-    public function sendPassword($password = null, $email = null)
+    public function setup(){
+      if ($this->request->getMethod() == 'post') {
+        if ($_POST['status'] == 'enrolled') {
+          $_POST['year_graduated'] = null;
+        } elseif ($_POST['status'] == 'alumni') {
+          $_POST['year_graduated'] = $_POST['level'];
+          $_POST['level'] = null;
+        } else {
+          $_POST['year_graduated'] = null;
+          $_POST['level'] = null;
+        }
+        if ($this->studentModel->edit($_POST, $_SESSION['student_id'])) {
+          $data = [
+            'status' => 'success',
+            'data' => $_POST
+          ];
+        } else {
+          $data = [
+            'status' => 'error',
+            'data' => $_POST
+          ];
+        }
+        return json_encode($data);
+      } else {
+        $data['students'] = $this->studentModel->getNull($_SESSION['student_id'])[0];
+        $data['courses'] = $this->courseModel->getCourseId();
+        foreach ($data['students'] as $key => $value) {
+          if ($value != null) {
+            unset($data['students'][$key]);
+          }
+        }
+      }
+      return json_encode($data);
+    }
+
+    public function sendPassword($username = null,$password = null, $email = null)
     {
 			$mail = \Config\Services::email();
 			$mail->setTo($email);
 			$mail->setSubject('User Account Password');
-			$mail->setFrom('ODRS', 'PUP');
-			$mail->setMessage('This is your password: ' .  $password);
+			$mail->setFrom('ODRS', 'PUP-Taguig ODRS');
+			$mail->setMessage('Your Account has been sucessfully made! <br> Username: ' .  $username . ' <br> Password: '  . $password);
       if ($mail->send()) {
         return true;
       }

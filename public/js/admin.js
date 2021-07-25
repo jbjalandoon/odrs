@@ -70,9 +70,7 @@ function denyRequest(id, student_number)
       'aria-label': 'Type your message here'
     },
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
+    confirmButtonText: 'Yes, deny it!'
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
@@ -89,6 +87,7 @@ function denyRequest(id, student_number)
             'icon': 'success',
             'title' : 'Successfully Denied',
           });
+          location.reload()
         }
       });
     }
@@ -146,8 +145,6 @@ function approveSelect()
     text: "You won't be able to revert this!",
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
     confirmButtonText: 'Yes'
   }).then((result) => {
     if(result.isConfirmed){
@@ -520,6 +517,7 @@ $("#slug").keypress(function (e){
 
 
 $(document).ready(function(){
+
   $(".permissions-data").each(function(){
     var element = $(this);
     $.ajax({

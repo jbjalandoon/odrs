@@ -24,4 +24,9 @@ class CoursesModel extends BaseModel
     return $this->findAll();
   }
 
+  public function getCourseId(){
+    $this->select('id, course');
+    return $this->findAll();
+  }
+
 }

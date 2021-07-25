@@ -33,27 +33,30 @@ class DocumentRequests extends BaseController
 
   public function denyRequest()
   {
-    // return print_r($this->requestModel->denyRequest($_POST));
     $student = $this->userModel->get(['username' => $_POST['student_number']]);
 
     $this->email->setTo($student[0]['email']);
     $this->email->setSubject('Document Request Update');
     $this->email->setFrom('ODRS', 'PUP');
-    $this->email->setMessage('Your Request has been denied : ' . $_POST['remark']);
+    $this->email->setMessage('Your Request has been denied (' . $_POST['remark'] .')');
     if($this->requestModel->denyRequest($_POST))
       $this->email->send();
     return $this->index();
   }
 
   public function confirmRequest(){
+    foreach($_POST['data'] as $key => $value){
+      $student = $this->userModel->get(['username' => $_POST['data'][$key][1]]);
+      $this->email->setTo($student[0]['email']);
+      $this->email->setSubject('Document Request Update');
+      $this->email->setFrom('ODRS', 'PUP');
+      $this->email->setMessage('Your Request has been confirmed, your request is now being process');
+      if($this->requestModel->confirmRequest($_POST['data']))
+        $this->email->send();
+    }
     // return print_r($this->requestModel->denyRequest($_POST));
-    $student = $this->userModel->get(['username' => $_POST['data'][0][1]]);
-    $this->email->setTo($student[0]['email']);
-    $this->email->setSubject('Document Request Update');
-    $this->email->setFrom('ODRS', 'PUP');
-    $this->email->setMessage('Your Request has been confirmed');
-    if($this->requestModel->confirmRequest($_POST['data']))
-      $this->email->send();
+
+
     return $this->index();
   }
 

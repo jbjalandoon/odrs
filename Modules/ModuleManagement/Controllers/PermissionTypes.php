@@ -64,8 +64,8 @@ class PermissionTypes extends BaseController
 
   public function delete($id)
   {
-    if($this->moduleModel->softDelete($id))
-    return redirect()->to(base_url('modules'));
+    if($this->permissionTypeModel->softDelete($id))
+    return redirect()->to(base_url('permission-types'));
   }
 
 }
