@@ -76,31 +76,61 @@ class Students extends BaseController
             $xlsx = new Xlsx($spreadsheet);
             $array = $spreadsheet->getActiveSheet()->toArray();
             $data = [];
+            $ctr = 0;
             foreach($array as $key => $value)
             {
+                $student = $this->userModel->getCount($value[0], $value[5]);
+                if ($student != 0) {
+                  $ctr++;
+                  continue;
+                }
                 if($key == 0)
                     continue;
                 $temp = [
                     'student_number' =>  $value[0],
                     'firstname' =>  $value[1],
-                    'lastname' =>  $value[2],
-                    'middlename' =>  $value[3],
-                    'email' =>  $value[4],
+                    'middlename' =>  $value[2],
+                    'lastname' =>  $value[3],
+                    'suffix' =>  $value[4],
+                    'email' =>  $value[5],
 
                 ];
                 array_push($data, $temp);
             }
 
             if($this->userModel->inputDetailBulk($data)){
-                return redirect()->to(base_url('students'));
+              $response = [
+                'status' => 'success',
+                'inserted_count' => count($data),
+                'insert_count' => count($array) - 1,
+                'exisiting_count' => $ctr,
+                'data' => json_encode($data),
+                'message' => 'Successfully Inserted',
+
+              ];
+
+              return json_encode($response);
             } else {
-                die('Something Went Wrong!');
+              $response = [
+                'status' => 'error',
+                'inserted_count' => 0,
+                'insert_count' => count($array),
+                'exisiting_count' => $ctr,
+                'data' => null,
+                'message' => 'Please check the format of each data in spreadsheet',
+              ];
+              return json_encode($response);
             }
         } else {
-          return redirect()->to(base_url('students'));
-            // $this->data['error'] = $this->validation->getErrors();
-            // $this->data['view'] = 'Modules\StudentManagement\Views\students\index';
-            // return view('template/index', $this->data);
+          $response = [
+            'status' => 'error',
+            'inserted_count' => 0,
+            'insert_count' => count($array),
+            'exisiting_count' => $ctr,
+            'message' => 'Wrong File Format',
+            'data' => json_encode($this->validation->getErrors()),
+          ];
+          return json_encode($response);
         }
     }
 

@@ -13,7 +13,7 @@ class StudentsModel extends BaseModel
 
   protected $table = 'students';
 
-  protected $allowedFields = ['id', 'student_number', 'firstname', 'lastname', 'middlename', 'gender', 'birthdate', 'contact', 'status','year_graduated', 'course_id', 'user_id', 'status', 'level'];
+  protected $allowedFields = ['id', 'student_number', 'firstname', 'lastname','suffix', 'middlename', 'gender', 'birthdate', 'contact', 'status','year_graduated', 'course_id', 'user_id', 'status', 'level'];
 
   function __construct(){
     parent::__construct();

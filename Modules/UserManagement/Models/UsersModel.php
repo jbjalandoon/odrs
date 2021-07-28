@@ -87,4 +87,10 @@ class UsersModel extends BaseModel
 
   }
 
+  public function getCount($username, $email){
+    $this->where('username', $username);
+    $this->orWhere('email', $email);
+    return $this->countAllResults();
+  }
+
 }

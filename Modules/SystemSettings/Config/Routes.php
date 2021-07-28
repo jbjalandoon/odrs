@@ -26,3 +26,6 @@ $routes->group('offices', ['namespace' => 'Modules\SystemSettings\Controllers'],
   $routes->match(['get', 'post'], 'edit/(:num)', 'Offices::edit/$1');
   $routes->get('delete/(:num)', 'Offices::delete/$1');
 });
+$routes->group('dashboard', ['namespace' => 'Modules\SystemSettings\Controllers'], function($routes){
+  $routes->get('/', 'Dashboard::index');
+});

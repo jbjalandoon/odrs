@@ -1,6 +1,20 @@
 var server = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '/');
 script();
 
+const showLoading = function() {
+  let timerInterval
+  Swal.fire({
+    title: 'Loading!',
+    html: ' Please Wait',
+    allowOutsideClick: false,
+    timerProgressBar: true,
+    didOpen: () => {
+      Swal.showLoading()
+    },
+  })
+};
+
+
 var adminPendingTable = $('#admin-pending-table').DataTable({
   "columnDefs" : [{
     "targets" : [0],
@@ -704,6 +718,44 @@ function filterPermission(){
       script();
     }
   });
+}
+
+function insertSpreadsheet(){
+  var fd = new FormData();
+  var files = $('#file')[0].files;
+  if(files.length > 0 ){
+     fd.append('students',files[0]);
+     $.ajax({
+        url: 'students/insert-spreadsheet',
+        type: 'post',
+        data: fd,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        beforeSend: function(){
+          showLoading();
+        },
+        success: function(response){
+          swal.close()
+          console.log(response)
+          Swal.fire({
+            icon: response['status'],
+            title: response['message'],
+            html: 'To be insert: ' + response['insert_count'] + '<br> Succesfully inserted: ' + response['inserted_count'] + '<br> Existing Data: ' + response['exisiting_count']
+          })
+        },
+        error: function (request, error) {
+          swal.close()
+          Swal.fire({
+            icon: 'error',
+            title: 'Something went wrong!'
+          })
+        },
+     });
+  }else{
+     alert("Please select a file.");
+  }
+
 }
 
 function filterProcessDocument(){

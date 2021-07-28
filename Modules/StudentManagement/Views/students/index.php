@@ -43,17 +43,15 @@
                       <a href="students/add" class="float-end btn"> Add Student</a>
                     </div>
                   </div>
-                  <form action="students/insert-spreadsheet" method="post" enctype="multipart/form-data">
                     <div class="row">
                       <div class="col-md-5">
-                        <input type="file" name="students" class="form-control" required>
+                        <input type="file" id="file" name="students" class="form-control" required>
                       </div>
                       <div class="col-md-2">
-                        <button type="submit" class="btn btn-upload">Upload file</button>
+                        <button onClick='insertSpreadsheet()' class="btn btn-upload">Upload file</button>
                       </div>
                       <p style="font-style: italic;">*Upload an excel file that contains list of students</p>
                     </div>
-                  </form>
                   <div class="row">
                     <div class="col-md-12">
                       <div class="table-responsive">
