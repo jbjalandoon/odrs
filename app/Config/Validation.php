@@ -53,6 +53,49 @@ class Validation
 
 	];
 
+	public $user_own = [
+		'email' => [
+			'rules' => 'required|valid_email',
+			'label' => 'Email',
+			'errors' => [
+				'required' => 'Please enter email',
+				'valid_email' => 'Please enter a valid email',
+			]
+		],
+		'contact' => [
+			'rules' => 'required|numeric|exact_length[11]',
+			'label' => 'Contact',
+			'errors' => [
+				'required' => 'Please enter contact',
+				'numeric' => 'Please enter numeric only',
+				'exact_length' => 'Enter 11 digits number'
+			]
+		],
+		'firstname' => [
+			'rules' => 'alpha_space|required',
+			'label' => 'First Name',
+			'errors' => [
+				'alpha_dash' => 'Enter valid characters',
+				'required' => 'Please enter first name'
+			]
+		],
+		'lastname' => [
+			'rules' => 'alpha_space|required',
+			'label' => 'Last Name',
+			'errors' => [
+				'alpha_dash' => 'Enter valid characters',
+				'required' => 'Please enter first name'
+			]
+		],
+		'course_id' => [
+			'rules' => 'required',
+			'label' => 'Course',
+			'errors' => [
+				'required' => 'Enter Course'
+			]
+		],
+	];
+
 	public $student = [
 		'student_number' => [
 			'rules'=> 'required|exact_length[15]|alpha_dash|regex_match[/[0-9]{4}-[0-9]{5}-TG-0/]|is_unique[users.username]',

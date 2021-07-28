@@ -57,7 +57,7 @@
                                   <td>#</td>
                                   <td><?=ucwords(esc($note['note']))?></td>
                                   <td class="text-center">
-                                    <?=esc(buttons($allPermissions, ['edit-role-permission'], 'role-permissions', $note['id']))?>
+                                    <?=esc(buttons($allPermissions, ['edit-notes', 'delete-notes'], 'notes', $note['id']))?>
                                   </td>
                                 </tr>
                               <?php endforeach; ?>

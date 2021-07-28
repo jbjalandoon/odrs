@@ -60,10 +60,7 @@ class RequestApprovalsModel extends BaseModel
 
       $details = new RequestDetailsModel();
 
-      foreach ($data as $index){
-        $this->update($index[0], ['status' => 'c', 'approved_at' => date("Y-m-d H:i:s")]);
-        $details->update($index[1], ['status' => 'p']);
-      }
+        $this->update($data[0], ['status' => 'c', 'approved_at' => date("Y-m-d H:i:s")]);
 
     $this->transComplete();
     return $this->transStatus();

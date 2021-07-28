@@ -57,7 +57,7 @@ class RequestDetailsModel extends BaseModel
 
   public function getReports($type, $date, $document){
 
-    $this->select('request_details.*, documents.price,requests.created_at as requested_at, requests.reason, documents.document, documents.price, students.firstname, students.lastname, students.student_number, courses.course, courses.abbreviation');
+    $this->select('request_details.*, students.level ,students.status as student_status,students.year_graduated,documents.price,requests.created_at as requested_at, requests.reason, documents.document, documents.price, students.firstname, students.lastname, students.student_number, courses.course, courses.abbreviation');
     $this->join('requests', 'request_id = requests.id');
     $this->join('documents', 'document_id = documents.id');
     $this->join('students', 'requests.student_id = students.id');

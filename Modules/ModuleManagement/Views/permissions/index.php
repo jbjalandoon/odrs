@@ -31,15 +31,15 @@
                     </div>
                   <?php endif; ?>
                   <div class="row mb-3">
-                    <div class="col-2">
+                    <div class="col-5">
                       <small class="text-muted">Module Management</small>
                       <h2>Permissions</h2>
                     </div>
-                    <div class="col-10">
-                      <a href="permissions/add" class="float-end btn"> Add Permission </a>
+                    <div class="col-7">
+                      <?php buttons($allPermissions, ['add-permissions'], 'permissions') ?>
                     </div>
                   </div>
-                  <div class="row mt-3 mb-3">
+                  <!-- <div class="row mt-3 mb-3">
                     <div class="col-4 offset-2">
                       <div class="input-group mb-3">
                         <label class="input-group-text" for="module">Modules</label>
@@ -70,7 +70,7 @@
                         </select>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="row">
                     <div class="col-12">
                       <div class="table-responsive" id="permission-table">
@@ -219,4 +219,3 @@
     </div>
   </div>
 </section>
-

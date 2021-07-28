@@ -6,10 +6,13 @@
   <tr style="text-align: center;">
     <td width="5%"> <b>#</b> </td>
     <td width="20%"> <b>Name</b> </td>
-    <td width="20%"> <b>Course</b> </td>
-    <td width="20%"> <b>Date Requested</b> </td>
-    <td width="20%"> <b>Date Printed</b> </td>
-    <td width="15%"> <b>Date Received</b> </td>
+    <td width="15%"> <b>Status</b> </td>
+    <td width="10%"> <b>Year Gaduated</b> </td>
+    <td width="10%"> <b>Date Admission</b> </td>
+    <td width="10%"> <b>Course</b> </td>
+    <td width="10%"> <b>Date Requested</b> </td>
+    <td width="10%"> <b>Date Printed</b> </td>
+    <td width="10%"> <b>Date Received</b> </td>
   </tr>
   <?php if (empty($documents)): ?>
     <tr>
@@ -21,7 +24,10 @@
       <tr style="text-align: center;">
         <td> <?=$ctr?> </td>
         <td> <?=ucwords(esc($document['firstname']). ' ' . esc($document['lastname']))?> </td>
-        <td> <?=$document['course']?> </td>
+        <td> <?=ucwords($document['student_status'])?> </td>
+        <td> <?=$document['year_graduated'] != null ? $document['year_graduated'] : 'N/A'?> </td>
+        <td> <?=substr($document['student_number'], 0,4)?> </td>
+        <td> <?=$document['abbreviation'] . ' ' . $document['level']?> </td>
         <td> <?=date('M d, Y', strtotime(esc($document['requested_at'])))?> </td>
         <td> <?=date('M d, Y', strtotime(esc($document['printed_at'])))?> </td>
         <td> <?=date('M d, Y', strtotime(esc($document['received_at'])))?> </td>

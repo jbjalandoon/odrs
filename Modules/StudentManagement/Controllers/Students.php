@@ -169,6 +169,30 @@ class Students extends BaseController
       return json_encode($data);
     }
 
+    public function editOwn(){
+      $this->data['value'] = $this->studentModel->get(['students.id' => $_SESSION['student_id']])[0];
+      $user = $this->userModel->get(['users.id' => $_SESSION['user_id']])[0];
+      array_push($this->data['value'], $user['email']);
+
+      $this->data['courses'] = $this->courseModel->get();
+      $this->data['view'] = 'Modules\StudentManagement\Views\students\profileform';
+      if ($this->request->getMethod() == 'post') {
+        if ($this->validate('user_own')) {
+          if ($this->studentModel->editOwn($_POST)) {
+            $this->session->setFlashData('success_message', 'successfully edited your information');
+            return redirect()->to(base_url('requests/new'));
+          } else {
+            die('Something Went Wrong!');
+          }
+        } else {
+          $this->data['error'] = $this->validation->getErrors();
+          $this->data['value'] = $_POST;
+          $this->data['value'][0] = $_POST['email'];
+        }
+      }
+      return view('template/index', $this->data);
+    }
+
     public function sendPassword($username = null,$password = null, $email = null)
     {
 			$mail = \Config\Services::email();

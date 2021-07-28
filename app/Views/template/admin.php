@@ -4,12 +4,12 @@
       <img src="<?=base_url()?>/img/pupt-logo.png" alt="">
       <span class="align-middle">PUPT - ODRS</span>
       <div class="dropdown float-end">
-        <button class="btn btn-light btn-sm">
+        <a class="btn btn-light btn-sm" href="<?=base_url('dashboards')?>">
           <i class="fas fa-tachometer-alt"></i> Dashboard
-        </button>
-        <button class="btn btn-light btn-sm report">
-          <i class="fas fa-chart-line"></i> Reports
-        </button>
+        </a>
+        <a class="btn btn-light btn-sm report" href="<?=base_url('completed')?>">
+          <i class="fas fa-chart-line"></i> Completed Requests
+        </a>
         <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fas fa-user-shield"></i> <?=esc($_SESSION['name'])?>
         </button>

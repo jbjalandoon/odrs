@@ -36,7 +36,7 @@
                       <h2>Permission Types</h2>
                     </div>
                     <div class="col-md-6">
-                      <a href="permission-types/add" class="float-end btn"> Add Permission Type </a>
+                      <?php buttons($allPermissions, ['add-permission-types'], 'permission-types') ?>
                     </div>
                   </div>
                   <div class="row">
@@ -59,7 +59,7 @@
                                   <td><?=ucwords(esc($permissionsType['type']))?></td>
                                   <td><?=esc($permissionsType['slug'])?></td>
                                   <td class="text-center">
-                                    #
+                                    <?php buttons($allPermissions, ['edit-permission-type','delete-permission-type'], 'permission-types', esc($permissionsType['id'])) ?>
                                   </td>
                                 </tr>
                               <?php endforeach; ?>

@@ -20,9 +20,6 @@
                   <small class="text-muted"> User Management</small>
                   <h2>Role Permissions</h2>
                 </div>
-                <div class="col-6">
-                  <a href="#" class="btn float-end"> Edit Permissions </a>
-                </div>
               </div>
               <div class="row">
                 <div class="col-12">
@@ -31,9 +28,10 @@
                       <thead class="table-dark">
                         <tr>
                           <th width="5%">#</th>
-                          <th width="25%">Role</th>
-                          <th width="20%">Description</th>
-                          <th width="50%">Permissions</th>
+                          <th width="15%">Role</th>
+                          <th width="15%">Description</th>
+                          <!-- <th width="50%">Permissions</th> -->
+                          <th width="25%">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -43,7 +41,8 @@
                               <td>#</td>
                               <td><?=ucwords(esc($role['role']))?></td>
                               <td><?=ucfirst(esc($role['description']))?></td>
-                              <td class="permissions-data" id="<?=$role['id']?>">test</td>
+                              <!-- <td class="permissions-data" id="<?=$role['id']?>">test</td> -->
+                              <td><?=esc(buttons($allPermissions, ['edit-role'], 'role-permissions', $role['id']))?></td>
                             </tr>
                           <?php endforeach; ?>
                         <?php endif; ?>

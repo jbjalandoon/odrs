@@ -46,3 +46,9 @@ $routes->group('claimed-requests', ['namespace' => 'Modules\DocumentRequest\Cont
     $routes->get('report', 'DocumentRequests::report');
 
 });
+
+$routes->group('completed', ['namespace' => 'Modules\DocumentRequest\Controllers'], function($routes)
+{
+    $routes->get('/', 'DocumentRequests::completed');
+
+});

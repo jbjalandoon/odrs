@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <!-- <i class="fas fa-bars"></i> -->
     <span>Registrar's Online Document Request and Approval System</span>
-    
+
     <div class="d-flex logout" id="navbarSupportedContent">
       <ul class="navbar-nav">
         <li class="nav-item dropdown me-3">
@@ -17,9 +17,9 @@
       </ul>
     </div>
   </div>
-</nav>  
+</nav>
 
-      
+
       <!-- <div class="helper">
         RESIZE THE WINDOW
             <span>Breakpoints on 900px and 400px</span>
@@ -37,8 +37,8 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div id="logout" class="collapse navbar-collapse d-flex" id="navbarSupportedContent">
-      
-      
+
+
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
       </ul>

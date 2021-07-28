@@ -198,7 +198,64 @@ $(document).ready(function() {
     $('.data-table').DataTable({
       dom: 'frtp',
     });
+    if ($('input[name="reason"]:checked').val() == 'others') {
+      $("#other_input").prop('disabled', false)
+      $("#other_input").prop('hidden', false)
+    }
+    $(".reasons").change(function(){
+        if ($(this).val() == 'others') {
+          $("#other_input").prop('disabled', false)
+          $("#other_input").prop('hidden', false)
+        } else {
+          $("#other_input").prop('disabled', true)
+          $("#other_input").prop('hidden', true)
+        }
+    })
+    if($('input[name="status"]:checked').val() == 'enrolled'){
+      $("#year_graduated").prop('disabled', true)
+      $("#year_graduated").prop('hidden', true)
+      $("#graduatedLabel").hide();
+    } else if ($('input[name="status"]:checked').val() == 'alumni') {
+      $("#level").prop('disabled', true)
+      $("#level").prop('hidden', true)
+      $("#yearLabel").hide();
+    } else {
+      $("#level").prop('disabled', true)
+      $("#level").prop('hidden', true)
+      $("#year_graduated").prop('disabled', true)
+      $("#year_graduated").prop('hidden', true)
+      $("#yearLabel").hide();
+      $("#graduatedLabel").hide();
+    }
+
+    $(".status").change(function(){
+      alert($(this).val())
+        if ($(this).val() == 'enrolled') {
+          $("#year_graduated").prop('disabled', true)
+          $("#year_graduated").prop('hidden', true)
+          $("#graduatedLabel").hide();
+          $("#level").prop('disabled', false)
+          $("#level").prop('hidden', false)
+          $("#yearLabel").toggle();
+        } else if ($(this).val() == 'alumni'){
+          $("#level").prop('disabled', true)
+          $("#level").prop('hidden', true)
+          $("#yearLabel").hide();
+          $("#year_graduated").prop('disabled', false)
+          $("#year_graduated").prop('hidden', false)
+          $("#graduatedLabel").toggle();
+        } else {
+          $("#level").prop('disabled', true)
+          $("#level").prop('hidden', true)
+          $("#year_graduated").prop('disabled', true)
+          $("#year_graduated").prop('hidden', true)
+          $("#yearLabel").hide();
+          $("#graduatedLabel").hide();
+        }
+    })
 });
+
+
 
 function showDetail(checkbox){
   if (checkbox.checked == true) {

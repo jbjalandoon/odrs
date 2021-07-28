@@ -55,7 +55,7 @@ class Notes extends BaseController
   public function edit($id)
   {
     $this->data['edit'] = true;
-    $this->data['value'] = $this->noteModel->get(['id' => $id]);
+    $this->data['value'] = $this->noteModel->get(['id' => $id])[0];
     $this->data['id'] = $id;
     $this->data['view'] = 'Modules\DocumentManagement\Views\notes\form';
 

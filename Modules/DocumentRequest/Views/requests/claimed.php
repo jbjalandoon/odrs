@@ -52,7 +52,7 @@
             <div class="col-12">
               <div class="input-group mb-3">
                 <label class="input-group-text" for="document">Filter by Documents: </label>
-                <select class="form-select" id="document" onchange="filterClaimed()">
+                <select class="form-select" id="documents" onchange="filterClaimeds()">
                   <?php if (empty($documents)): ?>
                     <option value="" disabled selected>--No Documents Found--</option>
                   <?php else: ?>

@@ -97,7 +97,7 @@ class StudentsModel extends BaseModel
 
   public function getDetail($condition = []){
 
-    $this->select('students.*, courses.course, users.id as user_id');
+    $this->select('students.*, courses.course, courses.abbreviation, users.id as user_id, users.email');
     $this->join('courses', 'students.course_id = courses.id');
     $this->join('users', 'students.user_id = users.id');
     foreach ($condition as $condition => $value) {
@@ -121,6 +121,20 @@ class StudentsModel extends BaseModel
     $this->select('contact, gender,course_id, status');
     $this->where('id', $id);
     return $this->findAll();
+  }
+
+  public function editOwn($data){
+    $this->transStart();
+
+    $user = new UsersModel();
+    $userData = [
+      'email' => $data['email'],
+    ];
+
+      $this->update($_SESSION['student_id'],$data);
+      $user->update($_SESSION['user_id'],$userData);
+    $this->transComplete();
+    return $this->transStatus();
   }
 
 }

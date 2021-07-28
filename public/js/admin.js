@@ -173,13 +173,24 @@ function approveSelect()
         type: "POST",
         data: {data},
         url: "approval/approve",
-        success: function(msg){
-
-          location.reload();
+        beforeSend: function(){
+          showLoading();
+        },
+        success: function(response){
+          swal.close()
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfuly Approved',
+          })
+          location.reload()
         },
         error: function (request, error) {
-          // console.log(arguments);
-          // alert(" Can't do because: " + error);
+          swal.close()
+          Swal.fire({
+            icon: 'error',
+            title: 'Something went wrong!'
+          })
+          // location.reload()
         },
       });
     }
@@ -213,13 +224,25 @@ function holdRequest(id, student_number, detail_id)
           'student_number' : student_number,
           'request_detail_id': detail_id
         },
+        beforeSend: function(){
+          Swal.close()
+          showLoading();
+        },
         success: function(html){
           Swal.close();
           Swal.fire({
             'icon': 'success',
             'title' : 'Successfully Hold the request',
           });
-        }
+        },
+        error: function (request, error) {
+          swal.close()
+          Swal.fire({
+            icon: 'error',
+            title: 'Something went wrong!'
+          })
+        },
+
       });
     }
   });
@@ -278,7 +301,7 @@ async function printRequest(id, per_page, template, email)
       title: 'This request will mark as printed.',
       showCancelButton: true,
       html: `You will not be able to undo the action`,
-      confirmButtonText: `Yes`,
+      confirmButtonText: `Confirm`,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
@@ -289,18 +312,27 @@ async function printRequest(id, per_page, template, email)
             'email': email
           },
           url: "on-process-document/print-requests",
-          success: function(msg){
-            console.log(msg)
+          beforeSend: function(){
+            Swal.close()
+            showLoading();
+          },
+          success: function(html){
             Swal.close();
             Swal.fire({
               'icon': 'success',
-              'title' : 'Successfully Processed',
+              'title' : 'Successfully mark as printed',
             }).then(function(){
-              location.reload();
-            });
+              location.reload()
+            })
           },
           error: function (request, error) {
-            alert(" Can't do because: " + error);
+            swal.close()
+            Swal.fire({
+              icon: 'error',
+              title: 'Something went wrong!'
+            }).then(function(){
+              location.reload()
+            })
           },
         });
       }
@@ -311,8 +343,8 @@ async function printRequest(id, per_page, template, email)
         icon: 'warning',
         title: 'This request will mark as printed.',
         showCancelButton: true,
-        html: `You will not be able to undo the action <br><a href='`+server+`/document-requests/`+template+`/`+id+`' target="_blank">CLICK HERE TO DOWNLOAD</a>`,
-        confirmButtonText: `Yes`,
+        html: `You will not be able to undo the action <br><small>(This document has a template)</small> <br><a href='`+server+`/document-requests/`+template+`/`+id+`' target="_blank">CLICK HERE TO DOWNLOAD</a>`,
+        confirmButtonText: `Confirm`,
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
@@ -323,18 +355,27 @@ async function printRequest(id, per_page, template, email)
               'email': email
             },
             url: "on-process-document/print-requests",
-            success: function(msg){
-              console.log(msg)
+            beforeSend: function(){
+              Swal.close()
+              showLoading();
+            },
+            success: function(html){
               Swal.close();
               Swal.fire({
                 'icon': 'success',
-                'title' : 'Successfully Processed',
+                'title' : 'Successfully mark as printed',
               }).then(function(){
-                location.reload();
-              });
+                location.reload()
+              })
             },
             error: function (request, error) {
-              alert(" Can't do because: " + error);
+              swal.close()
+              Swal.fire({
+                icon: 'error',
+                title: 'Something went wrong!'
+              }).then(function(){
+                location.reload()
+              })
             },
           });
         }
@@ -380,6 +421,10 @@ async function printRequest(id, per_page, template, email)
                 data: data,
                 contentType: false,
                 processData:false,
+                beforeSend: function(){
+                  Swal.close()
+                  showLoading();
+                },
                 success: function(resp){
                   console.log(resp);
                   Swal.fire({
@@ -392,9 +437,17 @@ async function printRequest(id, per_page, template, email)
                       location.reload();
                     }
                   })
-                }
+                },
+                error: function (request, error) {
+                  swal.close()
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Something went wrong!'
+                  }).then(function(){
+                    location.reload()
+                  })
+                },
               });
-
             }
           })
         }
@@ -498,7 +551,7 @@ $("#slug").keypress(function (e){
         Swal.fire({
           title: 'Receive Request',
           icon: 'question',
-          html: form,
+          html: '<small>Select document that will be receive</small><br>' + form,
           text: 'Select the document that will be received',
           preConfirm: () => {
             for(var i = 0; i < requests.length; i++) {
@@ -513,14 +566,27 @@ $("#slug").keypress(function (e){
             url: 'printed-requests/scan',
             type: 'POST',
             data: {'value': value, 'request_id': request_id},
-            success: function(msg){
-              console.log(msg);
+            beforeSend: function(){
+              Swal.close()
+              showLoading();
+            },
+            success: function(resp){
               Swal.fire({
+                title: 'Sucessfully received',
                 icon: 'success',
-                title: 'Succesfully Received',
-              });
-              // location.reload();
-            }
+              }).then((result) => {
+                  location.reload();
+              })
+            },
+            error: function (request, error) {
+              swal.close()
+              Swal.fire({
+                icon: 'error',
+                title: 'Something went wrong!'
+              }).then(function(){
+                location.reload()
+              })
+            },
           });
         });
         console.log(JSON.parse(data));
@@ -591,8 +657,8 @@ $(document).ready(function(){
   });
 });
 
-function filterClaimed(){
-  const documentID = $('#document').val();
+function filterClaimeds(){
+  var documentID = $('#documents').val();
   $.ajax({
     url : 'claimed-requests/filter',
     type: 'get',
@@ -759,7 +825,7 @@ function insertSpreadsheet(){
 }
 
 function filterProcessDocument(){
-  const documentID = $('#document').val();
+  var documentID = $('#document').val();
   $.ajax({
     url : 'on-process-document/filter',
     type: 'get',
@@ -788,7 +854,7 @@ function filterProcessDocument(){
 }
 
 function filterPrintedDocument(){
-  const documentID = $('#document').val();
+  var documentID = $('#document').val();
   $.ajax({
     url : 'printed-requests/filter',
     type: 'get',

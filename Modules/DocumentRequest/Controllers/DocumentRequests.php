@@ -17,6 +17,17 @@ class DocumentRequests extends BaseController
     }
   }
 
+  public function completed(){
+    $this->data['request_documents'] = $this->requestDetailModel->getDetails();
+    $this->data['requests'] = $this->requestModel->getDetails(['requests.completed_at !=' => null, 'requests.status !=' => 'd']);
+    $this->data['office_approvals'] = $this->officeApprovalModel->getDetails(['requests.completed_at !=' => null, 'request_details.status !=' => 'd']);
+    // echo "<pre>";
+    // print_r($this->data['office_approvals']);
+    // die();
+	  $this->data['view'] = 'Modules\DocumentRequest\Views\requests\completed';
+	  return view('template/index', $this->data);
+  }
+
   public function index()
   {
     $this->data['requests'] = $this->requestModel->getDetails(['requests.status' => 'p']);
@@ -49,12 +60,12 @@ class DocumentRequests extends BaseController
       $student = $this->userModel->get(['username' => $_POST['data'][$key][1]]);
       $this->email->setTo($student[0]['email']);
       $this->email->setSubject('Document Request Update');
-      $this->email->setFrom('ODRS', 'PUP');
-      $this->email->setMessage('Your Request has been confirmed, your request is now being process');
+      $this->email->setFrom('ODRS', 'PUP-Taguig ODRS');
+      $this->email->setMessage('<p>Good day!</p> <p>Your requested document/s has been approved!</p> <p>Please be reminded that you\'ll be notified via email once your requested document is done and is ready for its next step process.
+</p> <p>Thank you!</p>');
       if($this->requestModel->confirmRequest($_POST['data']))
         $this->email->send();
     }
-    // return print_r($this->requestModel->denyRequest($_POST));
 
 
     return $this->index();
@@ -77,7 +88,7 @@ class DocumentRequests extends BaseController
     $this->email->setTo($student[0]['email']);
     $this->email->setSubject('Document Request Update');
     $this->email->setFrom('ODRS', 'PUP');
-    $this->email->setMessage('Your Request is on hold : ' . $_POST['remark']);
+    $this->email->setMessage('<p>Good day!</p> <p>Your requested document/s has been denied due to the following reasons!</p> <p>'. $_POST['remark'].'<p>Please check your ODRS Account for further information</p></p> <p>Thank you!</p> ');
     if($this->officeApprovalModel->holdRequest($_POST))
       $this->email->send();
     return $this->approval();
@@ -86,16 +97,22 @@ class DocumentRequests extends BaseController
   public function approveRequest()
   {
     foreach($_POST['data'] as $key => $value){
+      $office = $this->officeModel->get(['id' => $_SESSION['office_id']])[0];
       $students = $this->userModel->get(['username' => $_POST['data'][$key][2]]);
       $this->email->setTo($students[0]['email']);
       $this->email->setSubject('Document Request Update');
       $this->email->setFrom('ODRS', 'PUP');
-      $this->email->setMessage('You dont have any sanctions your request ' . $_POST['data'][$key][5] . ' is now to be processed');
+      $this->email->setMessage('<p>Good day!</p> <p>Your requested document/s has been approved by the Office of the '.$office['office'].'!</p> <p>'.  $_POST['data'][$key][5].' <p>Please be reminded that you\'ll be notified via email once your requested document is done and is ready for its next step process.</p> </p> <p>Thank you!</p>');
 
       $this->email->send();
-
+      if($this->officeApprovalModel->approveRequest($_POST['data'][$key]))
+      {
+        if (count($this->officeApprovalModel->get(['request_detail_id' => $_POST['data'][$key][1]])) == count($this->officeApprovalModel->get(['request_detail_id' => $_POST['data'][$key][1], 'status' => 'c']))) {
+          $this->requestDetailModel->update($_POST['data'][$key][1], ['status' => 'p']);
+        }
+      }
     }
-    if($this->officeApprovalModel->approveRequest($_POST['data']))
+
       return $this->approval();
 
   }
@@ -168,7 +185,7 @@ class DocumentRequests extends BaseController
     $mail->setTo($_POST['email']);
     $mail->setSubject('Ready to claim Document');
     $mail->setFrom('ODRS', 'PUP');
-    $mail->setMessage('Your document is ready to claim: ' . $request['document']);
+    $mail->setMessage('<p>Good day! </p><p>Your requested document is now ready to claim</p>' . $request['document'] . '<p>You can now download the stub</p><p>Thank you!</p>');
     $mail->send();
     return $data['page'].'';
   }

@@ -31,7 +31,8 @@ class Requests extends BaseController
 
   public function add(){
 
-		$this->data['documents'] = $this->documentModel->get();
+    $this->data['documents'] = $this->documentModel->get();
+		$this->data['value'] = $this->studentModel->getDetail(['students.id' => $_SESSION['student_id']])[0];
     $this->data['view'] = 'Modules\DocumentRequest\Views\requests\form';
 		if ($this->request->getMethod() == 'post')
     {
@@ -46,9 +47,9 @@ class Requests extends BaseController
 				$requests['reason'] = $_POST['reason'];
 
 				$slugs = random_string('alnum', 12);
-				// while(!empty($this->requestModel->getBySlugs($slugs))){
-				// 	$slugs = random_string('alnum', 12);
-				// }
+				while(!empty($this->requestModel->getBySlugs($slugs))){
+					$slugs = random_string('alnum', 12);
+				}
 				$requests['slug'] = $slugs;
 				$data['request'] = array_merge($data['request'], $requests);
 
@@ -97,7 +98,7 @@ class Requests extends BaseController
   public function history()
   {
     $this->data['request_documents'] = $this->requestDetailModel->getDetails();
-    $this->data['requests'] = $this->requestModel->getDetails(['student_id' => $_SESSION['student_id'], 'requests.completed_at !=' => null, 'status !=' => 'd']);
+    $this->data['requests'] = $this->requestModel->getDetails(['student_id' => $_SESSION['student_id'], 'requests.completed_at !=' => null, 'requests.status !=' => 'd']);
     $this->data['office_approvals'] = $this->officeApprovalModel->getDetails(['requests.student_id' => $_SESSION['student_id'], 'requests.completed_at !=' => null, 'request_details.status !=' => 'd']);
     // echo "<pre>";
     // print_r($this->data['office_approvals']);
