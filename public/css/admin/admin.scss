@@ -63,34 +63,52 @@ body{
 }
 
 
-#dashboard{
+.dashboard{
     font-family: 'Open Sans', sans-serif;
-    font-size: .95em;
-    small{font-style: italic;}
+    
+    .card {
 
-    .card{
-        img{height: 8em;}
-        box-shadow: 0 0 6px rgb(216, 216, 216);
-        .card-header{
-            background: white;
-            padding-top: 15px;
-            padding-bottom: 15px;
+        &.pending{
+            border-left: .35em solid red!important;
+            i{color: rgb(153, 153, 153);}
         }
-        .list-group{
-            i{
-                margin-right: 1em;
-                font-size: normal;
-                width: 2.5em;
-                height: 2em;
-                background-color: rgb(240, 240, 240);
-                box-shadow: 0 1px 1px 0 rgba(223, 194, 194, 0.5); 
-                line-height: 30px;
-                text-align: center;
-                border-radius: 4px;
-            }
+        &.process{
+            border-left: .35em solid goldenrod!important;
+            i{color: rgb(153, 153, 153);}
+        }
+        &.printed{
+            border-left: .35em solid rgb(0, 195, 255)!important;
+            i{color: rgb(153, 153, 153);}
+        }
+        &.complete{
+            border-left: .35em solid green!important;
+            i{color: rgb(153, 153, 153);}
+        }
+    }
+    
+    // Bar Chart
+    .chart-bar {
+        position: relative;
+        height: 10rem;
+        width: 100%;
+        @media (min-width: 768px) {
+            height: 20rem;
+        }
+        color: #965252;
+    }
+    
+    // Pie Chart
+    .activity-log {
+        position: relative;
+        width: 100%;
+
+        table{
+            font-size: .9em;
         }
         
     }
+    
+    
 }
 
 

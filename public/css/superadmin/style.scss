@@ -260,6 +260,37 @@ body{
 	  }  
   	}
    }  
+
+   #dashboard{
+		.card{
+			&.activity-log{
+				border-top: .35em solid rgb(72, 72, 146);
+			}
+
+			&.chart{
+				border-top: .35em solid rgb(128, 51, 0);
+			}
+
+			&.setup{
+				border-left: .35em solid rgb(218, 0, 0)!important;
+			}
+			&.registered{
+				border-left: .35em solid green!important;
+			}
+		}
+	
+	// Bar Chart
+	.chart-bar {
+		position: relative;
+		height: 10rem;
+		width: 100%;
+		@media (min-width: 768px) {
+			height: 20rem;
+		}
+		color: #965252;
+	}
+	
+   }
 }
 
 
