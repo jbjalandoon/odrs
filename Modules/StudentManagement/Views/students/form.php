@@ -121,7 +121,7 @@
 
 					<div class="row">
 						<div class="col-12">
-						<button type="submit" class="btnRegister float-end btn">Submit</button>
+						<button type="submit" class="btnRegister float-end btn btn-primary">Submit</button>
 						</div>
 					</div>
 				</div>

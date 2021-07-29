@@ -40,7 +40,7 @@
                       <h2>Students</h2>
                     </div>
                     <div class="col-md-6">
-                      <a href="students/add" class="float-end btn"> Add Student</a>
+                      <a href="students/add" class="float-end btn btn-add"><i class="fas fa-plus-square"></i> Add Student</a>
                     </div>
                   </div>
                     <div class="row">
@@ -89,7 +89,7 @@
             </div>
           </div>
           <!-- *************** NOT YET SETUP ************** -->
-          <div class="tab-pane fade show active" id="pills-notset" role="tabpanel" aria-labelledby="pills-notsetup">
+          <div class="tab-pane fade show" id="pills-notset" role="tabpanel" aria-labelledby="pills-notsetup">
             <div class="card">
               <div class="card-body">
                 <div class="container-fluid p-1">
