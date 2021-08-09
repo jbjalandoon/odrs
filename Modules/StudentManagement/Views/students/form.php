@@ -32,46 +32,6 @@
 							</div>
 						<?php endif; ?>
 					</div>
-					<div class="form-group mb-3">
-						<label for="contact" class="form-label">Contact *</label>
-						<input type="text" name="contact" class="form-control" value="">
-						<?php if (isset($errors['contact'])): ?>
-							<div class="text-danger">
-								<?=esc($errors['contact'])?>
-							</div>
-						<?php endif; ?>
-					</div>
-					<div class="form-group mb-3">
-						<div class="row">
-							<div class="col-md-4">
-								<div class="max	l">
-									<label for="gender" class="form-label">Gender *</label>
-									<br>
-									<label class="radio inline">
-											<input type="radio" name="gender" value="m" checked>
-											<span> Male </span>
-									</label>
-									<label class="radio inline">
-											<input type="radio" name="gender" value="f">
-											<span>Female </span>
-									</label>
-								</div>
-							</div>
-							<div class="col-md-8">
-								<label for="birthdate" class="form-label">Birthdate</label>
-								<input type="date" name="birthdate" class="form-control" value="">
-								<?php if (isset($errors['birthdate'])): ?>
-									<div class="text-danger">
-										<?=esc($errors['birthdate'])?>
-									</div>
-								<?php endif; ?>
-							</div>
-						</div>
-						
-					</div>
-					<div class="form-group mb-3">
-						
-					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group mb-3">
@@ -100,23 +60,6 @@
 								<?=esc($errors['lastname'])?>
 							</div>
 						<?php endif; ?>
-					</div>
-					<div class="form-group mb-3">
-						<label for="course_id" class="form-label">Course *</label>
-							<select class="form-select" name="course_id">
-								<?php if (isset($courses)): ?>
-									<?php foreach ($courses as $course): ?>
-										<option value="<?=esc($course['id'])?>"><?=esc($course['course'])?></option>
-									<?php endforeach; ?>
-								<?php else: ?>
-										<option value="" disabled selected>-- No Available Course --</option>
-								<?php endif; ?>
-							</select>
-							<?php if (isset($errors['course_id'])): ?>
-								<div class="text-danger">
-									<?=esc($errors['course_id'])?>
-								</div>
-							<?php endif; ?>
 					</div>
 
 					<div class="row">

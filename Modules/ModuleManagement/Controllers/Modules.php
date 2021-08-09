@@ -19,6 +19,7 @@ class Modules extends BaseController
   {
     $this->data['view'] = 'Modules\ModuleManagement\Views\modules\index';
     $this->data['modules'] = $this->moduleModel->get();
+    $this->data['modules_deleted'] = $this->moduleModel->onlyDeleted()->get();
     return view('template\index', $this->data);
   }
 
@@ -66,6 +67,11 @@ class Modules extends BaseController
   public function delete($id)
   {
     if($this->moduleModel->softDelete($id))
-    return redirect()->to(base_url('modules'));
+      return redirect()->to(base_url('modules'));
+  }
+  public function restore($id)
+  {
+    if($this->moduleModel->restore($id))
+      return redirect()->to(base_url('modules'));
   }
 }

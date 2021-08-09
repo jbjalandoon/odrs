@@ -18,6 +18,7 @@ class Notes extends BaseController
   public function index()
   {
     $this->data['notes'] = $this->noteModel->get();
+    $this->data['notes_deleted'] = $this->noteModel->onlyDeleted()->get();
     $this->data['view'] = 'Modules\DocumentManagement\Views\notes\index';
 
     return view('template/index', $this->data);
@@ -87,14 +88,28 @@ class Notes extends BaseController
   {
     if($this->noteModel->softDelete($id))
     {
-      $this->session->setFlash('success_message', 'Successfully deleted notes');
+      $this->session->setFlashData('success_message', 'Successfully deleted notes');
 
     }
     else
     {
       die('Something went wrong!');
     }
-    return redirect()->to(base_url('documents'));
+    return redirect()->to(base_url('notes'));
+  }
+
+  function restore($id)
+  {
+    if($this->noteModel->restore($id))
+    {
+      $this->session->setFlashData('success_message', 'Successfully resore notes');
+
+    }
+    else
+    {
+      die('Something went wrong!');
+    }
+    return redirect()->to(base_url('notes'));
   }
 
 }

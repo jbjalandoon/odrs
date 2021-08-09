@@ -22,16 +22,16 @@
     <?php else: ?>
     <link rel="stylesheet" href="/css/student/student.css">
     <?php endif; ?>
-    
+
     <title>ODRS</title>
 
   </head>
   <?php if($_SESSION['role'] == 'Admin'): ?>
-    <body class="d-flex flex-column vh-100 overflow-hidden">
+    <body class="d-flex flex-column vh-100">
   <?php endif;?>
     <body>
 
-  
+
     <?php if($_SESSION['role'] == 'Superadmin'): ?>
       <?= view('template/superadmin') ?>
       <?= view('template/sidebar') ?>

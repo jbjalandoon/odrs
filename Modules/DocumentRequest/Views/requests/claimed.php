@@ -4,7 +4,7 @@
           <div class="row">
             <div class="col-12 mb-3">
               <span class="h2">Claimed Request</span>
-              <button class="float-end btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              <button class="float-end btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                 Generate Report
               </button>
             </div>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="row">
                       <div class="col-12">
-                        <button type="submit" class="float-end btn" formtarget="_blank"> Generate </button>
+                        <button type="submit" class="float-end btn btn-secondary" formtarget="_blank"> Generate </button>
                       </div>
                     </div>
                   </form>

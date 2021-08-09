@@ -111,8 +111,8 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <?php if (!empty($courses)): ?>
-                              <?php foreach ($courses as $course): ?>
+                            <?php if (!empty($courses_deleted)): ?>
+                              <?php foreach ($courses_deleted as $course): ?>
                                 <tr>
                                   <td>#</td>
                                   <td><?=ucwords(esc($course['course']))?></td>
@@ -120,7 +120,7 @@
                                   <td><?=ucwords(esc($course['type']))?></td>
                                   <td>Date</td>
                                   <td class="text-center">
-                                    <?=esc(buttons($allPermissions, ['edit-role', 'delete-role'], 'roles', $course['id']))?>
+                                    <?=esc(buttons($allPermissions, ['restore-all'], 'courses', $course['id']))?>
                                   </td>
                                 </tr>
                               <?php endforeach; ?>

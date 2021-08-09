@@ -117,15 +117,6 @@ class Validation
 				'is_unique' => 'Email is already in used'
 			]
 		],
-		'contact' => [
-			'rules' => 'required|numeric|exact_length[11]',
-			'label' => 'Contact',
-			'errors' => [
-				'required' => 'Please enter contact',
-				'numeric' => 'Please enter numeric only',
-				'exact_length' => 'Enter 11 digits number'
-			]
-		],
 		'firstname' => [
 			'rules' => 'alpha_space|required',
 			'label' => 'First Name',
@@ -142,21 +133,6 @@ class Validation
 				'required' => 'Please enter first name'
 			]
 		],
-		'course_id' => [
-			'rules' => 'required',
-			'label' => 'Course',
-			'errors' => [
-				'required' => 'Enter Course'
-			]
-		],
-		'birthdate' => [
-			'rules' => 'required|valid_date',
-			'label' => 'Birthdate',
-			'errors' => [
-				'required' => 'Enter birthdate',
-				'valid_date' => 'Enter valid date'
-			]
-		]
 	];
 
 	public $user = [

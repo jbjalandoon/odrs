@@ -127,8 +127,8 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <?php if (!empty($documents)): ?>
-                              <?php foreach ($documents as $document): ?>
+                            <?php if (!empty($documents_deleted)): ?>
+                              <?php foreach ($documents_deleted as $document): ?>
                                 <tr>
                                   <td>#</td>
                                   <td><?=ucwords(esc($document['document']))?></td>
@@ -144,7 +144,7 @@
                                   </td>
                                   <td>Date</td>
                                   <td class="text-center">
-                                    <?=esc(buttons($allPermissions, ['restore'], 'documents', $document['id']))?>
+                                    <?=esc(buttons($allPermissions, ['restore-all'], 'documents', $document['id']))?>
                                   </td>
                                 </tr>
                               <?php endforeach; ?>
@@ -163,4 +163,3 @@
     </div>
   </div>
 </section>
-

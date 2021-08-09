@@ -18,6 +18,7 @@ class Roles extends BaseController
   public function index()
   {
     $this->data['roles'] = $this->roleModel->get();
+    $this->data['roles_deleted'] = $this->roleModel->onlyDeleted()->get();
     $this->data['view'] = 'Modules\UserManagement\Views\roles\index';
     return view('template\index', $this->data);
   }
@@ -77,6 +78,19 @@ class Roles extends BaseController
     if($this->roleModel->softDelete($id))
     {
       $this->session->setFlashData('success_message', 'Successfully deleted role');
+    }
+    else
+    {
+      die('Something went wrong');
+    }
+    return redirect()->to(base_url('roles'));
+  }
+
+  public function restore($id)
+  {
+    if($this->roleModel->restore($id))
+    {
+      $this->session->setFlashData('success_message', 'Successfully restore role');
     }
     else
     {

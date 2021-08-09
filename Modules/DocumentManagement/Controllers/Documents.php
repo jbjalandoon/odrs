@@ -18,6 +18,7 @@ class Documents extends BaseController
   public function index()
   {
     $this->data['documents'] = $this->documentModel->get();
+    $this->data['documents_deleted'] = $this->documentModel->onlyDeleted()->get();
     $this->data['view'] = 'Modules\DocumentManagement\Views\documents\index';
 
     return view('template/index', $this->data);
@@ -110,6 +111,20 @@ class Documents extends BaseController
   {
     $data['requirements'] = $this->documentRequirementModel->getDetails(['document_requirements.document_id' => $_GET['id']]);
     return view('Modules\DocumentManagement\Views\documents\requirements', $data);
+  }
+
+  function restore($id)
+  {
+    if($this->documentModel->restore($id))
+    {
+      $this->session->setFlashData('success_message', 'Successfully restore document');
+
+    }
+    else
+    {
+      die('Something went wrong!');
+    }
+    return redirect()->to(base_url('notes'));
   }
 
 }

@@ -52,11 +52,14 @@ class RolePermissionsModel extends BaseModel
     return $this->findAll();
   }
 
-  public function softDeleteByRoleId($id){
-    return $this->where('role_id', $id)->delete();
+  public function softDeleteByRoleId(){
+    return $this->emptyTable();
   }
-  public function EditByModuleId($data, $id){
-    return $this->update(['module_id' => $id], $data);
+  public function EditByModuleId($data, $role_id, $permission_id){
+    $builder->set($data);
+    $builder->where('role_id', $role_id);
+    $builder->where('permission_id', $permission_id);
+    return $this->update();
   }
 
 }

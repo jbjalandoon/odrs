@@ -11,7 +11,7 @@ class OfficesModel extends BaseModel
 
   protected $table = 'offices';
 
-  protected $allowedFields = ['id', 'office'];
+  protected $allowedFields = ['id', 'office','deleted_at'];
 
   function __construct(){
     parent::__construct();

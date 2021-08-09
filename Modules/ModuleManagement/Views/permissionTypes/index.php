@@ -108,15 +108,15 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <?php if (!empty($permissionsTypes)): ?>
-                              <?php foreach ($permissionsTypes as $permissionsType): ?>
+                            <?php if (!empty($permissionsTypes_deleted)): ?>
+                              <?php foreach ($permissionsTypes_deleted as $permissionsType): ?>
                                 <tr>
                                   <td>#</td>
                                   <td><?=ucwords(esc($permissionsType['type']))?></td>
                                   <td><?=esc($permissionsType['slug'])?></td>
                                   <td>Date</td>
                                   <td class="text-center">
-                                    #
+                                    <?=esc(buttons($allPermissions, ['restore-all'], 'permission-types', $permissionsType['id']))?>
                                   </td>
                                 </tr>
                               <?php endforeach; ?>

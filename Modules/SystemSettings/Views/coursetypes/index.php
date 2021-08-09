@@ -36,13 +36,13 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <?php if (!empty($types)): ?>
-                          <?php foreach ($types as $type): ?>
+                        <?php if (!empty($types_deleted)): ?>
+                          <?php foreach ($types_deleted as $type): ?>
                             <tr>
                               <td>#</td>
                               <td><?=ucwords(esc($type['type']))?></td>
                               <td class="text-center">
-                                <?=esc(buttons($allPermissions, ['edit-course-type', 'delete-course-type'], 'course-types', $type['id']))?>
+                                <?=esc(buttons($allPermissions, ['restore-all'], 'course-types', $type['id']))?>
                               </td>
                             </tr>
                           <?php endforeach; ?>

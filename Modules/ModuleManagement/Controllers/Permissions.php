@@ -19,6 +19,7 @@ class Permissions extends BaseController
   {
     $this->data['view'] = 'Modules\ModuleManagement\Views\permissions\index';
     $this->data['permissions'] = $this->permissionModel->getDetails();
+    $this->data['permissions_deleted'] = $this->permissionModel->onlyDeleted()->getDetails();
     $this->data['modules'] = $this->moduleModel->get();
     $this->data['permission_types'] = $this->permissionTypeModel->get();
     return view('template\index', $this->data);
@@ -86,6 +87,18 @@ class Permissions extends BaseController
     }
     return redirect()->to(base_url('permissions'));
   }
+
+  public function restore($id){
+      if($this->permissionModel->restore($id))
+      {
+        $this->session->setFlashData('success_message', 'Successfully restore permission');
+      }
+      else
+      {
+        die('Something Went Wrong!');
+      }
+      return redirect()->to(base_url('permissions'));
+    }
 
   public function filter(){
     if($_GET['module_id'] == 0 && $_GET['type_id'] == 0){
