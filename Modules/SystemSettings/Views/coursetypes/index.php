@@ -14,6 +14,8 @@
             </button>
           </li>
         </ul>
+      </div>
+    </div>
         <div class="tab-content" id="pills-tabContent">
           <!-- CONTENTS -->
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -69,28 +71,6 @@
                   </div>
                 </div>
               </div>
-<<<<<<< HEAD
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="table-responsive">
-                    <table class="table table-striped table-bordered mt-3 dataTable" style="width:100%">
-                      <thead class="table-dark">
-                        <tr>
-                          <th width="5%">#</th>
-                          <th width="10%">Course Type</th>
-                          <th width="5%">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php if (!empty($types_deleted)): ?>
-                          <?php foreach ($types_deleted as $type): ?>
-                            <tr>
-                              <td>#</td>
-                              <td><?=ucwords(esc($type['type']))?></td>
-                              <td class="text-center">
-                                <?=esc(buttons($allPermissions, ['restore-all'], 'course-types', $type['id']))?>
-                              </td>
-=======
             </div>
           </div>
           <!-- **************** Recycle Bin *************** -->
@@ -124,7 +104,6 @@
                               <th width="10%">Course Type</th>
                               <th width="10%">Date Deleted</th>
                               <th width="5%">Action</th>
->>>>>>> origin/ui_design
                             </tr>
                           </thead>
                           <tbody>
@@ -135,7 +114,7 @@
                                   <td><?=ucwords(esc($type['type']))?></td>
                                   <td>Date</td>
                                   <td class="text-center">
-                                    <?=esc(buttons($allPermissions, ['edit-course-type', 'delete-course-type'], 'course-types', $type['id']))?>
+                                    <?=buttons($allPermissions, ['edit-course-type', 'delete-course-type'], 'course-types', $type['id'])?>
                                   </td>
                                 </tr>
                               <?php endforeach; ?>
@@ -149,7 +128,5 @@
               </div>
             </div>
           </div>
-      </div>
-    <div>
-  </div>
+        </div>
 </section>
