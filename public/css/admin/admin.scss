@@ -7,6 +7,7 @@ body{
     footer{
         img{width: 2%;}
     }
+    // overflow-y: scroll!important;
 }
 
 #header{
@@ -118,6 +119,9 @@ body{
     font-size: .9em;
 
     .content{
+        // .card{
+        //     overflow-y: scroll!important;
+        // }
         .table{
             border-collapse: collapse;
             margin-left: auto;

@@ -27,7 +27,7 @@
 
   </head>
   <?php if($_SESSION['role'] == 'Admin'): ?>
-    <body class="d-flex flex-column vh-100 overflow-hidden">
+    <body class="d-flex flex-column vh-100">
   <?php endif;?>
     <body>
 
