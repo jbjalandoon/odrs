@@ -29,7 +29,7 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <button type="submit" class="float-end btn">Submit</button>
+            <button type="submit" class="float-end btn btn-primary">Submit</button>
           </div>
         </div>
       </form>

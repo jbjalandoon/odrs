@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mt-5">
   <div class="card">
     <div class="card-body p-4">
       <nav style="--bs-breadcrumb-divider: '<'; font-weight: bold;" aria-label="breadcrumb">
@@ -126,7 +126,7 @@
 
         <div class="row">
           <div class="col-12">
-            <button type="submit" class="float-end btn" name="button">Submit</button>
+            <button type="submit" class="float-end btn btn-primary" name="button">Submit</button>
           </div>
         </div>
       </form>
