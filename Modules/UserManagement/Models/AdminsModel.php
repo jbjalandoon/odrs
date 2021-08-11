@@ -11,7 +11,7 @@ class AdminsModel extends BaseModel
 
   protected $table = 'admins';
 
-  protected $allowedFields = ['id', 'firstname', 'lastname', 'middlename', 'contact', 'user_id'];
+  protected $allowedFields = ['id', 'firstname', 'lastname', 'middlename', 'contact', 'user_id','deleted_at'];
 
   function __construct(){
     parent::__construct();
@@ -39,5 +39,12 @@ class AdminsModel extends BaseModel
     $this->where('user_id', $id);
     return $this->delete();
   }
+
+  public function restoreByUserId($id){
+    $this->where('user_id', $id);
+    $this->set('deleted_at', null);
+    return $this->update();
+  }
+
 
 }

@@ -1,6 +1,22 @@
 var server = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '/');
 script();
 
+function showCheckbox(){
+  $('.assigned-role').addClass('d-none')
+  $('.edit-button').addClass('d-none')
+  $('.checkbox').removeClass('d-none')
+  $('.cancel-button').removeClass('d-none')
+  $('#submit').removeClass('d-none')
+}
+
+function cancelCheckbox(){
+  $('.assigned-role').removeClass('d-none')
+  $('.edit-button').removeClass('d-none')
+  $('.checkbox').addClass('d-none')
+  $('.cancel-button').addClass('d-none')
+  $('#submit').addClass('d-none')
+}
+
 const showLoading = function() {
   let timerInterval
   Swal.fire({
@@ -59,12 +75,27 @@ function confirmSelect()
         type: "POST",
         data: {data},
         url: "document-requests/request-confirm",
-        success: function(msg){
-          $("#content").html(msg);
-          setInterval(location.reload(), 500);
+        beforeSend: function(){
+          showLoading();
+        },
+        success: function(response){
+          swal.close()
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfuly Approved',
+          }).then(function(){
+            location.reload()
+          })
         },
         error: function (request, error) {
-          alert(" Can't do because: " + error);
+          swal.close()
+          Swal.fire({
+            icon: 'error',
+            title: 'Something went wrong!'
+          }).then(function(){
+            location.reload()
+          })
+          // location.reload()
         },
       });
     }

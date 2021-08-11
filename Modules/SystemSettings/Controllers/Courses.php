@@ -18,6 +18,7 @@ class Courses extends BaseController
   public function index()
   {
     $this->data['courses'] = $this->courseModel->getDetails();
+    $this->data['courses_deleted'] = $this->courseModel->onlyDeleted()->getDetails();
     $this->data['view'] = 'Modules\SystemSettings\Views\courses\index';
 
     return view('template/index', $this->data);

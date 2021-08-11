@@ -19,6 +19,7 @@ class PermissionTypes extends BaseController
   {
     $this->data['view'] = 'Modules\ModuleManagement\Views\permissionTypes\index';
     $this->data['permissionsTypes'] = $this->permissionTypeModel->get();
+    $this->data['permissionsTypes_deleted'] = $this->permissionTypeModel->onlyDeleted()->get();
     return view('template\index', $this->data);
   }
 
@@ -65,6 +66,12 @@ class PermissionTypes extends BaseController
   public function delete($id)
   {
     if($this->permissionTypeModel->softDelete($id))
+    return redirect()->to(base_url('permission-types'));
+  }
+
+  public function restore($id)
+  {
+    if($this->permissionTypeModel->restore($id))
     return redirect()->to(base_url('permission-types'));
   }
 

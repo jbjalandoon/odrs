@@ -30,6 +30,32 @@
         <div class="row justify-content-center">
           <div class="col-4">
             <div class="form-group mb-3">
+              <label for="landing_page" class="form-label">Landing Page</label>
+              <input value="<?=isset($value['landing_page']) ? esc($value['landing_page']): ''?>" type="text" name="landing_page" class="form-control" id="landing_page">
+              <?php if (isset($error['landing_page'])): ?>
+                <div class="text-danger">
+                  <?=esc($error['landing_page'])?>
+                </div>
+              <?php endif; ?>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <div class="form-group mb-3">
+              <label for="identifier" class="form-label">Identifier</label>
+              <input value="<?=isset($value['identifier']) ? esc($value['identifier']): ''?>" type="text" name="identifier" class="form-control" id="identifier">
+              <?php if (isset($error['identifier'])): ?>
+                <div class="text-danger">
+                  <?=esc($error['identifier'])?>
+                </div>
+              <?php endif; ?>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <div class="form-group mb-3">
               <label for="description" class="form-label">Description</label>
               <textarea name="description" class="form-control" id="description" rows="5"><?=isset($value['description']) ? esc($value['description']): ''?></textarea>
               <?php if (isset($error['description'])): ?>

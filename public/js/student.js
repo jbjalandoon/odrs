@@ -101,7 +101,6 @@ $(document).ready(function() {
                   html: `Please enter <strong>STATUS</strong>`,
                   showCancelButton: ctr > 0,
                   preConfirm: (value) => {
-                    alert(value)
                     if (value == 'alumni') {
                       questions.push({
                         input: `text`,
@@ -114,8 +113,14 @@ $(document).ready(function() {
                     }
                     else if (value == 'enrolled') {
                       questions.push({
-                        input: `number`,
-                        title: `First Time Setup`,
+                        input: `radio`,
+                        inputOptions: {
+                          '1': 'First Year',
+                          '2': 'Second Year',
+                          '3': 'Third Year',
+                          '4': 'Fourth Year',
+                          '5': 'Fifth Year',
+                        },
                         html: `Please enter <strong>YEAR LEVEL</strong>`,
                         showCancelButton: ctr > 0,
                         currentProgressStep: ctr,
@@ -229,7 +234,6 @@ $(document).ready(function() {
     }
 
     $(".status").change(function(){
-      alert($(this).val())
         if ($(this).val() == 'enrolled') {
           $("#year_graduated").prop('disabled', true)
           $("#year_graduated").prop('hidden', true)

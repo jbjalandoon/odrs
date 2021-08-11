@@ -61,7 +61,7 @@
                                   <td><?=ucfirst(esc($user['role']))?></td>
                                   <td><?=ucfirst(esc($user['email']))?></td>
                                   <td class="text-center">
-                                    <?=esc(buttons($allPermissions, ['edit-users', 'delete-users'], 'users', $user['id']))?>
+                                    <?=esc(buttons($allPermissions, ['delete-users'], 'users', $user['user_id']))?>
                                   </td>
                                 </tr>
                               <?php endforeach; ?>
@@ -111,8 +111,8 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <?php if (!empty($users)): ?>
-                              <?php foreach ($users as $user): ?>
+                            <?php if (!empty($users_deleted)): ?>
+                              <?php foreach ($users_deleted as $user): ?>
                                 <tr>
                                   <td>#</td>
                                   <td><?=ucwords(esc($user['firstname']) . ' ' . $user['lastname'])?></td>
@@ -120,7 +120,7 @@
                                   <td><?=ucfirst(esc($user['email']))?></td>
                                   <td>Date</td>
                                   <td class="text-center">
-                                    <?=esc(buttons($allPermissions, ['restore'], 'users', $user['id']))?>
+                                    <?=esc(buttons($allPermissions, ['restore-all'], 'users', $user['user_id']))?>
                                   </td>
                                 </tr>
                               <?php endforeach; ?>

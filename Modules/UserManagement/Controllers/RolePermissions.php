@@ -19,7 +19,8 @@ class RolePermissions extends BaseController
   {
     $this->data['roles'] = $this->roleModel->get();
     $this->data['modules'] = $this->moduleModel->get();
-    $this->data['permissions'] = $this->rolePermissionModel->get();
+    $this->data['permissions'] = $this->permissionModel->get();
+    $this->data['permissions_roles'] = $this->rolePermissionModel->get();
     $this->data['permission_types'] = $this->permissionTypeModel->get();
     $this->data['view'] = 'Modules\UserManagement\Views\permissions\index';
     return view('template\index', $this->data);
@@ -45,33 +46,31 @@ class RolePermissions extends BaseController
     return view('template\index', $this->data);
   }
 
-  public function edit($id)
+  public function edit()
   {
-    $this->data['edit'] = true;
-    $this->data['value'] = $this->roleModel->get(['id' => $id])[0];
-    $this->data['permissions'] = $this->permissionModel->get();
-    $this->data['modules'] = $this->moduleModel->get();
-    $this->data['role_permissions'] = $this->rolePermissionModel->getDetails(['roles.id' => $id]);
-    $this->data['view'] = 'Modules\UserManagement\Views\permissions\form';
     if ($this->request->getMethod() === 'post') {
-      if ($this->rolePermissionModel->softDeleteByRoleId($id)) {
-        if(!empty($_POST['permission_id'])){
-          foreach ($_POST['permission_id'] as $key => $value) {
-            $permission = $this->rolePermissionModel->get(['role_id' => $id, 'permission_id' => $value]);
-            if (!empty($permission)) {
-              $this->rolePermissionModel->EditByModuleId(['deleted_at' => null],$value);
-            } else {
-              $this->rolePermissionModel->input(['role_id' => $id, 'permission_id' => $value]);
-            }
-          }
+      // echo "<pre>";
+      // print_r($_POST);
+      // die();
+      if (!empty($_POST['value'])) {
+        foreach($_POST['value'] as $key => $value){
+          $_POST['value'][$key] = explode(',', $value);
         }
-      } else {
+      }
+      // echo "<pre>";
+      // print_r($_POST['value']);
+      // die();
+      if (!$this->rolePermissionModel->softDeleteByRoleId()) {
         die('Something Went Wrong!');
       }
+      if (!empty($_POST['value'])) {
+        foreach ($_POST['value'] as $data) {
+          $this->rolePermissionModel->input(['role_id' => $data[1], 'permission_id' => $data[0]]);
+        }
+      }
       $this->session->setFlashData('success_message', 'Successfully Edited a role');
-      return redirect()->to(base_url('role-permissions'));
     }
-    return view('template\index', $this->data);
+    return redirect()->to(base_url('role-permissions'));
   }
 
   public function delete($id)

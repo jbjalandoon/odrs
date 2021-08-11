@@ -8,7 +8,7 @@
       <ul class="navbar-nav">
         <li class="nav-item dropdown me-3">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <span><?=esc($_SESSION['name'])?></span>
+              <span><?=ucwords(esc($_SESSION['name']))?></span>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="/logout">Log out<i class="fas fa-sign-out-alt"></i></a></li>

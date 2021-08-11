@@ -18,6 +18,7 @@ class Offices extends BaseController
   public function index()
   {
     $this->data['offices'] = $this->officeModel->get();
+    $this->data['offices_deleted'] = $this->officeModel->onlyDeleted()->get();
     $this->data['view'] = 'Modules\SystemSettings\Views\offices\index';
     return view('template/index', $this->data);
   }
@@ -81,9 +82,22 @@ class Offices extends BaseController
 
   public function delete($id)
   {
-    if($this->office_model->softDelete($id))
+    if($this->officeModel->softDelete($id))
     {
-      $this->setFlashData('success_message', 'Successfully Deleted');
+      $this->session->setFlashData('success_message', 'Successfully Deleted');
+    }
+    else
+    {
+      die('Something went wrong!');
+    }
+    return redirect()->to(base_url('offices'));
+  }
+
+  public function restore($id)
+  {
+    if($this->officeModel->restore($id))
+    {
+      $this->session->setFlashData('success_message', 'Successfully Restored');
     }
     else
     {

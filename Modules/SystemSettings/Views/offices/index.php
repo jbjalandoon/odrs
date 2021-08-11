@@ -14,6 +14,7 @@
             </button>
           </li>
         </ul>
+      </div>
         <div class="tab-content" id="pills-tabContent">
           <!-- CONTENTS -->
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -57,7 +58,7 @@
                                   <td>#</td>
                                   <td><?=ucwords(esc($office['office']))?></td>
                                   <td class="text-center">
-                                    <?=esc(buttons($allPermissions, ['edit-role', 'delete-role'], 'roles', $office['id']))?>
+                                    <?=esc(buttons($allPermissions, ['edit-role', 'delete-role'], 'offices', $office['id']))?>
                                   </td>
                                 </tr>
                               <?php endforeach; ?>
@@ -100,19 +101,17 @@
                           <tr>
                             <th>#</th>
                             <th>Office</th>
-                            <th>Date Deleted</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <?php if (!empty($offices)): ?>
-                            <?php foreach ($offices as $office): ?>
+                          <?php if (!empty($offices_deleted)): ?>
+                            <?php foreach ($offices_deleted as $office): ?>
                               <tr>
                                 <td>#</td>
                                 <td><?=ucwords(esc($office['office']))?></td>
-                                <td>Date</td>
                                 <td class="text-center">
-                                  <?=esc(buttons($allPermissions, ['edit-role', 'delete-role'], 'roles', $office['id']))?>
+                                  <?=esc(buttons($allPermissions, ['restore-all'], 'offices', $office['id']))?>
                                 </td>
                               </tr>
                             <?php endforeach; ?>
@@ -126,7 +125,6 @@
             </div>
           </div>
           </div>
-        </div>
       </div>
     </div>
   </div>

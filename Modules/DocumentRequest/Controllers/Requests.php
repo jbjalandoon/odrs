@@ -32,7 +32,10 @@ class Requests extends BaseController
   public function add(){
 
     $this->data['documents'] = $this->documentModel->get();
-		$this->data['value'] = $this->studentModel->getDetail(['students.id' => $_SESSION['student_id']])[0];
+		$this->data['value'] = $this->studentModel->getDetail(['students.id' => $_SESSION['student_id']]);
+    if (!empty($this->data['value'])) {
+      $this->data['value'] = $this->data['value'][0];
+    }
     $this->data['view'] = 'Modules\DocumentRequest\Views\requests\form';
 		if ($this->request->getMethod() == 'post')
     {

@@ -112,7 +112,7 @@
                                   <td><?=ucwords(esc($type['type']))?></td>
                                   <td>Date</td>
                                   <td class="text-center">
-                                    <?=esc(buttons($allPermissions, ['edit-course-type', 'delete-course-type'], 'course-types', $type['id']))?>
+                                    <?=buttons($allPermissions, ['edit-course-type', 'delete-course-type'], 'course-types', $type['id'])?>
                                   </td>
                                 </tr>
                               <?php endforeach; ?>

@@ -22,7 +22,7 @@
     <?php else: ?>
     <link rel="stylesheet" href="/css/student/student.css">
     <?php endif; ?>
-    
+
     <title>ODRS</title>
 
   </head>
@@ -31,7 +31,7 @@
   <?php endif;?>
     <body>
 
-  
+
     <?php if($_SESSION['role'] == 'Superadmin'): ?>
       <?= view('template/superadmin') ?>
       <?= view('template/sidebar') ?>

@@ -105,14 +105,14 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <?php if (!empty($notes)): ?>
-                              <?php foreach ($notes as $note): ?>
+                            <?php if (!empty($notes_deleted)): ?>
+                              <?php foreach ($notes_deleted as $note): ?>
                                 <tr>
                                   <td>#</td>
                                   <td><?=ucwords(esc($note['note']))?></td>
                                   <td>Date</td>
                                   <td class="text-center">
-                                    <?=esc(buttons($allPermissions, ['restore-role-permission'], 'role-permissions', $note['id']))?>
+                                    <?=esc(buttons($allPermissions, ['restore-all'], 'notes', $note['id']))?>
                                   </td>
                                 </tr>
                               <?php endforeach; ?>

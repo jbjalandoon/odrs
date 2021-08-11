@@ -19,6 +19,7 @@ class Students extends BaseController
     public function index()
     {
         $this->data['students'] = $this->studentModel->getDetail();
+        $this->data['students_inc'] = $this->studentModel->get(['course_id' => null]);
         $this->data['courses'] = $this->courseModel->get();
         $this->data['academic_status'] = $this->academicStatusModel->get();
         $this->data['view'] = 'Modules\StudentManagement\Views\students\index';

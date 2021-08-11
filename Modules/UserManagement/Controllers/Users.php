@@ -18,6 +18,7 @@ class Users extends BaseController
   public function index()
   {
     $this->data['users'] = $this->adminModel->getDetails();
+    $this->data['users_deleted'] = $this->adminModel->onlyDeleted()->getDetails();
     $this->data['view'] = 'Modules\UserManagement\Views\users\index';
     return view('template\index', $this->data);
   }
@@ -58,6 +59,21 @@ class Users extends BaseController
     {
       if ($this->userModel->softDelete($id)) {
         $this->session->setFlashData('success_message', 'Successfully deleted user');
+      }
+    }
+    else
+    {
+      die('Something went wrong');
+    }
+    return redirect()->to(base_url('users'));
+  }
+
+  public function restore($id)
+  {
+    if($this->adminModel->restoreByUserId($id))
+    {
+      if ($this->userModel->restore($id)) {
+        $this->session->setFlashData('success_message', 'Successfully restored user');
       }
     }
     else

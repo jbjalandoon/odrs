@@ -52,4 +52,8 @@ class BaseModel extends Model
     return $this->delete($id);
   }
 
+  public function restore($id){
+    return $this->update($id, ['deleted_at' => null]);  
+  }
+
 }

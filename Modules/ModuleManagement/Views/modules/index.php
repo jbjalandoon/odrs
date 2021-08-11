@@ -108,15 +108,15 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <?php if (!empty($modules)): ?>
-                              <?php foreach ($modules as $module): ?>
+                            <?php if (!empty($modules_deleted)): ?>
+                              <?php foreach ($modules_deleted as $module): ?>
                                 <tr>
                                   <td>#</td>
                                   <td><?=ucwords(esc($module['module']))?></td>
                                   <td><?=esc($module['slug'])?></td>
                                   <td>Date</td>
                                   <td class="text-center">
-                                    <?php buttons($allPermissions, ['restore'], 'modules', esc($module['id'])) ?>
+                                    <?php buttons($allPermissions, ['restore-all'], 'modules', esc($module['id'])) ?>
                                   </td>
                                 </tr>
                               <?php endforeach; ?>
@@ -134,4 +134,3 @@
     </div>
   </div>
 </section>
-

@@ -41,32 +41,32 @@
                   </div>
                   <div class="row">
                     <div class="col-md-12">
-                      <div class="table-responsive">
-                        <table class="table table-striped table-bordered mt-3 dataTable" style="width:100%">
-                          <thead class="table-dark">
-                            <tr>
-                              <th>#</th>
-                              <th>Role</th>
-                              <th>Description</th>
-                              <th>Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <?php if (!empty($roles)): ?>
-                              <?php foreach ($roles as $role): ?>
-                                <tr>
-                                  <td>#</td>
-                                  <td><?=ucwords(esc($role['role']))?></td>
-                                  <td><?=ucfirst(esc($role['description']))?></td>
-                                  <td class="text-center">
-                                    <?=esc(buttons($allPermissions, ['edit-role', 'delete-role'], 'roles', $role['id']))?>
-                                  </td>
-                                </tr>
-                              <?php endforeach; ?>
-                            <?php endif; ?>
-                          </tbody>
-                        </table>
-                      </div>
+                        <div class="table-responsive">
+                          <table class="table table-striped table-bordered mt-3 dataTable" style="width:100%">
+                            <thead class="table-dark">
+                              <tr>
+                                <th>#</th>
+                                <th>Role</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <?php if (!empty($roles)): ?>
+                                <?php foreach ($roles as $role): ?>
+                                  <tr>
+                                    <td>#</td>
+                                    <td><?=ucwords(esc($role['role']))?></td>
+                                    <td><?=ucfirst(esc($role['description']))?></td>
+                                    <td class="text-center">
+                                      <?=esc(buttons($allPermissions, ['edit-role', 'delete-role'], 'roles', $role['id']))?>
+                                    </td>
+                                  </tr>
+                                <?php endforeach; ?>
+                              <?php endif; ?>
+                            </tbody>
+                          </table>
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -108,15 +108,15 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <?php if (!empty($roles)): ?>
-                              <?php foreach ($roles as $role): ?>
+                            <?php if (!empty($roles_deleted)): ?>
+                              <?php foreach ($roles_deleted as $role): ?>
                                 <tr>
                                   <td>#</td>
                                   <td><?=ucwords(esc($role['role']))?></td>
                                   <td><?=ucfirst(esc($role['description']))?></td>
                                   <td>Date</td>
                                   <td class="text-center">
-                                    <?=esc(buttons($allPermissions, ['restore'], 'roles', $role['id']))?>
+                                    <?=esc(buttons($allPermissions, ['restore-all'], 'roles', $role['id']))?>
                                   </td>
                                 </tr>
                               <?php endforeach; ?>
