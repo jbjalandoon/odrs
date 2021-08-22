@@ -30,6 +30,39 @@ const showLoading = function() {
   })
 };
 
+var adminPaidTable = $('#admin-paid-table').DataTable({
+  "columnDefs" : [{
+    "targets" : [0],
+    "visible" : false,
+    "searchable" : false,
+  }],
+  "bPaginate": true,
+  "bLengthChange": false,
+  "bFilter": true,
+  "bInfo": false,
+  "bAutoWidth": false,
+  "dom": '<"row"<"col-6"<"select-pending mb-3">><"col-6"f>>t<"row"<"col-6"<"action-pending mt-3">><"col-6 float-end mt-3"p>>',
+  fnInitComplete: function(){
+      $('div.select-pending').html('<span class="h2"> Paid Requests </span>');
+    }
+});
+
+var adminPaymentTable = $('#admin-payment-table').DataTable({
+  "columnDefs" : [{
+    "targets" : [0],
+    "visible" : false,
+    "searchable" : false,
+  }],
+  "bPaginate": true,
+  "bLengthChange": false,
+  "bFilter": true,
+  "bInfo": false,
+  "bAutoWidth": false,
+  "dom": '<"row"<"col-6"<"select-pending mb-3">><"col-6"f>>t<"row"<"col-6"<"action-pending mt-3">><"col-6 float-end mt-3"p>>',
+  fnInitComplete: function(){
+      $('div.select-pending').html('<span class="h2"> For Payment </span>');
+    }
+});
 
 var adminPendingTable = $('#admin-pending-table').DataTable({
   "columnDefs" : [{
@@ -83,6 +116,50 @@ function confirmSelect()
           Swal.fire({
             icon: 'success',
             title: 'Successfuly Approved',
+          }).then(function(){
+            location.reload()
+          })
+        },
+        error: function (request, error) {
+          swal.close()
+          Swal.fire({
+            icon: 'error',
+            title: 'Something went wrong!'
+          }).then(function(){
+            location.reload()
+          })
+          // location.reload()
+        },
+      });
+    }
+  });
+}
+
+function acceptRequest(id, student_number)
+{
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "The request will now mark to be process!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: 'POST',
+        url: 'paid/accept-request',
+        data: {
+          'id' : id,
+          'student_number' : student_number
+        },
+        beforeSend: function(){
+          showLoading();
+        },
+        success: function(response){
+          swal.close()
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfuly Accepted',
           }).then(function(){
             location.reload()
           })

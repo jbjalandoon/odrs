@@ -35,6 +35,16 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link sideLink" href="/payment">
+            <i class="far fa-file-alt" style="color: maroon;"></i> For Payment
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link sideLink" href="/paid">
+            <i class="far fa-file-alt" style="color: maroon;"></i> Paid Requests
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link sideLink " href="/on-process-document">
               <i class="fas fa-redo-alt"style="color: goldenrod;"></i> On Process Documents
             </a>

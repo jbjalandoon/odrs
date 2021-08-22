@@ -40,8 +40,9 @@
                       <table class="table table-striped">
                         <thead>
                             <th>Request Code</th>
-                            <th>Document</th>
-                            <th>Date Requested</th>
+                            <th>Documents</th>
+                            <th>Date Submitted</th>
+                            <th>Receipt Info</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
@@ -69,10 +70,15 @@
                                   </ul>
                                 </td>
                                 <td><?=date('F d, Y - h:i A', strtotime(esc($request['created_at'])))?></td>
+                                <td>View</td>
                                 <td>
                                   <?php if ($request['status'] == 'p'): ?>
                                     <a href="#" onclick="deleteRequest(<?=esc($request['id'])?>)" class="btn btn-danger btn-sm">Cancel Request</a>
+                                  <?php elseif($request['status'] == 'y'): ?>
+                                    <a href="#" onclick="uploadReceipt(<?=esc($request['id'])?>)" class="btn btn-secondary btn-sm">Upload Receipt</a>
+                                    <a target="_blank" href="<?=base_url()?>/requests/stub/<?=esc($request['id'])?>" class="btn btn-success btn-sm">Download Stub</a>
                                   <?php else: ?>
+                                    <a href="#" onclick="uploadReceipt(<?=esc($request['id'])?>)" class="btn btn-secondary btn-sm">Reupload Receipt</a>
                                     <a target="_blank" href="<?=base_url()?>/requests/stub/<?=esc($request['id'])?>" class="btn btn-success btn-sm">Download Stub</a>
                                   <?php endif; ?>
                                 </td>

@@ -71,6 +71,35 @@ class DocumentRequests extends BaseController
     return $this->index();
   }
 
+  public function acceptPaid()
+  {
+    // return print_r($this->requestModel->denyRequest($_POST));
+    $student = $this->userModel->get(['username' => $_POST['student_number']]);
+
+    $this->email->setTo($student[0]['email']);
+    $this->email->setSubject('Document Request Update');
+    $this->email->setFrom('ODRS', 'PUP');
+    $this->email->setMessage('<p>Good day!</p> <p>Your requested document/s has been approved and now will be process!</p> <p>Please be reminded that you\'ll be notified via email once your requested document is done and is ready for its next step process.
+</p> <p>Thank you!</p>');
+    if($this->requestModel->acceptPaid($_POST['id']))
+      $this->email->send();
+    return $this->paid();
+  }
+
+  public function payment(){
+    $this->data['requests'] = $this->requestModel->getDetails(['requests.status' => 'y']);
+    $this->data['request_documents'] = $this->requestDetailModel->getDetails(['request_details.received_at' => null]);
+    $this->data['view'] = 'Modules\DocumentRequest\Views\requests\payment';
+    return view('template\index', $this->data);
+  }
+
+  public function paid(){
+    $this->data['requests'] = $this->requestModel->getDetails(['requests.status' => 'i']);
+    $this->data['request_documents'] = $this->requestDetailModel->getDetails(['request_details.received_at' => null]);
+    $this->data['view'] = 'Modules\DocumentRequest\Views\requests\paid';
+    return view('template\index', $this->data);
+  }
+
   public function approval()
   {
     $this->data['request_approvals'] = $this->officeApprovalModel->getDetails(['office_id' => $_SESSION['office_id'], 'request_approvals.status' => 'p', 'requests.status !=' => 'p']);
@@ -79,6 +108,8 @@ class DocumentRequests extends BaseController
 
     return view('template/index', $this->data);
   }
+
+
 
   public function holdRequest()
   {

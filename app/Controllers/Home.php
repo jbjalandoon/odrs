@@ -65,6 +65,7 @@ class Home extends BaseController
 							return redirect()->to(base_url());
 						}
 					} else {
+
 						$this->session->setFlashdata('error_login', 'Username or password is incorrect');
 						return redirect()->to(base_url());
 					}
@@ -75,6 +76,8 @@ class Home extends BaseController
 				return redirect()->to( base_url());
 			}
 		} else {
+			print_r($this->validation->getErrors());
+			die();
 			$this->session->setFlashdata('error_login', 'Something Went Wrong!');
 			return redirect()->to( base_url());
 		}

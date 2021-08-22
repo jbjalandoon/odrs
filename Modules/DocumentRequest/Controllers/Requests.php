@@ -110,15 +110,31 @@ class Requests extends BaseController
 	  return view('template/index', $this->data);
   }
 
+  public function uploadReceipt(){
+    $file = $this->request->getFile('file');
+    $newName = $file->getRandomName();
+    $data = [
+      'status' => 'i',
+      'receipt_number' => $_POST['receipt_number'],
+      'receipt_img' => $newName,
+      'uploaded_at' => date('Y-m-d H:i:s'),
+    ];
+    if ($this->requestModel->uploadReceipt($_POST['id'], $data)) {
+      $path = $file->move('../public/receipt/', $newName);
+      return json_encode(['status' => true]);
+    }
+    return json_encode(['status' => false]);
+  }
+
 	public function stub($id){
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
     // set document information
     // (di ata kailangan)
     $data['documents'] = $this->documentModel->get();
     $data['requests'] = $this->requestModel->getDetails(['student_id' => $_SESSION['student_id']], $id);
-    $data['request_documents'] = $this->requestDetailModel->getDetails(['requests.student_id' => $_SESSION['student_id'], 'request_details.request_id' => $id, 'request_details.status' => 'r']);
+    $data['request_documents'] = $this->requestDetailModel->getDetails(['requests.student_id' => $_SESSION['student_id'], 'request_details.request_id' => $id]);
 		$data['document_notes'] = $this->documentNoteModel->getDetails();
-    $pdf->SetTitle('Claiming Stub');
+    $pdf->SetTitle('Stub');
 
 
 		$pdf->SetHeaderData('header.png', '130', '', '');
@@ -184,7 +200,7 @@ class Requests extends BaseController
     // Print text using writeHTMLCell()
 
     // $pdf->AddPage();
-    $pdf->Output('example_001.pdf', 'I');
+    $pdf->Output('Stub.pdf', 'I');
     die();
 	}
 

@@ -298,11 +298,10 @@ class Validation
 
 	public $login = [
 		'username' => [
-			'rules' => 'required|alpha_dash',
+			'rules' => 'required|max_length[35]',
 			'label' => 'Username',
 			'errors' => [
 				'required' => 'Please enter username',
-				'alpha_dash' => 'No special characters'
 			]
 		],
 		'password' => [

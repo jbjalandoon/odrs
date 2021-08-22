@@ -1,5 +1,18 @@
 const server = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '/')
 
+const showLoading = function() {
+  let timerInterval
+  Swal.fire({
+    title: 'Loading!',
+    html: ' Please Wait',
+    allowOutsideClick: false,
+    timerProgressBar: true,
+    didOpen: () => {
+      Swal.showLoading()
+    },
+  })
+};
+
 function deleteRequest(id){
   Swal.fire({
     icon: 'warning',
@@ -22,7 +35,52 @@ function deleteRequest(id){
         }
       })
     }
-  });;
+  });
+}
+
+function uploadReceipt(id) {
+  let data;
+  Swal.fire({
+    title: 'Insert Receipt Information',
+    html: `<form method='post' id='form' enctype='multipart/form-data'><input type='hidden' name='id' value='`+id+`'><div class='mb-3'><label for="file" class="form-label">Receipt Image</label><input type='file' name='file' id='file' class='form-control' accept='image/jpeg, image.jpeg, image.png' required></div><label for="receipt_number" class="form-label">Receipt Number</label><input type='text' class='form-control' id="receipt_number" name='receipt_number'></form> <Br>`,
+    showCancelButton: true,
+    confirmButtonText: `Save`,
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      data = new FormData(document.getElementById('form'))
+      $.ajax({
+        type: "POST",
+        data: data,
+        contentType: false,
+        processData:false,
+        datType: 'json',
+        url: "requests/upload-receipt",
+        beforeSend: function(){
+          Swal.close()
+          showLoading();
+        },
+        success: function(resp){
+          Swal.fire({
+            title: 'Sucessfully received',
+            icon: 'success',
+          }).then((result) => {
+              location.reload();
+          })
+        },
+        error: function (request, error) {
+          swal.close()
+          Swal.fire({
+            icon: 'error',
+            title: 'Something went wrong!'
+          }).then(function(){
+            location.reload()
+          })
+        },
+      });
+    }
+  })
+
 }
 
 $(document).ready(function() {

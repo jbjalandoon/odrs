@@ -12,14 +12,14 @@ class RequestsModel extends BaseModel
 
   protected $table = 'requests';
 
-  protected $allowedFields = ['id', 'slug', 'student_id', 'remark','reason','disapproved_at','approved_at', 'status', 'completed_at'];
+  protected $allowedFields = ['id', 'slug', 'student_id', 'remark','reason','receipt_number','receipt_img','uploaded_at','confirmed_at','disapproved_at','approved_at', 'status', 'completed_at'];
 
   function __construct(){
     parent::__construct();
   }
 
   public function getDetails($condition = [], $id = null){
-    $this->select('requests.id, requests.approved_at ,requests.slug, requests.disapproved_at,students.firstname,students.middlename, students.status as student_status,students.student_number, students.lastname,requests.completed_at, requests.reason, requests.created_at, courses.course, courses.abbreviation, requests.status');
+    $this->select('requests.id, requests.approved_at ,requests.receipt_img,requests.receipt_number,requests.uploaded_at,requests.slug, requests.disapproved_at,students.firstname,students.middlename, students.status as student_status,students.student_number, students.lastname,requests.completed_at, requests.reason, requests.created_at, courses.course, courses.abbreviation, requests.status');
     $this->join('students', 'students.id = student_id');
     $this->join('courses', 'courses.id = students.course_id');
     foreach ($condition as $condition => $value) {
@@ -34,12 +34,19 @@ class RequestsModel extends BaseModel
   {
     $this->transStart();
     foreach ($data as $index){
-      $this->update($index[0], ['status' => 'c', 'approved_at' => date("Y-m-d H:i:s")]);
+      $this->update($index[0], ['status' => 'y', 'approved_at' => date("Y-m-d H:i:s")]);
     }
 
     $this->transComplete();
 
     return $this->transStatus();
+  }
+
+  public function acceptPaid($id)
+  {
+    return $this->update($id, ['status' => 'c', 'confirmed_at' => date("Y-m-d H:i:s")]);
+
+
   }
 
   public function denyRequest($data)
@@ -140,6 +147,10 @@ class RequestsModel extends BaseModel
     $this->select('id, slug');
     $this->where('slug', $slugs);
     return $this->findAll();
+  }
+
+  public function uploadReceipt($id, $data){
+    return $this->update($id, $data);
   }
 
 }
