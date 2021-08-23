@@ -53,6 +53,7 @@ class UsersModel extends BaseModel
     $this->select('users.*, roles.role, roles.identifier, roles.landing_page');
     $this->join('roles', 'roles.id = users.role_id');
     $this->where('username', $username);
+    $this->orWhere('email', $username);
     return $this->findAll();
   }
 

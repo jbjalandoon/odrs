@@ -19,9 +19,9 @@
           </div>
           <form class="" action="new" method="post">
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-6">
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-10">
                     <span class="h5">User Information</span>
                     <a href="<?=base_url('students/edit')?>" class="btn btn-seconary text-light btn-sm float-end">Edit</a>
                   </div>
@@ -60,6 +60,14 @@
                 </div>
                 <div class="row">
                   <div class="col-md-4">
+                    Birthdate:
+                  </div>
+                  <div class="col-md-7">
+                    <?=date('F d, Y',strtotime(esc($value['birthdate'])))?>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
                     Email:
                   </div>
                   <div class="col-md-7">
@@ -75,33 +83,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-5">
-                <div class="row">
-                  <label for="Document" class="form-label"><h5>List of Documents</h5></label>
-                </div>
-                <?php foreach ($documents as $document): ?>
-                  <div class="input-group mb-2">
-                    <div class="input-group-text">
-                      <div class="form-check">
-                        <input class="form-check-input document-checkbox" name="document_id[]" type="checkbox" id="<?=trim(str_replace(' ', '', $document['document']))?>" value="<?=esc($document['id'])?>" onchange="showDetail(this)" >
-                        <label class="for m-check-label" for="<?=trim(str_replace(' ', '', $document['document']))?>"><?=esc($document['document'])?></label>
-                      </div>
-                    </div>
-                    <input type="number" name="quantity[]" value="1" class="form-control quantity-form" id="qty-form-<?=trim(str_replace(' ', '', $document['document']))?>" disabled required>
-                  </div>
-                <?php endforeach; ?>
-                <?php if (isset($error['document_id'])): ?>
-                  <div class="text-danger">
-                    <?=esc($error['document_id'])?>
-                  </div>
-                <?php endif; ?>
-                <?php if (isset($error['quantity.*']) && !isset($error['document_id'])): ?>
-                  <div class="text-danger">
-                    <?=esc($error['quantity.*'])?>
-                  </div>
-                <?php endif; ?>
-              </div>
-              <div class="col-md-3">
+              <div class="col-6">
                 <div class="row">
                   <label for="reasonInput" class="form-label" required><h5>Reason/s for Requesting</h5></label>
                 </div>
@@ -138,9 +120,58 @@
                   <input type="text" name="reason" value="" id="other_input" class="form-control form-control-sm" placeholder="Other Reason" disabled hidden>
                   <br>
                 </div>
-              <br>
+              </div>
+            <hr>
+            <div class="row">
               <div class="col-12">
-                      <br><button type="submit" class="btn float-end" name="button">Submit <i class="fas fa-paper-plane"></i></button>
+                <div class="row">
+                  <label for="Document" class="form-label"><h5>List of Documents</h5></label>
+                </div>
+                <div class="table-responsive">
+                  <table class="table w-100 table-striped table-sm">
+                    <thead>
+                      <tr>
+                        <th width="2%">#</th>
+                        <th width="20%">Document</th>
+                        <th width="20%">Quantity</th>
+                        <th width="20%">Processing Time (Days)</th>
+                        <th width="20%">Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($documents as $document): ?>
+                          <tr>
+                            <td>
+                              <input class="form-check-input document-checkbox" name="document_id[]" type="checkbox" id="<?=trim(str_replace(' ', '', $document['document']))?>" value="<?=esc($document['id'])?>" onchange="showDetail(this)" >
+                            </td>
+                            <td>
+                              <label class="for m-check-label" for="<?=trim(str_replace(' ', '', $document['document']))?>"><?=esc($document['document'])?></label>
+                            </td>
+                            <td>
+                              <input type="number" name="quantity[]" value="1" class="form-control quantity-form form-control-sm" id="qty-form-<?=trim(str_replace(' ', '', $document['document']))?>" disabled required>
+                            </td>
+                            <td> <?=esc($document['process_day'])?></td>
+                            <td>P <?=esc($document['price'])?></td>
+                          </tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                </div>
+                <?php if (isset($error['document_id'])): ?>
+                  <div class="text-danger">
+                    <?=esc($error['document_id'])?>
+                  </div>
+                <?php endif; ?>
+                <?php if (isset($error['quantity.*']) && !isset($error['document_id'])): ?>
+                  <div class="text-danger">
+                    <?=esc($error['quantity.*'])?>
+                  </div>
+                <?php endif; ?>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <br><button type="submit" class="btn float-end" name="button">Submit <i class="fas fa-paper-plane"></i></button>
               </div>
             </div>
           </form>

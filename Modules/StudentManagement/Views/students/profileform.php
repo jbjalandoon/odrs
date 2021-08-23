@@ -49,7 +49,16 @@
               <div class="col-1">
                 <div class="form-group mb-3">
                   <label for="suffix" class="form-label">Suffix </label>
-                  <input value="<?=isset($value['suffix']) ? esc($value['suffix']): ''?>" type="text" name="suffix" class="form-control" id="suffix">
+                  <select class="form-select" name="sufix">
+                    <option value=""> -- Select Suffix -- </option>
+                    <option value="jr"> Jr. </option>
+                    <option value="sr"> Sr. </option>
+                    <option value="i"> I </option>
+                    <option value="ii"> II </option>
+                    <option value="iii"> III </option>
+                    <option value="iv"> IV </option>
+                    <option value="v"> V </option>
+                  </select>
                   <?php if (isset($error['suffix'])): ?>
                     <div class="text-danger">
                       <?=esc($error['suffix'])?>
@@ -144,6 +153,17 @@
                   <?php if (isset($error['contact'])): ?>
                     <div class="text-danger">
                       <?=esc($error['contact'])?>
+                    </div>
+                  <?php endif; ?>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group mb-3">
+                  <label for="birthdate" class="form-label">Birthdate </label>
+                  <input type="date" name="birthdate" id="birthdate" class="form-control" value="<?=isset($value['birthdate']) ? date('Y-m-d',strtotime(esc($value['birthdate']))): ''?>">
+                  <?php if (isset($error['birthdate'])): ?>
+                    <div class="text-danger">
+                      <?=esc($error['birthdate'])?>
                     </div>
                   <?php endif; ?>
                 </div>

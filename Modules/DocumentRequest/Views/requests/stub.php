@@ -1,4 +1,4 @@
-<h4 style="text-align:center">Claiming Stub</h4>
+<h4 style="text-align:center">Stub</h4>
 <?php $document_price = 0 ?>
 <?php foreach ($requests as $request): ?>
   <table cellpadding="5">
@@ -17,8 +17,7 @@
   <tr style="text-align:center">
     <th width="7%">Qty</th>
     <th width="45%">Document</th>
-    <th width="25%">Notes</th>
-    <th width="10%">Page/s</th>
+    <th width="35%">Notes</th>
     <th width="13%">Price</th>
   </tr>
   <?php $price = 0; ?>
@@ -36,9 +35,6 @@
               <?php endforeach; ?>
             <?php endif; ?>
           </ul>
-        </td>
-        <td>
-            <?=(esc($request_detail['page'] == null ? 'N/A': $request_detail['page']))?>
         </td>
         <td>
           P <?php if ($request_detail['per_page_payment']): ?>

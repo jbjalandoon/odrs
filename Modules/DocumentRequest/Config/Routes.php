@@ -6,6 +6,7 @@ $routes->group('requests', ['namespace' => 'Modules\DocumentRequest\Controllers'
     $routes->delete('delete/(:num)', 'Requests::delete/$1');
     $routes->get('stub/(:num)', 'Requests::stub/$1');
     $routes->get('history', 'Requests::history');
+    $routes->post('upload-receipt', 'Requests::uploadReceipt');
     $routes->match(['get', 'post'], 'new', 'Requests::add');
 });
 
@@ -15,6 +16,20 @@ $routes->group('document-requests', ['namespace' => 'Modules\DocumentRequest\Con
     $routes->post('request-confirm', 'DocumentRequests::confirmRequest');
     $routes->post('deny-request', 'DocumentRequests::denyRequest');
     $routes->get('goodmoral/(:num)', 'DocumentRequests::goodmoral/$1');
+});
+
+$routes->group('payment', ['namespace' => 'Modules\DocumentRequest\Controllers'], function($routes)
+{
+    $routes->get('/', 'DocumentRequests::payment');
+
+});
+
+$routes->group('paid', ['namespace' => 'Modules\DocumentRequest\Controllers'], function($routes)
+{
+    $routes->get('/', 'DocumentRequests::paid');
+    $routes->post('accept-request', 'DocumentRequests::acceptPaid');
+    $routes->post('deny-request', 'DocumentRequests::denyPaid');
+
 });
 
 $routes->group('on-process-document', ['namespace' => 'Modules\DocumentRequest\Controllers'], function($routes)
