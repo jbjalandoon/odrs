@@ -30,15 +30,17 @@ class Requests extends BaseController
   }
 
   public function add(){
-
-    $this->data['documents'] = $this->documentModel->get();
-		$this->data['value'] = $this->studentModel->getDetail(['students.id' => $_SESSION['student_id']]);
-    if (!empty($this->data['value'])) {
-      $this->data['value'] = $this->data['value'][0];
+    $this->data['documents'] = $this->documentModel->orderBy('document', 'ASC')->get();
+		$this->data['student'] = $this->studentModel->getDetail(['students.id' => $_SESSION['student_id']]);
+    if (!empty($this->data['student'])) {
+      $this->data['student'] = $this->data['student'][0];
     }
     $this->data['view'] = 'Modules\DocumentRequest\Views\requests\form';
 		if ($this->request->getMethod() == 'post')
     {
+      // echo "<pre>";
+      // print_r($_POST);
+      // die();
 			if ($this->validate('request')) {
 				// if (!empty($this->requestModel->get(['student_id' => $_SESSION['student_id'], 'completed_at' => null]))) {
 				// 	$this->session->setFlashdata('error_message', 'You Have on process document request');
@@ -60,10 +62,23 @@ class Requests extends BaseController
 			foreach ($_POST['document_id'] as $index => $document_id) {
         $request_details['free'] = 0;
         $documents = $this->documentModel->get(['id' => $document_id])[0];
+        if (isset($_POST['first'])) {
+          foreach ($_POST['first'] as $key => $value) {
+            if ($document_id == $key) {
+              if ($value != '') {
+                $request_details['free'] = 1;
+              }
+              break;
+            }
+          }
+        }
         $history = $this->requestDetailModel->getDetails(['documents.id' => $document_id, 'documents.is_free_on_first' => 1, 'requests.student_id' => $_SESSION['student_id']]);
         if (empty($history) && $documents['is_free_on_first'] == 1) {
           $request_details['free'] = 1;
+        } else {
+          $request_details['free'] = 0;
         }
+
 				$request_details['document_id'] = $document_id;
 				$request_details['quantity'] = $_POST['quantity'][$index];
 				array_push($data['request_document'], $request_details);
@@ -111,19 +126,24 @@ class Requests extends BaseController
   }
 
   public function uploadReceipt(){
-    $file = $this->request->getFile('file');
-    $newName = $file->getRandomName();
-    $data = [
-      'status' => 'i',
-      'receipt_number' => $_POST['receipt_number'],
-      'receipt_img' => $newName,
-      'uploaded_at' => date('Y-m-d H:i:s'),
-    ];
-    if ($this->requestModel->uploadReceipt($_POST['id'], $data)) {
-      $path = $file->move('../public/receipt/', $newName);
-      return json_encode(['status' => true]);
+    if ($this->validate('receipt')) {
+      $file = $this->request->getFile('file');
+      $newName = $file->getRandomName();
+      $data = [
+        'status' => 'i',
+        'receipt_number' => $_POST['receipt_number'],
+        'receipt_img' => $newName,
+        'uploaded_at' => date('Y-m-d H:i:s'),
+      ];
+      if ($this->requestModel->uploadReceipt($_POST['id'], $data)) {
+        $path = $file->move('../public/receipt/', $newName);
+        return json_encode(['status' => true]);
+      }
+    } else {
+      $response = $this->validation->getErrors();
+      // $response = array_push($response, ['status' => false]);
+      return json_encode($response);
     }
-    return json_encode(['status' => false]);
   }
 
 	public function stub($id){

@@ -32,6 +32,15 @@
 							</div>
 						<?php endif; ?>
 					</div>
+          <div class="form-group mb-3">
+            <label for="birthdate" class="form-label">Birthdate *</label>
+            <input type="date" name="birthdate" id="birthdate" class="form-control" placeholder="Birthdate" value="" />
+            <?php if (isset($errors['birthdate'])): ?>
+              <div class="text-danger">
+                <?=esc($errors['birthdate'])?>
+              </div>
+            <?php endif; ?>
+          </div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group mb-3">

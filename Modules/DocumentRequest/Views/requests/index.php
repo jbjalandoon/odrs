@@ -39,11 +39,12 @@
                       <h4>My Requested Documents</h4>
                       <table class="table table-striped">
                         <thead>
-                            <th>Request Code</th>
-                            <th>Documents</th>
-                            <th>Date Submitted</th>
-                            <th>Receipt Info</th>
-                            <th>Action</th>
+                            <th width="10%">Request Code</th>
+                            <th width="20%">Documents</th>
+                            <th width="10%">Date Submitted</th>
+                            <th width="5%">Receipt Info</th>
+                            <th width="20%">Status</th>
+                            <th width="35%">Action</th>
                         </thead>
                         <tbody>
                           <?php if (!empty($requests)): ?>
@@ -70,7 +71,24 @@
                                   </ul>
                                 </td>
                                 <td><?=date('F d, Y - h:i A', strtotime(esc($request['created_at'])))?></td>
-                                <td>View</td>
+                                <td>
+                                  <?php if ($request['receipt_number'] == null): ?>
+                                    N/A
+                                  <?php else: ?>
+                                    <a href="#" onClick="viewReceipt('<?=esc($request['receipt_img'])?>', '<?=esc($request['receipt_number'])?>')">View</a>
+                                  <?php endif; ?>
+                                </td>
+                                <td>
+                                  <?php if ($request['status'] == 'p'): ?>
+                                      Waiting for admin approval
+                                  <?php elseif($request['status'] == 'y'): ?>
+                                      Waiting for payment (Upload receipt details)
+                                  <?php elseif($request['status'] == 'i'): ?>
+                                      Admin is checking the receipt details you uploaded
+                                  <?php else: ?>
+                                      Your requests is now on process
+                                  <?php endif; ?>
+                                </td>
                                 <td>
                                   <?php if ($request['status'] == 'p'): ?>
                                     <a href="#" onclick="deleteRequest(<?=esc($request['id'])?>)" class="btn btn-danger btn-sm">Cancel Request</a>
@@ -85,7 +103,7 @@
                               </tr>
                             <?php endforeach; ?>
                             <?php else: ?>
-                              <td colspan="4" class="text-center">You don't have active request</td>
+                              <td colspan="6" class="text-center">You don't have active request</td>
                           <?php endif; ?>
                         </tbody>
                       </table>

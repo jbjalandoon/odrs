@@ -101,8 +101,8 @@
                     <label class="form-check-label" for="inlineRadio2">Currently Enrolled</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input status" type="radio" name="status" id="inlineRadio3" value="dropout" <?=$value['status'] == 'dropout' ?'checked':''?>>
-                    <label class="form-check-label" for="inlineRadio3">Dropout</label>
+                    <input class="form-check-input status" type="radio" name="status" id="inlineRadio3" value="returning" <?=$value['status'] == 'dropout' ?'checked':''?>>
+                    <label class="form-check-label" for="inlineRadio3">Returning</label>
                   </div>
                   <?php if (isset($error['status'])): ?>
                     <div class="text-danger">

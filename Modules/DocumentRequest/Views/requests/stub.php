@@ -7,7 +7,7 @@
       <td><b>Student Number: </b> <?=esc($request['student_number'])?></td>
     </tr>
     <tr>
-      <td><b>Date Requested: </b> <?=date('F d, Y h:i A', strtotime(esc($request['created_at'])))?></td>
+      <td><b>Date Submitted: </b> <?=date('F d, Y h:i A', strtotime(esc($request['created_at'])))?></td>
     </tr>
   </table>
   <br>

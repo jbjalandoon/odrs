@@ -31,7 +31,7 @@
                     Name:
                   </div>
                   <div class="col-md-7">
-                    <?=ucwords(esc($value['firstname']) . ' ' . esc($value['middlename']) . ' ' . esc($value['lastname']) . ' ' . esc($value['suffix']))?>
+                    <?=ucwords(esc($student['firstname']) . ' ' . esc($student['middlename']) . ' ' . esc($student['lastname']) . ' ' . esc($student['suffix']))?>
                   </div>
                 </div>
                 <div class="row">
@@ -39,7 +39,7 @@
                     Gender:
                   </div>
                   <div class="col-md-7">
-                    <?=$value['gender'] == 'm' ? 'Male': 'Female'?>
+                    <?=$student['gender'] == 'm' ? 'Male': 'Female'?>
                   </div>
                 </div>
                 <div class="row">
@@ -47,15 +47,15 @@
                     Status:
                   </div>
                   <div class="col-md-7">
-                    <?=ucwords(esc($value['status']))?>
+                    <?=ucwords(esc($student['status']))?>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-4">
-                    Course and <?=$value['status'] == 'enrolled' ? 'Level':'Year Graduated'?>:
+                    Course and <?=$student['status'] == 'enrolled' ? 'Level':'Year Graduated'?>:
                   </div>
                   <div class="col-md-7">
-                    <?=strtoupper($value['abbreviation'] . ' ' . $value['level'])?>
+                    <?=strtoupper($student['abbreviation'] . ' ' . $student['level'])?>
                   </div>
                 </div>
                 <div class="row">
@@ -63,7 +63,7 @@
                     Birthdate:
                   </div>
                   <div class="col-md-7">
-                    <?=date('F d, Y',strtotime(esc($value['birthdate'])))?>
+                    <?=date('F d, Y',strtotime(esc($student['birthdate'])))?>
                   </div>
                 </div>
                 <div class="row">
@@ -71,7 +71,7 @@
                     Email:
                   </div>
                   <div class="col-md-7">
-                    <?=ucwords(esc($value['email']))?>
+                    <?=ucwords(esc($student['email']))?>
                   </div>
                 </div>
                 <div class="row">
@@ -79,7 +79,7 @@
                     Contact:
                   </div>
                   <div class="col-md-7">
-                    <?=ucwords(esc($value['contact']))?>
+                    <?=ucwords(esc($student['contact']))?>
                   </div>
                 </div>
               </div>
@@ -145,10 +145,14 @@
                               <input class="form-check-input document-checkbox" name="document_id[]" type="checkbox" id="<?=trim(str_replace(' ', '', $document['document']))?>" value="<?=esc($document['id'])?>" onchange="showDetail(this)" >
                             </td>
                             <td>
-                              <label class="for m-check-label" for="<?=trim(str_replace(' ', '', $document['document']))?>"><?=esc($document['document'])?></label>
+                              <label class="form-check-label" for="<?=trim(str_replace(' ', '', $document['document']))?>"><?=esc($document['document'])?></label>
                             </td>
                             <td>
                               <input type="number" name="quantity[]" value="1" class="form-control quantity-form form-control-sm" id="qty-form-<?=trim(str_replace(' ', '', $document['document']))?>" disabled required>
+                              <?php if ($document['is_free_on_first']): ?>
+                                <input type="checkbox" name="first[<?=esc($document['id'])?>]" value="1" class="form-check-input" id="free-form-<?=trim(str_replace(' ', '', $document['document']))?>" disabled>
+                                <label class="form-check-label" for="free-form-<?=trim(str_replace(' ', '', $document['document']))?>">First Request</label>
+                              <?php endif; ?>
                             </td>
                             <td> <?=esc($document['process_day'])?></td>
                             <td>P <?=esc($document['price'])?></td>

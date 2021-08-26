@@ -48,8 +48,8 @@ class DocumentRequests extends BaseController
 
     $this->email->setTo($student[0]['email']);
     $this->email->setSubject('Document Request Update');
-    $this->email->setFrom('ODRS', 'PUP');
-    $this->email->setMessage('Your Request has been denied (' . $_POST['remark'] .')');
+    $this->email->setFrom('ODRS', 'PUP-Taguig ODRS');
+    $this->email->setMessage('Your Request has been denied (' . $_POST['remark'] .') <br> Try Requesting again');
     if($this->requestModel->denyRequest($_POST))
       $this->email->send();
     return $this->index();
@@ -61,7 +61,7 @@ class DocumentRequests extends BaseController
       $this->email->setTo($student[0]['email']);
       $this->email->setSubject('Document Request Update');
       $this->email->setFrom('ODRS', 'PUP-Taguig ODRS');
-      $this->email->setMessage('<p>Good day!</p> <p>Your requested document/s has been approved!</p> <p>Please be reminded that you\'ll be notified via email once your requested document is done and is ready for its next step process.
+      $this->email->setMessage('<p>Good day!</p> <p>Your requested document/s has been approved!</p> <p>You may now download the payment stub and pay the indicated price in the stub.
 </p> <p>Thank you!</p>');
       if($this->requestModel->confirmRequest($_POST['data']))
         $this->email->send();
@@ -78,10 +78,25 @@ class DocumentRequests extends BaseController
 
     $this->email->setTo($student[0]['email']);
     $this->email->setSubject('Document Request Update');
-    $this->email->setFrom('ODRS', 'PUP');
+    $this->email->setFrom('ODRS', 'PUP-Taguig ODRS');
     $this->email->setMessage('<p>Good day!</p> <p>Your requested document/s has been approved and now will be process!</p> <p>Please be reminded that you\'ll be notified via email once your requested document is done and is ready for its next step process.
 </p> <p>Thank you!</p>');
     if($this->requestModel->acceptPaid($_POST['id']))
+      $this->email->send();
+    return $this->paid();
+  }
+
+  public function denyPaid()
+  {
+    // return print_r($this->requestModel->denyRequest($_POST));
+    $student = $this->userModel->get(['username' => $_POST['student_number']]);
+
+    $this->email->setTo($student[0]['email']);
+    $this->email->setSubject('Document Request Update');
+    $this->email->setFrom('ODRS', 'PUP-Taguig ODRS');
+    $this->email->setMessage('<p>Good day!</p> <p> There is something wrong in your uploaded receipt please double check your upload and try it uploading again. (This will be serve as proof of your payment)
+</p> <p>Thank you!</p>');
+    if($this->requestModel->denyPaid($_POST['id']))
       $this->email->send();
     return $this->paid();
   }
@@ -118,7 +133,7 @@ class DocumentRequests extends BaseController
 
     $this->email->setTo($student[0]['email']);
     $this->email->setSubject('Document Request Update');
-    $this->email->setFrom('ODRS', 'PUP');
+    $this->email->setFrom('ODRS', 'PUP-Taguig ODRS');
     $this->email->setMessage('<p>Good day!</p> <p>Your requested document/s has been denied due to the following reasons!</p> <p>'. $_POST['remark'].'<p>Please check your ODRS Account for further information</p></p> <p>Thank you!</p> ');
     if($this->officeApprovalModel->holdRequest($_POST))
       $this->email->send();
@@ -132,7 +147,7 @@ class DocumentRequests extends BaseController
       $students = $this->userModel->get(['username' => $_POST['data'][$key][2]]);
       $this->email->setTo($students[0]['email']);
       $this->email->setSubject('Document Request Update');
-      $this->email->setFrom('ODRS', 'PUP');
+      $this->email->setFrom('ODRS', 'PUP-Taguig ODRS');
       $this->email->setMessage('<p>Good day!</p> <p>Your requested document/s has been approved by the Office of the '.$office['office'].'!</p> <p>'.  $_POST['data'][$key][5].' <p>Please be reminded that you\'ll be notified via email once your requested document is done and is ready for its next step process.</p> </p> <p>Thank you!</p>');
 
       $this->email->send();
@@ -185,10 +200,11 @@ class DocumentRequests extends BaseController
 
   public function printRequest()
   {
+    $_POST['printed_at'] == null ? $printed_at = date('Y-m-d H:i:s'): $printed_at = date("Y-m-d H:i:s", strtotime($_POST["printed_at"]));
     if($this->request->getFile('file') == null){
       $data = [
         'status' => 'r',
-        'printed_at' => date('Y-m-d H:i:s'),
+        'printed_at' => $printed_at,
         'page' => null,
       ];
       if($this->requestDetailModel->printRequest($_POST['id'] ,$data)){
@@ -214,9 +230,9 @@ class DocumentRequests extends BaseController
     // return $request['document'];
     $mail = \Config\Services::email();
     $mail->setTo($_POST['email']);
-    $mail->setSubject('Ready to claim Document');
-    $mail->setFrom('ODRS', 'PUP');
-    $mail->setMessage('<p>Good day! </p><p>Your requested document is now ready to claim</p>' . $request['document'] . '<p>You can now download the stub</p><p>Thank you!</p>');
+    $mail->setSubject('Document Request Update');
+    $mail->setFrom('ODRS', 'PUP-Taguig ODRS');
+    $mail->setMessage('<p>Good day! </p><p>Your requested document is now ready to claim</p>' . $request['document'] . '<p>Just present the receipt to claim the document</p><p>Thank you!</p>');
     $mail->send();
     return $data['page'].'';
   }

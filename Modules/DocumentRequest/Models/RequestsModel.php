@@ -45,8 +45,11 @@ class RequestsModel extends BaseModel
   public function acceptPaid($id)
   {
     return $this->update($id, ['status' => 'c', 'confirmed_at' => date("Y-m-d H:i:s")]);
+  }
 
-
+  public function denyPaid($id)
+  {
+    return $this->update($id, ['status' => 'y']);
   }
 
   public function denyRequest($data)

@@ -12,7 +12,7 @@
                   <th>Course</th>
                   <th>Reason</th>
                   <th>Documents</th>
-                  <th>Date Requested</th>
+                  <th>Date Submitted</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -21,12 +21,11 @@
                   <?php foreach ($requests as $request): ?>
                     <tr class="active-row">
                       <td><?=esc($request['id'])?></td>
-                      <!-- <td><input  id="row" type="checkbox"></td> -->
                       <td><?= esc($request['student_number']) ?></td>
                       <td><?= ucwords(esc($request['firstname']) . ' ' . esc($request['lastname'])) ?></td>
                       <td><?= ucwords(esc($request['student_status'])) ?></td>
                       <td><?=esc($request['abbreviation'])?></td>
-                      <td><?=esc($request['reason'])?></td>
+                      <td><?=strtoupper(esc($request['reason']))?></td>
                       <td>
                         <ul>
                           <?php foreach ($request_documents as $request_document): ?>

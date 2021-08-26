@@ -1,6 +1,14 @@
 var server = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '/');
 script();
 
+function viewReceipt(img, number){
+  Swal.fire({
+  title: 'Receipt Number : ' + number,
+  imageUrl: 'receipt/' + img,
+  imageAlt: 'Image Receipt'
+})
+}
+
 function showCheckbox(){
   $('.assigned-role').addClass('d-none')
   $('.edit-button').addClass('d-none')
@@ -66,7 +74,7 @@ var adminPaymentTable = $('#admin-payment-table').DataTable({
 
 var adminPendingTable = $('#admin-pending-table').DataTable({
   "columnDefs" : [{
-    "targets" : [0],
+    "targets" : [0,1],
     "visible" : false,
     "searchable" : false,
   }],
@@ -116,6 +124,50 @@ function confirmSelect()
           Swal.fire({
             icon: 'success',
             title: 'Successfuly Approved',
+          }).then(function(){
+            location.reload()
+          })
+        },
+        error: function (request, error) {
+          swal.close()
+          Swal.fire({
+            icon: 'error',
+            title: 'Something went wrong!'
+          }).then(function(){
+            location.reload()
+          })
+          // location.reload()
+        },
+      });
+    }
+  });
+}
+
+function reUploadRequest(id, student_number)
+{
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "This will notify the user that their uploaded receipt is incorrect!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: 'POST',
+        url: 'paid/deny-request',
+        data: {
+          'id' : id,
+          'student_number' : student_number
+        },
+        beforeSend: function(){
+          showLoading();
+        },
+        success: function(response){
+          swal.close()
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfuly notify the user!',
           }).then(function(){
             location.reload()
           })
@@ -408,7 +460,7 @@ async function printRequest(id, per_page, template, email)
       icon: 'warning',
       title: 'This request will mark as printed.',
       showCancelButton: true,
-      html: `You will not be able to undo the action`,
+      html: `<label for='printed_at' class='form-label'>Date Printed</label><input type='datetime-local' id='printed_at' class='form-control'><br>You will not be able to undo the action`,
       confirmButtonText: `Confirm`,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
@@ -417,7 +469,8 @@ async function printRequest(id, per_page, template, email)
           type: "POST",
           data: {
             'id': id,
-            'email': email
+            'email': email,
+            'printed_at': $('#printed_at').val()
           },
           url: "on-process-document/print-requests",
           beforeSend: function(){
@@ -451,7 +504,7 @@ async function printRequest(id, per_page, template, email)
         icon: 'warning',
         title: 'This request will mark as printed.',
         showCancelButton: true,
-        html: `You will not be able to undo the action <br><small>(This document has a template)</small> <br><a href='`+server+`/document-requests/`+template+`/`+id+`' target="_blank">CLICK HERE TO DOWNLOAD</a>`,
+        html: `<label for='printed_at' class='form-label'>Date Printed</label><input type='datetime-local' id='printed_at' class='form-control'><br> You will not be able to undo the action <br><small>(This document has a template)</small> <br><a href='`+server+`/document-requests/`+template+`/`+id+`' target="_blank">CLICK HERE TO DOWNLOAD</a>`,
         confirmButtonText: `Confirm`,
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
@@ -460,7 +513,8 @@ async function printRequest(id, per_page, template, email)
             type: "POST",
             data: {
               'id': id,
-              'email': email
+              'email': email,
+              'printed_at': $('#printed_at').val()
             },
             url: "on-process-document/print-requests",
             beforeSend: function(){
@@ -468,6 +522,7 @@ async function printRequest(id, per_page, template, email)
               showLoading();
             },
             success: function(html){
+              console.log(html)
               Swal.close();
               Swal.fire({
                 'icon': 'success',
@@ -492,7 +547,7 @@ async function printRequest(id, per_page, template, email)
       Swal.fire({
         title: 'Please Upload a File',
         icon: 'warning',
-        html: `<form method='post' id='form' enctype='multipart/form-data'><input type='hidden' name='email' value=`+email+`><input type='hidden' name='id' value=`+id+`><input type='file' name='file' id='file' class='form-control' accept='application/pdf' required></form> <Br>`,
+        html: `<form method='post' id='form' enctype='multipart/form-data'><input type='hidden' name='email' value=`+email+`><input type='hidden' name='id' value=`+id+`><label for='printed_at' class='form-label'>Date Printed</label><input type='datetime-local' id='printed_at' name='printed_at' class='form-control'><input type='file' name='file' id='file' class='form-control' accept='application/pdf' required></form> <Br>`,
         showCancelButton: true,
         confirmButtonText: `Confirm`,
         preConfirm: () => {

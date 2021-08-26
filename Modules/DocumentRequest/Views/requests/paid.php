@@ -11,7 +11,6 @@
                   <th>Course</th>
                   <th>Reason</th>
                   <th>Documents</th>
-                  <th>Date Requested</th>
                   <th>Date Receipt Uploaded</th>
                   <th>Receipt Info</th>
                   <th>Action</th>
@@ -36,9 +35,10 @@
                           <?php endforeach; ?>
                         </ul>
                       </td>
-                      <td><?= date('F d, Y - H:i A', strtotime(esc($request['created_at']))) ?></td>
                       <td><?= date('F d, Y - H:i A', strtotime(esc($request['uploaded_at']))) ?></td>
-                      <td>View</td>
+                      <td>
+                        <a href="#" onClick="viewReceipt('<?=esc($request['receipt_img'])?>', '<?=esc($request['receipt_number'])?>')">View</a>
+                      </td>
                       <td>
                         <button onClick="acceptRequest(<?=esc($request['id'])?>, '<?=esc($request['student_number'])?>')" class="btn btn-reject btn-success btn-sm"> Accept </button>
                         <button onClick="reUploadRequest(<?=esc($request['id'])?>, '<?=esc($request['student_number'])?>')" class="btn btn-reject btn-danger btn-sm"> Reject </button>
