@@ -23,7 +23,7 @@
                       <td><?=esc($request['id'])?></td>
                       <!-- <td><input  id="row" type="checkbox"></td> -->
                       <td><?= esc($request['student_number']) ?></td>
-                      <td><?= ucwords(esc($request['firstname']) . ' ' . esc($request['lastname'])) ?></td>
+                      <td style="text-transform: uppercase;"><?= ucwords(esc($request['firstname']) . ' ' . esc($request['lastname']) . ' ' . esc($request['suffix'])) ?></td>
                       <td><?= ucwords(esc($request['student_status'])) ?></td>
                       <td><?=esc($request['abbreviation'])?></td>
                       <td><?=esc($request['reason'])?></td>

@@ -11,7 +11,7 @@
           </nav>
           <hr>
           <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
               <div class="alert alert-warning" role="alert">
                 <i class="fas fa-exclamation-circle"></i> Make sure the information is correct before submitting the request
               </div>
@@ -19,11 +19,11 @@
           </div>
           <form class="" action="new" method="post">
             <div class="row">
-              <div class="col-6">
+              <div class="col-md-6">
                 <div class="row">
-                  <div class="col-10">
+                  <div class="col-md-12">
                     <span class="h5">User Information</span>
-                    <a href="<?=base_url('students/edit')?>" class="btn btn-seconary text-light btn-sm float-end">Edit</a>
+                    <a href="<?=base_url('students/edit')?>" id="editbtn" class="btn text-light btn-sm float-end">Edit</a>
                   </div>
                 </div>
                 <div class="row">
@@ -31,7 +31,7 @@
                     Name:
                   </div>
                   <div class="col-md-7">
-                    <?=ucwords(esc($value['firstname']) . ' ' . esc($value['middlename']) . ' ' . esc($value['lastname']) . ' ' . esc($value['suffix']))?>
+                    <span style="text-transform: uppercase;"><?=ucwords(esc($value['firstname']) . ' ' . esc($value['middlename']) . ' ' . esc($value['lastname']) . ' ' . esc($value['suffix']))?></span>
                   </div>
                 </div>
                 <div class="row">
@@ -83,9 +83,11 @@
                   </div>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-md-6">
                 <div class="row">
-                  <label for="reasonInput" class="form-label" required><h5>Reason/s for Requesting</h5></label>
+                  <div class="col-md-12">
+                    <label for="reasonInput" class="form-label" required><h5>Reason/s for Requesting</h5></label>
+                  </div>
                 </div>
                   <div class="form-check" id="reasonInput">
                     <input class="form-check-input reasons" type="radio" value="scholarship" name="reason" id="scholarship" required checked>
@@ -170,8 +172,15 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-12">
-                <br><button type="submit" class="btn float-end" name="button">Submit <i class="fas fa-paper-plane"></i></button>
+              <div class="col-md-12">
+                <div class="alert alert-primary" role="alert">
+                  <i class="fas fa-exclamation-circle"></i> After submitting your request, please wait for an email to be sent to you for the confirmation of your request before proceeding to the PUP Taguig Accounting Office.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button type="submit" id="submitbtn" class="btn float-end" name="button">Submit <i class="fas fa-paper-plane"></i></button>
               </div>
             </div>
           </form>

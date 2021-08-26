@@ -3,105 +3,52 @@
 
 body {
     font-family: "Open Sans", sans-serif;
-    background-color: $darkcolor;
-    min-height: 100vh;
+    background-color: $bgColor;
+    font-size: 16px;
+    background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
 }
 
-.brand-wrapper {
-    margin-bottom: 19px;
+.card {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-size: .95em;
 
-    .logo {
-        height: 40px;
-    }
-}
-
-.login-card {
-    border: 0;
-    border-radius: 27.5px;
-    box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
-    overflow: hidden;
-
-
-    &-img {
-        border-radius: 0;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+    &-body{
+        padding-top: 30px;
+        padding-bottom: 0!important;
     }
 
-    
-
-    .card-body {
-        padding: 85px 60px 60px;
-
-        @media (max-width: 422px) {
-            padding: 35px 24px;
-        }
-    }
-
-    &-description {
-        font-size: 25px;
-        color: $maroonColor;
-        font-weight: normal;
-        margin-bottom: 23px;
-    }
-
-    form {
-        max-width: 326px;
+    form{
+        width: 80%;
+        margin: 0 auto;
     }
 
     .form-control {
         border: 1px solid #d5dae2;
-        padding: 15px 25px;
-        margin-bottom: 20px;
-        min-height: 45px;
-        font-size: 13px;
-        line-height: 15;
-        font-weight: normal;
+        font-size: .9em;
 
         &::placeholder {
             color: #919aa3;
         }
     }
 
-    .login-btn {
-        padding: 13px 20px 12px;
+    #footer-login{
+        font-size: .85em!important;
+    }
+
+    #login-button {
         background-color: $maroonColor;
-        border-radius: 4px;
+        border-radius: 2px;
         font-size: 17px;
-        font-weight: bold;
-        line-height: 20px;
         color: #fff;
-        margin-bottom: 24px;
+        padding-left: 3em;
+        padding-right: 3em;
+        text-align: center;
 
         &:hover {
             border: 1px solid $maroonColor;
             background-color: transparent;
             color: $maroonColor;
-        }
-    }
-
-    .forgot-password-link {
-        font-size: 14px;
-        color: #919aa3;
-        margin-bottom: 12px;
-    }
-
-    &-footer-text {
-        font-size: 16px;
-        color: $darkcolor;
-        margin-bottom: 60px;
-
-        @media (max-width: 767px) {
-            margin-bottom: 24px;
-        }
-    }
-
-    &-footer-nav {
-        a {
-            font-size: 14px;
-            color: #919aa3;
         }
     }
 }

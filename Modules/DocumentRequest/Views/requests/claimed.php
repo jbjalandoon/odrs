@@ -84,7 +84,7 @@
                     <?php foreach ($request_details as $request_detail): ?>
                       <tr>
                         <td><?=esc($request_detail['student_number'])?></td>
-                        <td><?=ucwords(esc($request_detail['firstname']) . ' ' . esc($request_detail['lastname']))?></td>
+                        <td style="text-transform: uppercase;"><?=ucwords(esc($request_detail['firstname']) . ' ' . esc($request_detail['lastname']) . ' ' . esc($request['suffix']))?></td>
                         <td><?=ucwords(esc($request_detail['course']))?></td>
                         <td><?=ucwords(esc($request_detail['document']))?></td>
                         <td><?=ucwords(esc($request_detail['reason']))?></td>

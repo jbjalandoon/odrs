@@ -38,7 +38,7 @@
                     <td><?=esc($request_detail['id'])?></td>
                     <td><?=esc($request_detail['request_id'])?></td>
                     <td><?=esc($request_detail['student_number'])?></td>
-                    <td><?=ucwords(esc($request_detail['firstname']) . ' ' . esc($request_detail['lastname']))?></td>
+                    <td style="text-transform: uppercase;"><?=ucwords(esc($request_detail['firstname']) . ' ' . esc($request_detail['lastname']) . ' ' . esc($request['suffix']))?></td>
                     <td><?=ucwords(esc($request_detail['course']))?></td>
                     <td><?=ucwords(esc($request_detail['document']))?></td>
                     <td><?=date('F d, Y - H:i A', strtotime(esc($request_detail['requested_at'])))?></td>

@@ -37,58 +37,60 @@
                   <div class="row">
                     <div class="col-md-12">
                       <h4>My Requested Documents</h4>
-                      <table class="table table-striped">
-                        <thead>
-                            <th>Request Code</th>
-                            <th>Documents</th>
-                            <th>Date Submitted</th>
-                            <th>Receipt Info</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                          <?php if (!empty($requests)): ?>
-                            <?php foreach ($requests as $request): ?>
-                              <tr>
-                                <td><?= esc($request['slug']) ?></td>
-                                <td>
-                                  <ul>
-                                    <?php
-                                    $ctr = 0;
-                                    $ctrDocument = 0
-                                    ?>
-                                    <?php foreach ($request_documents as $request_document): ?>
-                                      <?php if (esc($request_document['request_id']) == esc($request['id'])): ?>
-                                        <?php $ctrDocument++; ?>
-                                        <li  class="text-<?=$request_document['status'] == 'c' ?'success':'danger'?>"><?=esc($request_document['document'])?>
-                                        </li>
-                                        <?php
-                                        if (esc($request_document['status']) == 'r') {
-                                          $ctr++;
-                                        } ?>
-                                      <?php endif; ?>
-                                    <?php endforeach; ?>
-                                  </ul>
-                                </td>
-                                <td><?=date('F d, Y - h:i A', strtotime(esc($request['created_at'])))?></td>
-                                <td>View</td>
-                                <td>
-                                  <?php if ($request['status'] == 'p'): ?>
-                                    <a href="#" onclick="deleteRequest(<?=esc($request['id'])?>)" class="btn btn-danger btn-sm">Cancel Request</a>
-                                  <?php elseif($request['status'] == 'y'): ?>
-                                    <a href="#" onclick="uploadReceipt(<?=esc($request['id'])?>)" class="btn btn-secondary btn-sm">Upload Receipt</a>
-                                    <a target="_blank" href="<?=base_url()?>/requests/stub/<?=esc($request['id'])?>" class="btn btn-success btn-sm">Download Stub</a>
-                                  <?php else: ?>
-                                    <a href="#" onclick="uploadReceipt(<?=esc($request['id'])?>)" class="btn btn-secondary btn-sm">Reupload Receipt</a>
-                                    <a target="_blank" href="<?=base_url()?>/requests/stub/<?=esc($request['id'])?>" class="btn btn-success btn-sm">Download Stub</a>
-                                  <?php endif; ?>
-                                </td>
-                              </tr>
-                            <?php endforeach; ?>
-                            <?php else: ?>
-                              <td colspan="4" class="text-center">You don't have active request</td>
-                          <?php endif; ?>
-                        </tbody>
-                      </table>
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                              <th>Request Code</th>
+                              <th>Documents</th>
+                              <th>Date Submitted</th>
+                              <th>Receipt Info</th>
+                              <th>Action</th>
+                          </thead>
+                          <tbody>
+                            <?php if (!empty($requests)): ?>
+                              <?php foreach ($requests as $request): ?>
+                                <tr>
+                                  <td><?= esc($request['slug']) ?></td>
+                                  <td>
+                                    <ul>
+                                      <?php
+                                      $ctr = 0;
+                                      $ctrDocument = 0
+                                      ?>
+                                      <?php foreach ($request_documents as $request_document): ?>
+                                        <?php if (esc($request_document['request_id']) == esc($request['id'])): ?>
+                                          <?php $ctrDocument++; ?>
+                                          <li  class="text-<?=$request_document['status'] == 'c' ?'success':'danger'?>"><?=esc($request_document['document'])?>
+                                          </li>
+                                          <?php
+                                          if (esc($request_document['status']) == 'r') {
+                                            $ctr++;
+                                          } ?>
+                                        <?php endif; ?>
+                                      <?php endforeach; ?>
+                                    </ul>
+                                  </td>
+                                  <td><?=date('F d, Y - h:i A', strtotime(esc($request['created_at'])))?></td>
+                                  <td>View</td>
+                                  <td>
+                                    <?php if ($request['status'] == 'p'): ?>
+                                      <a href="#" onclick="deleteRequest(<?=esc($request['id'])?>)" class="btn btn-danger btn-sm">Cancel Request</a>
+                                    <?php elseif($request['status'] == 'y'): ?>
+                                      <a href="#" onclick="uploadReceipt(<?=esc($request['id'])?>)" class="btn btn-primary btn-sm">Upload Receipt</a>
+                                      <a target="_blank" href="<?=base_url()?>/requests/stub/<?=esc($request['id'])?>" class="btn btn-success btn-sm">Download Stub</a>
+                                    <?php else: ?>
+                                      <a href="#" onclick="uploadReceipt(<?=esc($request['id'])?>)" class="btn btn-warning btn-sm">Reupload Receipt</a>
+                                      <a target="_blank" href="<?=base_url()?>/requests/stub/<?=esc($request['id'])?>" class="btn btn-success btn-sm">Download Stub</a>
+                                    <?php endif; ?>
+                                  </td>
+                                </tr>
+                              <?php endforeach; ?>
+                              <?php else: ?>
+                                <td colspan="4" class="text-center">You don't have active request</td>
+                            <?php endif; ?>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -96,61 +98,65 @@
                   <div class="row">
                     <div class="col-md-12">
                       <h4>Office Approval</h4>
-                      <table class="table table-striped">
-                          <thead>
-                              <th>Document</th>
-                              <th>Office</th>
-                              <th>Status</th>
-                              <th>Remark</th>
-                              <th>Date Requested</th>
-                          </thead>
-                          <tbody>
-                          <?php if (empty($office_approvals)): ?>
-                            <tr>
-                              <td colspan="6" class="text-center">You have no on process document request</td>
-                            </tr>
-                          <?php else: ?>
-                            <?php foreach ($office_approvals as $office_approval): ?>
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Document</th>
+                                <th>Office</th>
+                                <th>Status</th>
+                                <th>Remark</th>
+                                <th>Date Requested</th>
+                            </thead>
+                            <tbody>
+                            <?php if (empty($office_approvals)): ?>
                               <tr>
-                                <td><?= esc($office_approval['document']) ?></td>
-                                <td><?= esc($office_approval['office']) ?></td>
-                                <td><?= esc($office_approval['status']) == 'p' ? 'Pending for Approval': 'On Hold'?></td>
-                                <td><?= esc(!empty($office_approval['remark'])) ? esc($office_approval['remark']) : 'N/A' ?></td>
-                                <td><?= date('F d, Y - h:i A', strtotime(esc($office_approval['created_at'])))?></td>
+                                <td colspan="6" class="text-center">You have no on process document request</td>
                               </tr>
-                            <?php endforeach; ?>
-                          <?php endif; ?>
-                          </tbody>
-                      </table>
+                            <?php else: ?>
+                              <?php foreach ($office_approvals as $office_approval): ?>
+                                <tr>
+                                  <td><?= esc($office_approval['document']) ?></td>
+                                  <td><?= esc($office_approval['office']) ?></td>
+                                  <td><?= esc($office_approval['status']) == 'p' ? 'Pending for Approval': 'On Hold'?></td>
+                                  <td><?= esc(!empty($office_approval['remark'])) ? esc($office_approval['remark']) : 'N/A' ?></td>
+                                  <td><?= date('F d, Y - h:i A', strtotime(esc($office_approval['created_at'])))?></td>
+                                </tr>
+                              <?php endforeach; ?>
+                            <?php endif; ?>
+                            </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div class="tab-pane fade" id="nav-process" role="tabpanel" aria-labelledby="nav-contact-tab">
                   <div class="row">
                     <div class="col-md-12">
-                      <h4>On Process Documents (To Be Print)</h4>
-                      <table class="table table-striped">
-                          <thead>
-                              <th>Document</th>
-                              <th>Date Requested</th>
-                              <th>Remark</th>
-                          </thead>
-                          <tbody>
-                          <?php if (empty($request_details_process)): ?>
-                            <tr>
-                              <td colspan="3" class="text-center">You have no on process document request</td>
-                            </tr>
-                          <?php else: ?>
-                            <?php foreach ($request_details_process as $request_detail): ?>
+                      <h4>On Process Documents (To Be Printed)</h4>
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Document</th>
+                                <th>Date Requested</th>
+                                <th>Remark</th>
+                            </thead>
+                            <tbody>
+                            <?php if (empty($request_details_process)): ?>
                               <tr>
-                                <td><?= esc($request_detail['document']) ?></td>
-                                <td><?= date('F d, Y - h:i A', strtotime(esc($request_detail['created_at'])))?></td>
-                                <td><?= esc(empty($request_detail['remark']) ? 'N/A': esc($request_detail['remark'])) ?></td>
+                                <td colspan="3" class="text-center">You have no on process document request</td>
                               </tr>
-                            <?php endforeach; ?>
-                          <?php endif; ?>
-                          </tbody>
-                      </table>
+                            <?php else: ?>
+                              <?php foreach ($request_details_process as $request_detail): ?>
+                                <tr>
+                                  <td><?= esc($request_detail['document']) ?></td>
+                                  <td><?= date('F d, Y - h:i A', strtotime(esc($request_detail['created_at'])))?></td>
+                                  <td><?= esc(empty($request_detail['remark']) ? 'N/A': esc($request_detail['remark'])) ?></td>
+                                </tr>
+                              <?php endforeach; ?>
+                            <?php endif; ?>
+                            </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -158,28 +164,30 @@
                   <div class="row">
                     <div class="col-md-12">
                       <h4>Documents For Claiming</h4>
-                      <table class="table table-striped">
-                          <thead>
-                              <th>Document</th>
-                              <th>Date Finished</th>
-                              <th>Price</th>
-                          </thead>
-                          <tbody>
-                          <?php if (empty($request_details_ready)): ?>
-                            <tr>
-                              <td colspan="3" class="text-center">You have no to be release document request</td>
-                            </tr>
-                          <?php else: ?>
-                            <?php foreach ($request_details_ready as $request_detail): ?>
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Document</th>
+                                <th>Date Finished</th>
+                                <th>Price</th>
+                            </thead>
+                            <tbody>
+                            <?php if (empty($request_details_ready)): ?>
                               <tr>
-                                <td><?= esc($request_detail['document']) ?></td>
-                                <td><?= date('F d, Y - h:i A', strtotime(esc($request_detail['updated_at'])))?></td>
-                                <td>₱ <?= (esc($request_detail['price']) * esc($request_detail['quantity'])) * esc($request_detail['page'])?></td>
+                                <td colspan="3" class="text-center">You have no to be release document request</td>
                               </tr>
-                            <?php endforeach; ?>
-                          <?php endif; ?>
-                          </tbody>
-                      </table>
+                            <?php else: ?>
+                              <?php foreach ($request_details_ready as $request_detail): ?>
+                                <tr>
+                                  <td><?= esc($request_detail['document']) ?></td>
+                                  <td><?= date('F d, Y - h:i A', strtotime(esc($request_detail['updated_at'])))?></td>
+                                  <td>₱ <?= (esc($request_detail['price']) * esc($request_detail['quantity'])) * esc($request_detail['page'])?></td>
+                                </tr>
+                              <?php endforeach; ?>
+                            <?php endif; ?>
+                            </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -188,6 +196,23 @@
           </div>
         </div>
       </div>
+      <div class="card-footer">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="text-muted">
+                <strong>REMINDER:</strong>
+                <p>
+                  <ul class="fst-italic">
+                    <li>Requesting of documents should be made during office hours. (Weekdays from 8:00 AM - 5:00 PM only)</li>
+                    <li>Make sure that your information and requests are correct before submitting.</li>
+                    <li>You may still cancel your requested document if your application is not been approved by the Registrar.</li>
+                    <li>Once a request has been submitted, you will be unable to request another document until your requested document is complete.</li>
+                  </ul>
+                </p>
+              </span>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 </div>

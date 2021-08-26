@@ -23,7 +23,7 @@
     <?php foreach ($documents as $document): ?>
       <tr style="text-align: center;">
         <td> <?=$ctr?> </td>
-        <td> <?=ucwords(esc($document['firstname']). ' ' . esc($document['lastname']))?> </td>
+        <td style="text-transform: uppercase;"> <?=ucwords(esc($document['firstname']). ' ' . esc($document['lastname']) . ' ' . esc($request['suffix']))?> </td>
         <td> <?=ucwords($document['student_status'])?> </td>
         <td> <?=$document['year_graduated'] != null ? $document['year_graduated'] : 'N/A'?> </td>
         <td> <?=substr($document['student_number'], 0,4)?> </td>
