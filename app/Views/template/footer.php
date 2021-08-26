@@ -1,9 +1,23 @@
-<footer class="footer p-3 bg-transparent">
-        <div class="container-fluid text-center align-items-center">
-          <small class="text-muted">
-            © 2021 made by - <img src="/img/logo.png" alt=""> Mitsu Tech
-          </small>
-        </div>
+  
+  <?php if($_SESSION['role'] == 'Students'): ?>
+    <footer class="footer p-3 bg-light bg-gradient">
+      <div class="container-fluid text-center align-items-center">
+        <small class="text-muted">
+          Gen. Santos Avenue, Lower Bicutan, Taguig City 1632; (Direct Line) 8 837-5858 to 60; (Telefax) 8 837-5859 <br>
+          Website: <a href="https://www.pup.edu.ph/">www.pup.edu.ph</a> |  Email: <a href="#">taguig@pup.edu.ph</a>
+        </small>
+        <br>
+        <strong>“THE COUNTRY’S 1ST POLYTECHNIC U”</strong>
+      </div>
+  <?php else: ?>
+    <footer class="footer p-3 bg-transparent">
+    <div class="container-fluid text-center align-items-center">
+      <small class="text-muted">
+        © 2021 made by - <img src="/img/logo.png" alt=""> Mitsu Tech
+      </small>
+    </div>
+  <?php endif; ?>
+        
       </footer>
     </main>
     <!-- Optional JavaScript; choose one of the two! -->

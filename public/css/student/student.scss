@@ -363,8 +363,9 @@ body{
 
 @media screen and (max-width: 320px) {
     body{
+        font-size: 12px;
         .navbar{
-            font-size: .72em;
+            font-size: .9em;
             img{
                 max-width: 8%;
             }
