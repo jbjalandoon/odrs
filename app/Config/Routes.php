@@ -37,6 +37,7 @@ $routes->post('/verify', 'Home::verification');
 $routes->get('logout', 'Home::logout');
 $routes->post('register', 'Home::register');
 $routes->get('signup', 'Home::signUp');
+$routes->post('request-password', 'Home::requestPassword');
 
 $routes->group('office', ['namespace' => 'App\Controllers\Office'], function($routes){
 	$routes->get('/', 'Request::index');

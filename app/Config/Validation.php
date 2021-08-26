@@ -197,6 +197,50 @@ class Validation
 		]
 	];
 
+	public $user_edit = [
+		'firstname' => [
+			'rules' => 'required|alpha',
+			'errors' => [
+				'required' => 'This field is required',
+				'alpha' => 'Invalid first name'
+			]
+		],
+		'lastname' => [
+			'rules' => 'required|alpha',
+			'errors' => [
+				'required' => 'This field is required',
+				'alpha' => 'Invalid last name'
+			]
+		],
+		'email' => [
+			'rules' => 'required|valid_email',
+			'errors' => [
+				'required' => 'This field is required',
+				'valid_email' => 'Email is invalid'
+			]
+		],
+		'contact' => [
+			'rules' => 'required|numeric',
+			'errors' => [
+				'required' => 'This field is required',
+				'valid_email' => 'Email is invalid'
+			]
+		],
+		'username' => [
+			'rules' => 'required',
+			'errors' => [
+				'required' => 'This field is required',
+			]
+		],
+		'confirm_password' => [
+			'rules' => 'matches[password]',
+			'errors' => [
+				'required' => 'This field is required',
+				'matches' => 'Password not match'
+			]
+		]
+	];
+
 	public $request = [
 		'document_id' => [
 			'rules' => 'required',

@@ -1,18 +1,19 @@
-
-<div class="container" id="content">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/dashboards"><i class="fas fa-home"></i></a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Request History</li>
-                  </ol>
-                </nav>
-                <hr>
-                <!-- <h2>Request History</h2> -->
-                    <table class="table table-striped dataTable">
+<section class="content">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-body">
+                    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                      <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/dashboards"><i class="fas fa-home"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Request History</li>
+                      </ol>
+                    </nav>
+                    <hr>
+                    <!-- <h2>Request History</h2> -->
+                    <div class="table-responsive">
+                      <table class="table table-striped dataTable">
                         <thead>
                             <th>Name</th>
                             <th>Document Requested</th>
@@ -25,7 +26,7 @@
                           <?php if (!empty($requests)): ?>
                             <?php foreach ($requests as $request): ?>
                               <tr>
-                                <td><?= ucwords(esc($request['firstname']) . ' ' . esc($request['lastname'])) ?></td>
+                                <td style="text-transform: uppercase;"><?= ucwords(esc($request['firstname']) . ' ' . esc($request['lastname']) . ' ' . esc($request['suffix'])) ?></td>
                                 <td>
                                   <ul>
                                     <?php
@@ -142,16 +143,18 @@
                                       </div>
                                     </div>
                                   </div>
-                                 </td>
+                                  </td>
                               </tr>
                             <?php endforeach; ?>
                             <?php else: ?>
                               <td colspan="4" class="text-center">You don't have active request</td>
                           <?php endif; ?>
                         </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                      </table>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>

@@ -9,6 +9,28 @@ function viewReceipt(img, number){
 })
 }
 
+function changePassword(){
+  const oldPassword = $("#old_password").val();
+  const newPassword = $("#new_password").val();
+  const repeatPassword = $("#repeat_password").val();
+  $.ajax({
+    url  : 'users/edit-password',
+    type : 'post',
+    dataType: 'json',
+    data : {
+      'old_password' : oldPassword,
+      'new_password' : newPassword,
+      'repeat_password' : repeatPassword
+    },
+    success : function(html)
+    {
+      console.log(JSON.parse(html))
+      // location.reload()
+    }
+  });
+}
+
+
 function showCheckbox(){
   $('.assigned-role').addClass('d-none')
   $('.edit-button').addClass('d-none')
@@ -424,7 +446,7 @@ function opentab(evt, tabName) {
 
 var onProcessTable = $('#process-table').DataTable({
   "columnDefs" : [{
-    "targets" : [0,1],
+    "targets" : [0,1,2],
     "visible" : false,
     "searchable" : false,
   }],

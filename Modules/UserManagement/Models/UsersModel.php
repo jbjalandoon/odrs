@@ -49,6 +49,24 @@ class UsersModel extends BaseModel
     return $this->transStatus();
   }
 
+  public function editDetails($id, $data)
+  {
+
+    $this->transStart();
+
+    if ($data['password'] == '') {
+      unset($data['password']);
+    }
+    // die($id);
+
+    $this->edit($data, $id);
+    $admin = new AdminsModel();
+    $admin->editByUserId($data, $id);
+
+    $this->transComplete();
+    return $this->transStatus();
+  }
+
   public function getUsername($username){
     $this->select('users.*, roles.role, roles.identifier, roles.landing_page');
     $this->join('roles', 'roles.id = users.role_id');

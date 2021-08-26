@@ -10,7 +10,12 @@
 		<hr>
 
 		<h3>Add Student</h3>
-
+    <?php if (isset($errors['names'])): ?>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <?=$errors['names']?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <?php endif; ?>
 		<form class="" action="add" method="post">
 			<div class="row register-form">
 				<div class="col-md-6">

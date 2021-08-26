@@ -12,6 +12,7 @@
                   <th>Reason</th>
                   <th>Documents</th>
                   <th>Date Approved</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -20,7 +21,7 @@
                     <tr class="active-row">
                       <td><?=esc($request['id'])?></td>
                       <!-- <td><input  id="row" type="checkbox"></td> -->
-                      <td><?= ucwords(esc($request['firstname']) . ' ' . esc($request['lastname'])) ?></td>
+                      <td style="text-transform: uppercase;"><?= ucwords(esc($request['firstname']) . ' ' . esc($request['lastname']) . ' ' . esc($request['suffix'])) ?></td>
                       <td><?= ucwords(esc($request['student_status'])) ?></td>
                       <td><?=esc($request['abbreviation'])?></td>
                       <td><?=strtoupper(esc($request['reason']))?></td>
@@ -34,6 +35,9 @@
                         </ul>
                       </td>
                       <td><?= date('F d, Y - H:i A', strtotime(esc($request['approved_at']))) ?></td>
+                      <td>
+                        <button onClick="acceptRequest(<?=esc($request['id'])?>, '<?=esc($request['student_number'])?>')" class="btn btn-reject btn-success btn-sm"> Start Processing </button>
+                      </td>
                     </tr>
                   <?php endforeach; ?>
                 <?php endif; ?>

@@ -38,10 +38,10 @@
                     <td><?=esc($request_detail['id'])?></td>
                     <td><?=esc($request_detail['request_id'])?></td>
                     <td><?=esc($request_detail['student_number'])?></td>
-                    <td><?=ucwords(esc($request_detail['firstname']) . ' ' . esc($request_detail['lastname']))?></td>
+                    <td style="text-transform: uppercase;"><?=ucwords(esc($request_detail['firstname']) . ' ' . esc($request_detail['lastname']) . ' ' . esc($request_detail['suffix']))?></td>
                     <td><?=ucwords(esc($request_detail['course']))?></td>
                     <td><?=ucwords(esc($request_detail['document']))?></td>
-                    <td><?=date('F d, Y - H:i A', strtotime(esc($request_detail['requested_at'])))?></td>
+                    <td><?=date('F d, Y - h:i A', strtotime(esc($request_detail['confirmed_at'])))?></td>
                     <td>
                       <button type="button" onClick="printRequest(<?=$request_detail['id']?>, <?=$request_detail['per_page_payment']?>, <?=$request_detail['template'] == null ? 'null': "'".$request_detail['template']."'"?>, '<?=$request_detail['email']?>')" class="btn btn-primary" name="button">Complete</button>
                     </td>
@@ -53,5 +53,5 @@
         </div>
       </div>
     </section>
-  </div>  
+  </div>
 </div>

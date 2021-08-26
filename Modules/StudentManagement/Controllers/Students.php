@@ -34,8 +34,9 @@ class Students extends BaseController
       $this->data['view'] = 'Modules\StudentManagement\Views\students\form';
       if($this->request->getMethod() == 'post')
       {
-        if($this->validate('student'))
+        if($this->validate('student') && empty($this->studentModel->get(['firstname' => $_POST['firstname'], 'lastname' => $_POST['lastname'], 'middlename' => $_POST['middlename'], 'birthdate' => date('Y-m-d', strtotime($_POST['birthdate']))])))
         {
+          die('here');
           if($this->studentModel->insertStudent($_POST))
           {
             $this->session->setFlashData('success_message', 'Successfully Added Student');
@@ -49,6 +50,7 @@ class Students extends BaseController
         else
         {
           $this->data['errors'] = $this->validation->getErrors();
+          $this->data['errors']['names'] = 'Full name and Birthdate are already on the database';
           $this->data['value'] = $_POST;
         }
       }

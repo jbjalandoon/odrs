@@ -1,4 +1,9 @@
-<section class="dashboard mb-5 mt-5">
+<section class="dashboard">
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0">Dashboard</h1>
+    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+    <i class="fas fa-download fa-sm"></i> Generate Report</a>
+</div>
     <div class="row">
         <!-- Pending Requests Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">

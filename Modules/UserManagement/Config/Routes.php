@@ -23,5 +23,6 @@ $routes->group('users', ['namespace' => 'Modules\UserManagement\Controllers'], f
   $routes->get('delete/(:num)', 'Users::delete/$1');
   $routes->get('restore/(:num)', 'Users::restore/$1');
   $routes->post('edit-password', 'Users::updatePassword');
+  $routes->post('request-password', 'Users::requestPassword');
   $routes->get('retrieve', 'Users::retrieve');
 });

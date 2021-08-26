@@ -83,14 +83,45 @@ class Users extends BaseController
     return redirect()->to(base_url('users'));
   }
 
+  public function edit($id){
+    $this->data['edit'] = true;
+    $this->data['roles'] = $this->roleModel->get();
+    $this->data['value'] = $this->adminModel->getDetails(['users.id' => $id])[0];
+    $this->data['offices'] = $this->officeModel->get();
+    $this->data['view'] = 'Modules\UserManagement\Views\users\form';
+    if($this->request->getMethod() == 'post')
+    {
+      if($this->validate('user_edit'))
+      {
+        if($this->userModel->editDetails($id ,$_POST))
+        {
+          $this->session->setFlashData('success_message', 'Successfully edited a User Account');
+          return redirect()->to(base_url('users'));
+        }
+        else
+        {
+          die('Something Went Wrong!');
+        }
+      }
+      else
+      {
+        $this->data['error'] = $this->validation->getErrors();
+        $this->data['value'] = $_POST;
+      }
+
+    }
+    return view('template\index', $this->data);
+  }
+
   public function updatePassword()
   {
     $users = $this->userModel->get(['id' => $_SESSION['user_id']]);
     if($this->validate('password') || password_verify($_POST['old_password'], $users[0]['password']))
     {
+      $data['status'] = true;
       if($this->userModel->edit(['password' => password_hash($_POST['new_password'], PASSWORD_DEFAULT)], $_SESSION['user_id']))
       {
-        $data['message'] = 'Sucessfully Editd Password';
+        $data['message'] = 'Sucessfully Edited Password';
       }
       else
       {
@@ -99,11 +130,12 @@ class Users extends BaseController
     }
     else
     {
+      $data['status'] = false;
       $data['error'] = $this->validation->getErrors();
       if(!password_verify($_POST['old_password'], $users[0]['password']))
         $data['error']['old_password'] = 'Incorrect Password';
     }
-    return view('userTemplate\passwordForm', $data);
+    return json_encode($data);
   }
 
 }

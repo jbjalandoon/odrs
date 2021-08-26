@@ -11,7 +11,7 @@ class DocumentsModel extends BaseModel
 
   protected $table = 'documents';
 
-  protected $allowedFields = ['id', 'document', 'price', 'is_free_on_first', 'template','per_page_payment', 'deleted_at'];
+  protected $allowedFields = ['id', 'document', 'price', 'is_free_on_first', 'process_day','template','per_page_payment', 'deleted_at'];
 
   function __construct(){
     parent::__construct();

@@ -9,7 +9,6 @@ body footer img {
   width: 2%;
 }
 
-
 #header {
   font-family: 'Merriweather', serif;
   background-color: maroon;
@@ -57,8 +56,8 @@ body footer img {
 }
 
 #menu li a {
-  padding-right: 5em;
-  padding-left: 5em;
+  padding-right: 2em;
+  padding-left: 2em;
   border-radius: 0;
 }
 
@@ -152,7 +151,6 @@ body footer img {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
-  font-size: 0.9em;
   width: 100%;
   -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
           box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -191,5 +189,56 @@ body footer img {
 
 #form form {
   padding: 0 2em 0 2em;
+}
+
+@media screen and (max-width: 425px) {
+  #header {
+    padding-bottom: 0;
+  }
+  #header .dashboard {
+    margin-top: 10px;
+  }
+  #header .completerqt {
+    margin-top: 10px;
+  }
+  #header .logout {
+    margin-top: -130px;
+    margin-left: 220px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  #header {
+    padding-bottom: 0;
+  }
+  #header .dashboard {
+    margin-top: 10px;
+    margin-left: 135px;
+  }
+  #header .completerqt {
+    margin-left: 135px;
+    width: 180px;
+  }
+  #header .logout {
+    margin-top: -215px;
+    margin-left: 300px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  #header {
+    padding-bottom: 0;
+  }
+  #header .dashboard {
+    margin-top: 10px;
+    margin-left: 190px;
+  }
+  #header .completerqt {
+    margin-left: 190px;
+  }
+  #header .logout {
+    margin-top: -140px;
+    margin-left: 310px;
+  }
 }
 /*# sourceMappingURL=admin.css.map */

@@ -5,6 +5,10 @@ body {
   background-color: #e3e3e3;
 }
 
+body .modal {
+  z-index: 999999999999;
+}
+
 body .logout {
   position: relative;
   width: 150px;
@@ -29,6 +33,10 @@ body footer {
 
 body footer img {
   width: 3%;
+}
+
+body .navbar-toggler {
+  color: white !important;
 }
 
 body .navbar {
@@ -66,7 +74,6 @@ body .btn {
   font-size: 1em;
   -webkit-box-shadow: 0 0 5px rgba(100, 15, 15, 0.418);
           box-shadow: 0 0 5px rgba(100, 15, 15, 0.418);
-  background: #800000;
   color: white;
 }
 
@@ -124,6 +131,10 @@ body #content h1 i, body #content h2 i, body #content h3 i, body #content h4 i, 
 body #content .container {
   font-size: .98em;
   padding: 25px;
+}
+
+body #content .container #editbtn {
+  background-color: #00007e;
 }
 
 body #content .container .row {
@@ -258,6 +269,9 @@ body #content .container .row .card .card-body .request tbody .btn:hover {
 
 body #content .container .row .card .card-body #tab button {
   color: black;
+  border-top: 1px solid #9c7575;
+  border-right: 1px solid #9c7575;
+  color: #b84545;
 }
 
 body #content .container .row .card .card-body #tab button:hover {
@@ -310,5 +324,80 @@ body #content .container .row .card .card-body .tab-content table tbody .btn-suc
   font-size: 1em;
   -webkit-box-shadow: 0 0 5px rgba(100, 15, 15, 0.418);
           box-shadow: 0 0 5px rgba(100, 15, 15, 0.418);
+}
+
+body #content .container .row .card-footer {
+  background-color: #fcfcfc;
+  font-size: .9em;
+}
+
+@media screen and (max-width: 425px) {
+  body {
+    font-size: 13px;
+  }
+  body .navbar {
+    height: 50px;
+    font-size: 1em;
+  }
+  body .navbar img {
+    max-width: 7%;
+  }
+  body .card {
+    max-width: 100%;
+  }
+  body #menu {
+    color: white;
+  }
+  body .collapse {
+    background-color: maroon;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: center;
+    z-index: 999999999;
+  }
+  body .collapse li {
+    border-bottom: 1px solid #d3bf9b;
+  }
+  body .logout {
+    display: inline-block;
+    position: relative;
+  }
+  body .logout .nav-link {
+    text-align: center;
+  }
+  body .logout .dropdown-menu {
+    font-size: .9em;
+    height: 100%;
+    margin: -11em;
+    margin-top: 30px;
+  }
+  body .logout .dropdown-menu li {
+    border-bottom: none;
+  }
+  #content #editbtn {
+    background-color: #00007e;
+  }
+  #content #submitbtn {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  body {
+    font-size: 12px;
+  }
+  body .navbar {
+    font-size: .9em;
+  }
+  body .navbar img {
+    max-width: 8%;
+  }
+  #content #editbtn {
+    font-size: .7em;
+    background-color: #00007e;
+  }
+  #content #submitbtn {
+    width: 100%;
+  }
 }
 /*# sourceMappingURL=student.css.map */

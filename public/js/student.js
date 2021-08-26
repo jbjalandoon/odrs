@@ -353,6 +353,7 @@ function changePassword(){
   $.ajax({
     url  : 'users/edit-password',
     type : 'post',
+    dataType: 'json',
     data : {
       'old_password' : oldPassword,
       'new_password' : newPassword,
@@ -360,9 +361,13 @@ function changePassword(){
     },
     success : function(html)
     {
-      $("#passwordContainer").html(html);
-      var myModal = new bootstrap.Modal(document.getElementById("passwordForm"), {});
-      myModal.show();
+      console.log(html)
+      if (html['status']) {
+        alert('Password successfully changed')
+      } else {
+        alert(html['error']['old_password'] + ' and '+ html['error']['repeat_password'])
+      }
+      location.reload()
     }
   });
 }

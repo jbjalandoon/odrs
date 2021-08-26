@@ -34,6 +34,12 @@ class Documents extends BaseController
     {
       if($this->validate('document'))
       {
+        $day = $_POST['day'];
+        $hour = $_POST['hour'];
+        $minute = $_POST['minute'];
+        $second = $_POST['second'];
+        $second += (($day * 24 + $hour) * 60 + $minute) * 60;
+        $_POST['process_day'] = $second;
         if($this->documentModel->insertDocument($_POST))
         {
           $this->session->setFlashData('success_message', 'Successfully added Document');
@@ -58,6 +64,30 @@ class Documents extends BaseController
   {
     $this->data['edit'] = true;
     $this->data['value'] = $this->documentModel->get(['id' => $id])[0];
+    $secondsInAMinute = 60;
+    $secondsInAnHour  = 60 * $secondsInAMinute;
+    $secondsInADay    = 24 * $secondsInAnHour;
+    $inputSeconds = $this->data['value']['process_day'];
+    // extract days
+    $days = floor($inputSeconds / $secondsInADay);
+
+    // extract hours
+    $hourSeconds = $inputSeconds % $secondsInADay;
+    $hours = floor($hourSeconds / $secondsInAnHour);
+
+    // extract minutes
+    $minuteSeconds = $hourSeconds % $secondsInAnHour;
+    $minutes = floor($minuteSeconds / $secondsInAMinute);
+
+    // extract the remaining seconds
+    $remainingSeconds = $minuteSeconds % $secondsInAMinute;
+    $seconds = ceil($remainingSeconds);
+
+    $this->data['value']['day'] = (int) $days;
+    $this->data['value']['hour'] = (int) $hours;
+    $this->data['value']['minute'] = (int) $minutes;
+    $this->data['value']['second'] = (int) $seconds;
+
     $this->data['id'] = $id;
     $this->data['notes'] = $this->noteModel->get();
     $this->data['offices'] = $this->officeModel->get();
@@ -68,6 +98,12 @@ class Documents extends BaseController
     {
       if($this->validate('document'))
       {
+        $day = $_POST['day'];
+        $hour = $_POST['hour'];
+        $minute = $_POST['minute'];
+        $second = $_POST['second'];
+        $second += (($day * 24 + $hour) * 60 + $minute) * 60;
+        $_POST['process_day'] = $second;
         if($this->documentModel->editDocument($_POST, $id))
         {
           $this->session->setFlashData('success_message', 'Successfully edited document');

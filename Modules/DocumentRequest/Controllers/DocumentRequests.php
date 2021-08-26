@@ -282,10 +282,10 @@ class DocumentRequests extends BaseController
 
 		// set document information
 		$pdf->SetCreator(PDF_CREATOR);
-		$pdf->SetAuthor('Nicola Asuni');
-		$pdf->SetTitle('TCPDF Example 048');
-		$pdf->SetSubject('TCPDF Tutorial');
-		$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+		$pdf->SetAuthor('PUPT Taguig ODRS');
+		$pdf->SetTitle('Report');
+		$pdf->SetSubject('Documet Request Report');
+		$pdf->SetKeywords('Report, ODRS, Document');
 
 		// set default header data
 		$pdf->SetHeaderData('header.png', '130', '', '');
@@ -332,10 +332,35 @@ class DocumentRequests extends BaseController
 
 		$pdf->writeHTML($reportTable, true, false, false, false, '');
 
+    $pdf->SetFont('helvetica', '', 12);
+
+
+// Fit text on cell by reducing font size
+    $pdf->MultiCell(89, 40, 'Prepared By:
+
+Mhel P. Garcia
+Branch Registrar Head', 0, 'C', 0, 0, '', '', true, 0, false, true, 40, 'M' ,true);
+    $pdf->MultiCell(89, 40, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'M');
+    $pdf->MultiCell(89, 40, 'Noted By:
+
+Dr. Marissa B. Ferrer
+Branch Director', 0, 'C', 0, 1, '', '', true, 0, false, true, 40, 'M');
+
+    $pdf->Ln(4);
+
+    $pdf->AddPage();
+
+    $data['documents'] = $this->requestDetailModel->getSummary($_GET['t'], $_GET['a'], $_GET['d']);
+  
+    $data['types'] = $_GET;
+    $data['document'] = $this->documentModel->get(['id' => $_GET['d']])[0]['document'];
+    $summaryTable = view('Modules\DocumentRequest\Views\requests\summary',$data);
+
+    $pdf->writeHTML($summaryTable, true, false, false, false, '');
 		// -----------------------------------------------------------------------------
 
 		//Close and output PDF document
-		$pdf->Output('example_048.pdf', 'I');
+		$pdf->Output('report.pdf', 'I');
 
 		//============================================================+
 		// END OF FILE

@@ -107,4 +107,29 @@ class Home extends BaseController
 			}
 		}
 	}
+
+
+  public function requestPassword(){
+    $users = $this->userModel->get(['email' => $_POST['email']]);
+		if (empty($users)) {
+			return json_encode(['status' => false]);
+		} else {
+			$password = random_string('alnum', 8);
+			$password_hash = password_hash($password, PASSWORD_DEFAULT);
+			$this->userModel->edit(['password' => $password_hash], $users[0]['id']);
+
+			$mail = \Config\Services::email();
+			$mail->setTo($_POST['email']);
+			$mail->setSubject('User Account Password');
+			$mail->setFrom('ODRS', 'PUP-Taguig ODRS');
+			$mail->setMessage('This is your new password! <br> Password: '  . $password);
+			if ($mail->send()) {
+				return json_encode(['status' => true]);
+			}
+			return json_encode(['status' => false]);
+
+
+		}
+
+  }
 }

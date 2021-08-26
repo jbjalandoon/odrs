@@ -13,7 +13,7 @@
           <span class="h2"><?=esc($edit) ? 'Editing': 'Adding'?> User</span>
         </div>
       </div>
-      <form class="form-floating" action="<?=esc($edit) ? esc($value['id']) : 'add'?>" method="post" autocomplete="off">
+      <form class="form-floating" action="<?=esc($edit) ? esc($value['user_id']) : 'add'?>" method="post" autocomplete="off">
         <div class="row justify-content-center">
           <div class="col-3">
             <div class="form-group mb-3">

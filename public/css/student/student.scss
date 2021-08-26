@@ -18,6 +18,10 @@ body{
     font-size: 15px;
     background-color: #e3e3e3;
 
+    .modal{
+        z-index: 999999999999;
+    }
+
     .logout{
         position: relative;
         width: 150px;
@@ -34,6 +38,11 @@ body{
 		img{width: 3%;}
 	}
 
+    
+    .navbar-toggler{
+        color: white!important;
+    }
+
     .navbar{
         background: $maroonColor;
         img{max-width: 2.5%;}
@@ -47,6 +56,7 @@ body{
         }
 
         a{
+
             text-decoration: none;
             padding-left: 10px;
             font-size: 1em;
@@ -55,12 +65,11 @@ body{
                 color: $graycolor;
             }
         }
-        
     }
 
     .btn{
         @include btn();
-        background: $maroonColor;
+        // background: $maroonColor;
         color: white;
 
         &:hover{
@@ -113,6 +122,10 @@ body{
         .container{ 
             font-size: .98em;
             padding: 25px;
+
+            #editbtn{
+                background-color: rgb(0, 0, 126);
+            }
             .row{
                 padding: 10px 5px;
                 .card{
@@ -122,8 +135,6 @@ body{
 
                     .card-body{
                         padding: 0;
-
-                        
 
                         .breadcrumb-item{
                             a{
@@ -227,6 +238,9 @@ body{
                         #tab {
                             button {
                                 color: black;
+                                border-top: 1px solid rgb(156, 117, 117);
+                                border-right: 1px solid rgb(156, 117, 117);
+                                color: rgb(184, 69, 69);
     
                                 &:hover {
                                     background-color: rgba(87, 68, 68, 0.774);
@@ -277,9 +291,95 @@ body{
                                 }
                             }
                         }
-                    }                    
+                    }
+                    
+                    &-footer{
+                        background-color: rgb(252, 252, 252);
+                        font-size: .9em;
+                    }
                 }
             }
+        }
+    }
+}
+
+@media screen and (max-width: 425px) {
+    body{
+        font-size: 13px;
+       .navbar{
+        img{max-width: 7%;}
+        height: 50px;
+        font-size: 1em;
+       }
+
+       .card{
+           max-width: 100%;
+       }
+
+        #menu{
+            color: white;
+        }
+    
+        .collapse{
+            background-color: maroon;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            text-align: center;
+            z-index: 999999999;
+            
+            li{
+                border-bottom: 1px solid rgb(211, 191, 155);
+            }
+        }
+
+        .logout{
+            display:inline-block;
+            position: relative;
+            .nav-link{
+                text-align: center;
+            }
+            .dropdown-menu{
+                font-size: .9em;
+                height: 100%;
+                margin: -11em;
+                margin-top: 30px;
+                li{
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+
+    #content{
+        #editbtn{
+            background-color: rgb(0, 0, 126);
+        }
+
+        #submitbtn{
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 320px) {
+    body{
+        font-size: 12px;
+        .navbar{
+            font-size: .9em;
+            img{
+                max-width: 8%;
+            }
+        }
+    }
+
+    #content{
+        #editbtn{
+            font-size: .7em;
+            background-color: rgb(0, 0, 126);
+        }
+
+        #submitbtn{
+            width: 100%;
         }
     }
 }

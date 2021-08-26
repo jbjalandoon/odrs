@@ -14,8 +14,6 @@
             </button>
           </li>
         </ul>
-      </div>
-    </div>
         <div class="tab-content" id="pills-tabContent">
           <!-- CONTENTS -->
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -128,5 +126,7 @@
               </div>
             </div>
           </div>
-        </div>
+      </div>
+    <div>
+  </div>
 </section>
