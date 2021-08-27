@@ -42,6 +42,11 @@ defined('MONTH')  || define('MONTH', 2592000);
 defined('YEAR')   || define('YEAR', 31536000);
 defined('DECADE') || define('DECADE', 315360000);
 
+
+defined('SCHOOL_YEAR')  || define('SCHOOL_YEAR', '2020 - 2021');
+
+
+
 /*
  | --------------------------------------------------------------------------
  | Exit Status Codes

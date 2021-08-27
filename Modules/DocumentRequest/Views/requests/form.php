@@ -31,7 +31,7 @@
                     Name:
                   </div>
                   <div class="col-md-7">
-                    <span style="text-transform: uppercase;"><?=ucwords(esc($value['firstname']) . ' ' . esc($value['middlename']) . ' ' . esc($value['lastname']) . ' ' . esc($value['suffix']))?></span>
+                    <span style="text-transform: uppercase;"><?=ucwords(esc($student['firstname']) . ' ' . esc($student['middlename']) . ' ' . esc($student['lastname']) . ' ' . esc($student['suffix']))?></span>
                   </div>
                 </div>
                 <div class="row">

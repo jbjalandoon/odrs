@@ -215,6 +215,18 @@ class Requests extends BaseController
     $pdf->write1DBarcode($data['requests'][0]['slug'], 'C39', '', '', '', 18, .4, $style, 'N');
     $pdf->Ln(4);
 
+
+    $pdf->MultiCell(180, 100,
+    ' Note:
+All requested credentials will be released to the following assigned representatives other than the student/client:
+
+• PARENTS/SIBLINGS/SPOUSE/CHILDREN - with formal authorization letter duly signed by the student with two (2) valid ID\'s with picture of both the student/client and the representative and photo copy of the representative\'s PSA (NSO) Birth Certificate and PSA (NSO) marriage contract for the spouse.
+• REPRESENTATIVE OTHER THAN THE IMMEDIATE FAMILY - with Special Power of Attorney from the student concerned, duly notarized in the country/place of residence and two (2) valid ID\'s with picture of both'
+    , 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
+
+    $pdf->Ln(15);
+
+
     // Set some content to print
 
     // Print text using writeHTMLCell()

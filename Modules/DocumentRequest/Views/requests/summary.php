@@ -1,5 +1,5 @@
 <br>
-<h1>Total: <?=esc(count($documents))?></h1>
+<h1>Summary Report</h1>
 <br>
 <h2><?=esc($document)?> -  (<?=esc(ucwords($types['t']))?> | <?=date('F', mktime(0, 0, 0, (int)esc($types['a']), 10));?>)</h2>
 <table cellspacing="0" cellpadding="5" border="1">
