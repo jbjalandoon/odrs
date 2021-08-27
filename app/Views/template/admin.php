@@ -37,12 +37,12 @@
         </li>
         <li class="nav-item">
             <a class="nav-link sideLink" href="/payment">
-            <i class="far fa-file-alt" style="color: maroon;"></i> For Payment
+            <i class="fas fa-money-bill-wave" style="color: blue"></i> For Payment
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link sideLink" href="/paid">
-            <i class="far fa-file-alt" style="color: maroon;"></i> Paid Requests
+            <i class="fas fa-receipt" style="color: green;"></i> Paid Requests
             </a>
         </li>
         <li class="nav-item">

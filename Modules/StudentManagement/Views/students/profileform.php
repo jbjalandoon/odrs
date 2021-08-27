@@ -13,7 +13,7 @@
           <hr>
           <form class="" action="edit" method="post">
             <div class="row">
-              <div class="col-4">
+              <div class="col-md-4">
                 <div class="form-group mb-3">
                   <label for="firstname" class="form-label">First Name </label>
                   <input value="<?=isset($value['firstname']) ? esc($value['firstname']): ''?>" type="text" name="firstname" class="form-control" id="firstname">
@@ -24,7 +24,7 @@
                   <?php endif; ?>
                 </div>
               </div>
-              <div class="col-4">
+              <div class="col-md-4">
                 <div class="form-group mb-3">
                   <label for="lastname" class="form-label">Last Name </label>
                   <input value="<?=isset($value['lastname']) ? esc($value['lastname']): ''?>" type="text" name="lastname" class="form-control" id="lastname">
@@ -35,7 +35,7 @@
                   <?php endif; ?>
                 </div>
               </div>
-              <div class="col-3">
+              <div class="col-md-3">
                 <div class="form-group mb-3">
                   <label for="office" class="form-label">Middle Name </label>
                   <input value="<?=isset($value['middlename']) ? esc($value['middlename']): ''?>" type="text" name="office" class="form-control" id="office">
@@ -46,7 +46,7 @@
                   <?php endif; ?>
                 </div>
               </div>
-              <div class="col-1">
+              <div class="col-md-1">
                 <div class="form-group mb-3">
                   <label for="suffix" class="form-label">Suffix </label>
                   <select class="form-select" name="sufix">
@@ -66,7 +66,7 @@
                   <?php endif; ?>
                 </div>
               </div>
-              <div class="col-5">
+              <div class="col-md-5">
                 <div class="form-group mb-3">
                   <label for="course_id" class="form-label">Course </label>
                   <select name="course_id" id="course_id" class="form-select">
@@ -89,7 +89,7 @@
                   <?php endif; ?>
                 </div>
               </div>
-              <div class="col-4">
+              <div class="col-md-4">
                 <label for="" class="mb-3">Status</label>
                 <div class="form-group mb-3">
                   <div class="form-check form-check-inline">
@@ -111,7 +111,7 @@
                   <?php endif; ?>
                 </div>
               </div>
-              <div class="col-3">
+              <div class="col-md-3">
                 <div class="form-group mb-3">
                   <label for="level" class="form-label" id="yearLabel">Year Level</label>
                   <select name="level" id="level" class="form-select">
@@ -135,7 +135,7 @@
                   <?php endif; ?>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-md-6">
                 <div class="form-group mb-3">
                   <label for="email" class="form-label">Email </label>
                   <input value="<?=isset($value['0']) ? esc($value['0']): ''?>" type="text" name="email" class="form-control" id="email">
@@ -146,7 +146,7 @@
                   <?php endif; ?>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-md-6">
                 <div class="form-group mb-3">
                   <label for="suffix" class="form-label">Contact Number </label>
                   <input value="<?=isset($value['contact']) ? esc($value['contact']): ''?>" type="text" name="contact" class="form-control" id="contact">
@@ -157,7 +157,7 @@
                   <?php endif; ?>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-md-6">
                 <div class="form-group mb-3">
                   <label for="birthdate" class="form-label">Birthdate </label>
                   <input type="date" name="birthdate" id="birthdate" class="form-control" value="<?=isset($value['birthdate']) ? date('Y-m-d',strtotime(esc($value['birthdate']))): ''?>">
@@ -168,7 +168,7 @@
                   <?php endif; ?>
                 </div>
               </div>
-              <div class="col-12">
+              <div class="col-md-12">
                 <label for="" class="mb-3">Gender</label>
                 <div class="form-group mb-3">
                   <div class="form-check form-check-inline">
@@ -187,11 +187,13 @@
                 </div>
               </div>
               <div class="input-group mb-3 mt-3">
-                <br><button type="submit" class="btn" name="button">Submit <i class="fas fa-paper-plane"></i></button>
+                <br><button type="submit" id="submitbtn" class="btn" name="button">Submit <i class="fas fa-paper-plane"></i></button>
               </div>
             </div>
           </form>
         </div>
+      </div>
+      <br>
     </div>
   </div>
 </div>
