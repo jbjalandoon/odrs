@@ -74,12 +74,15 @@ body footer img {
   color: blanchedalmond !important;
 }
 
-#menu .active {
+#menu li .active {
   background-color: maroon;
-  color: white;
 }
 
-#menu .active i {
+#menu li .active a {
+  color: white !important;
+}
+
+#menu li .active i {
   color: blanchedalmond !important;
 }
 

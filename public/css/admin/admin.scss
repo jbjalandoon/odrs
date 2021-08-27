@@ -55,11 +55,11 @@ body{
                 i{color: blanchedalmond!important;}
             }
         }
-    }
-    .active {
-        background-color: maroon;
-        color: white;
-        i{color: blanchedalmond!important;}
+        .active {
+            background-color: maroon;
+            a{color: white!important;}
+            i{color: blanchedalmond!important;}
+        }
     }
 }
 
