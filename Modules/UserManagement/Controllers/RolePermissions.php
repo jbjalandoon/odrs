@@ -49,17 +49,11 @@ class RolePermissions extends BaseController
   public function edit()
   {
     if ($this->request->getMethod() === 'post') {
-      // echo "<pre>";
-      // print_r($_POST);
-      // die();
       if (!empty($_POST['value'])) {
         foreach($_POST['value'] as $key => $value){
           $_POST['value'][$key] = explode(',', $value);
         }
       }
-      // echo "<pre>";
-      // print_r($_POST['value']);
-      // die();
       if (!$this->rolePermissionModel->softDeleteByRoleId()) {
         die('Something Went Wrong!');
       }

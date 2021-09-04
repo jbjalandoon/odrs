@@ -156,7 +156,11 @@
                                 <label class="form-check-label" for="free-form-<?=trim(str_replace(' ', '', $document['document']))?>">First Request</label>
                               <?php endif; ?>
                             </td>
-                            <td> <?=esc($document['process_day'])?></td>
+                            <td><?php
+                              $dtF = new \DateTime('@0');
+                              $dtT = new \DateTime('@'.$document['process_day']);
+                              echo $dtF->diff($dtT)->format('%a days, %h hours and %i minutes');
+                             ?></td>
                             <td>P <?=esc($document['price'])?></td>
                           </tr>
                       <?php endforeach; ?>

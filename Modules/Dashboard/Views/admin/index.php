@@ -23,7 +23,7 @@
               </div>
           </div>
       </div>
-      
+
       <!-- On process Documents -->
       <div class="col-xl-3 col-md-6 mb-4">
           <div class="card process shadow h-100 py-2">
@@ -135,5 +135,5 @@
                 </div>
             </div>
         </div>
-    </div>  
+    </div>
 </section>

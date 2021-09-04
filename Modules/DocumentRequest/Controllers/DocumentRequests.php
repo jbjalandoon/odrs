@@ -12,7 +12,7 @@ class DocumentRequests extends BaseController
     $this->session = \Config\Services::session();
     $this->session->start();
     if(!isset($_SESSION['user_id'])){
-      header('Location: '.base_url());
+      header('Location: '.base_url('admin'));
       exit();
     }
   }
@@ -33,7 +33,7 @@ class DocumentRequests extends BaseController
     $this->data['requests'] = $this->requestModel->getDetails(['requests.status' => 'p']);
     $this->data['request_documents'] = $this->requestDetailModel->getDetails(['request_details.received_at' => null]);
     $this->data['view'] = 'Modules\DocumentRequest\Views\requests\pending';
-    return view('template\index', $this->data);
+    return view('template/index', $this->data);
   }
 
   // public function getRequestDetails()
@@ -117,7 +117,7 @@ class DocumentRequests extends BaseController
 
   public function approval()
   {
-    $this->data['request_approvals'] = $this->officeApprovalModel->getDetails(['office_id' => $_SESSION['office_id'], 'request_approvals.status' => 'p', 'requests.status !=' => 'p']);
+      $this->data['request_approvals'] = $this->officeApprovalModel->getDetails(['office_id' => $_SESSION['office_id'], 'request_approvals.status' => 'p', 'requests.status !=' => 'p']);
     $this->data['request_approvals_hold'] = $this->officeApprovalModel->getDetails(['office_id' => $_SESSION['office_id'], 'request_approvals.status' => 'h']);
     $this->data['view'] = 'Modules\DocumentRequest\Views\requests\approval';
 

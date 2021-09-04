@@ -99,6 +99,13 @@ class Validation
 				'required' => 'Enter Course'
 			]
 		],
+		'birthdatesqweqw' => [
+			'rules' => 'valid_date',
+			'label' => 'Birthdate',
+			'errors' => [
+				'required' => 'Enter Birthdate'
+			]
+		],
 	];
 
 	public $student = [

@@ -10,7 +10,6 @@ class Dashboards extends BaseController {
   }
 
   public function index(){
-
     $data['view'] = 'Modules\Dashboard\Views\dashboards\index';
     return view('template/index', $data);
   }

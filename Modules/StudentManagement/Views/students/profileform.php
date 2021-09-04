@@ -37,8 +37,8 @@
               </div>
               <div class="col-md-3">
                 <div class="form-group mb-3">
-                  <label for="office" class="form-label">Middle Name </label>
-                  <input value="<?=isset($value['middlename']) ? esc($value['middlename']): ''?>" type="text" name="office" class="form-control" id="office">
+                  <label for="middlename" class="form-label">Middle Name </label>
+                  <input value="<?=isset($value['middlename']) ? esc($value['middlename']): ''?>" type="text" name="middlename" class="form-control" id="middlename">
                   <?php if (isset($error['middlename'])): ?>
                     <div class="text-danger">
                       <?=esc($error['middlename'])?>
@@ -50,14 +50,14 @@
                 <div class="form-group mb-3">
                   <label for="suffix" class="form-label">Suffix </label>
                   <select class="form-select" name="sufix">
-                    <option value=""> -- Select Suffix -- </option>
-                    <option value="jr"> Jr. </option>
-                    <option value="sr"> Sr. </option>
-                    <option value="i"> I </option>
-                    <option value="ii"> II </option>
-                    <option value="iii"> III </option>
-                    <option value="iv"> IV </option>
-                    <option value="v"> V </option>
+                    <option value="" selected> -- Select Suffix -- </option>
+                    <option value="jr" <?=$value['suffix'] == 'jr' ?'selected':''?>> Jr. </option>
+                    <option value="sr" <?=$value['suffix'] == 'sr' ?'selected':''?>> Sr. </option>
+                    <option value="i" <?=$value['suffix'] == 'i' ?'selected':''?>> I </option>
+                    <option value="ii" <?=$value['suffix'] == 'ii' ?'selected':''?>> II </option>
+                    <option value="iii" <?=$value['suffix'] == 'iii' ?'selected':''?>> III </option>
+                    <option value="iv" <?=$value['suffix'] == 'iv' ?'selected':''?>> IV </option>
+                    <option value="v" <?=$value['suffix'] == 'v' ?'selected':''?>> V </option>
                   </select>
                   <?php if (isset($error['suffix'])): ?>
                     <div class="text-danger">
@@ -101,7 +101,7 @@
                     <label class="form-check-label" for="inlineRadio2">Currently Enrolled</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input status" type="radio" name="status" id="inlineRadio3" value="returning" <?=$value['status'] == 'dropout' ?'checked':''?>>
+                    <input class="form-check-input status" type="radio" name="status" id="inlineRadio3" value="returning" <?=$value['status'] == 'returning' ?'checked':''?>>
                     <label class="form-check-label" for="inlineRadio3">Returning</label>
                   </div>
                   <?php if (isset($error['status'])): ?>
