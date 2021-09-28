@@ -386,7 +386,7 @@ Branch Director', 0, 'C', 0, 1, '', '', true, 0, false, true, 40, 'M');
   }
 
   public function requestForm(){
-    $pdf = new Pdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+    $pdf = new Pdf(PDF_PAGE_ORIENTATION, PDF_UNIT, 'LETTER', true, 'UTF-8', false);
 
     // set document information
     $pdf->SetCreator(PDF_CREATOR);
@@ -395,8 +395,7 @@ Branch Director', 0, 'C', 0, 1, '', '', true, 0, false, true, 40, 'M');
     $pdf->SetSubject('Form-137 Request');
 
     // set default header data
-    $pdf->SetHeaderData('header.png', '130', '', '');
-
+    $pdf->SetHeaderData('PUPLogo.png', '20', 'Test', 'test');
     // set header and footer fonts
     $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
     $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
@@ -405,8 +404,8 @@ Branch Director', 0, 'C', 0, 1, '', '', true, 0, false, true, 40, 'M');
     $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
     // set margins
-    $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-    $pdf->SetHeaderMargin(1);
+    $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP + 5, PDF_MARGIN_RIGHT);
+    $pdf->SetHeaderMargin(3);
     $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
     // set auto page breaks
