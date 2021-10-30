@@ -237,6 +237,198 @@ class DocumentRequests extends BaseController
     return $data['page'].'';
   }
 
+  public function acceptForm()
+  {
+    // return print_r($this->requestModel->denyRequest($_POST));
+    $student = $this->userModel->get(['username' => $_POST['student_number']]);
+
+    $this->email->setTo($student[0]['email']);
+    $this->email->setSubject('Document Request Update');
+    $this->email->setFrom('ODRS', 'PUP-Taguig ODRS');
+    $this->email->setMessage('Your Form 137 Requests has been approved, you may now download the request form.');
+    if($this->formRequestModel->acceptForm($_POST['id']))
+      $this->email->send();
+    return $this->formRequests();
+  }
+
+  public function receiveForm()
+  {
+    // return print_r($this->requestModel->denyRequest($_POST));
+    if($this->formRequestModel->receiveForm($_POST['id']))
+      $this->email->send();
+    return $this->formRequests();
+  }
+
+  public function form($id){
+    $pdf = new Pdf(PDF_PAGE_ORIENTATION, PDF_UNIT, 'LETTER', true, 'UTF-8', false);
+    $data = $this->formRequestModel->getDetails(['form_requests.id' => $id])[0];
+    // set document information
+    $pdf->SetCreator(PDF_CREATOR);
+    $pdf->SetAuthor('PUPT ODRS');
+    $pdf->SetTitle('Form-137 Request');
+    $pdf->SetSubject('Form-137 Request');
+    // set default header data
+    $pdf->SetHeaderData('header.png', '200', '', '');
+    // set header and footer fonts
+    $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+    $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+    // set default monospaced font
+    $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+    // set margins
+    $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP + 10, PDF_MARGIN_RIGHT);
+    $pdf->SetHeaderMargin(3);
+    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER + 15);
+
+    // set auto page breaks
+    $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+
+    // set image scale factor
+    $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+    // set some language-dependent strings (optional)
+    if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+        require_once(dirname(__FILE__).'/lang/eng.php');
+        $pdf->setLanguageArray($l);
+    }
+    // ---------------------------------------------------------
+
+
+    // set font
+
+    // add a page
+    $pdf->AddPage();
+    // disable auto-page-break
+    // set bacground image
+    $img_file = K_PATH_IMAGES.'bg.png';
+    $pdf->Image($img_file, 22, 40, 175, 175, '', '', '', false, 300, '', false, false, 0);
+    // restore auto-page-break status
+    // set the starting point for the page content
+    $pdf->setPageMark();
+    $pdf->setJPEGQuality(100);
+    $pdf->SetFont('lucidafaxdemib', '', 9);
+
+    $pdf->MultiCell(90, 10, 'Reference No.', 0, 'L', 0, 0, '', '', true, 0, false, true, 0, 'T');
+    $pdf->Ln(4);
+    $pdf->SetTextColor(255,0,0);
+    $pdf->SetFont('lucidafaxdemib', '', 12);
+
+    $pdf->MultiCell(90, 10, 'PUPTG-F137-' . date('Y', strtotime($data['created_at'])). '-' . substr(str_repeat(0, 5).$data['id'], - 5), 0, 'L', 0, 0, '', '', true, 0, false, true, 0, 'T');
+
+    $pdf->Ln(12);
+    $pdf->SetTextColor(0,0,0);
+    $pdf->SetFont('lucidafax', '', 12);
+
+    $pdf->MultiCell(90, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
+    $pdf->MultiCell(90, 10, date('F d, Y'), 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
+
+    $pdf->Ln(20);
+
+    $pdf->SetFont('lucidafaxdemib', '', 12);
+    $pdf->MultiCell(70, 30, 'THE PRINCIPAL/REGISTRAR', 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
+
+    $pdf->Ln(4);
+    $pdf->SetFont('lucidafax', '', 12);
+    $pdf->MultiCell(120, 30, strtoupper($data['school']), 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
+    $pdf->Ln(4);
+    $pdf->MultiCell(120, 30, strtoupper($data['address']), 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
+
+    $pdf->Ln(8);
+
+    $pdf->SetFont('lucidafax', '', 12);
+    $pdf->MultiCell(70, 30, 'Dear Sir/Maam:', 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
+
+    $pdf->Ln(8);
+    $pdf->writeHTML('<p style="text-indent: 50px">May I request for the ', 0, 0, true, 1);
+    $pdf->SetFont('lucidafaxdemib', '', 12);
+    $pdf->writeHTML('original copy', 0, 0, true, 1);
+    $pdf->SetFont('lucidafax', '', 12);
+    $pdf->writeHTML('of Form 137-A and/or Transcript of Records of', 0, 0, true, 1);
+    $pdf->SetFont('lucidafaxdemib', '', 12);
+    $pdf->writeHTML(ucwords($data['firstname'] . ' ' . $data['middlename'] . ' '. $data['lastname'] . ' '. $data['suffix']).' ', 0, 0, true, 1);
+    $pdf->SetFont('lucidafax', '', 12);
+    $pdf->writeHTML('please indicate the student\'s complete name ', 0, 0, true, 1);
+    $pdf->SetFont('lucidafaxdemib', '', 12);
+    $pdf->writeHTML('(Last Name, First Name, and Middle Name) ', 0, 0, true, 1);
+    $pdf->SetFont('lucidafax', '', 12);
+    $pdf->writeHTML('and with ', 0, 0, true, 1);
+    $pdf->SetFont('lucidafaxdemib', '', 12);
+    $pdf->writeHTML('<b>"Copy for POLYTECHNIC UNIVERSITY OF THE PHILIPPINES TAGUIG BRANCH"</b> ', 0, 0, true, 1);
+    $pdf->SetFont('lucidafax', '', 12);
+    $pdf->writeHTML('remarks. The above-mentioned student has been admitted on the basis of his/her transfer credentials for ', 0, 0, true, 1);
+    $pdf->SetFont('lucidafaxdemib', '', 12);
+    $pdf->writeHTML($data['course'], 0, 0, true, 1);
+    $pdf->SetFont('lucidafax', '', 12);
+    $pdf->writeHTML('presented in this University, S.Y. ', 0, 0, true, 1);
+    $pdf->SetFont('lucidafaxdemib', '', 12);
+    $pdf->writeHTML('<b>'.SCHOOL_YEAR.'</b>.</p>', 0, 0, true, 1);
+    // $pdf->writeHTML('May I request for the <b>original copy</b> of Form 137-A and/or Transcript of Records of <u><b>'.$_SESSION['name'].'</b></u>. Please indicate the <b>student\'s complete name</b> (Last Name, First Name, and Middle Name) and with <b>"Copy for POLYTECHNIC UNIVERSITY OF THE PHILIPPINES TAGUIG BRANCH"  </b> remarks. The above-mentioned student has been admitted on the basis of his/her transfer credentials presented in this University, S.Y. <u><b>'.SCHOOL_YEAR.'</b></u>.', true, 0, true, 0);
+    // $pdf->MultiCell(180, 30, , 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
+
+    $pdf->Ln(8);
+
+    $pdf->SetFont('lucidafax', '', 12);
+    $pdf->writeHTML('<p style="text-indent: 50px;">May I Further request that said copy be sent to our Admission and Registration Office, c/o the undersigned, in a <b>sealed envelope</b>, bearing your signature on its flap, to be hand-carried by the student. Thank you.</p>', 0, 0, true, 1);
+    // $pdf->MultiCell(180, 30, , 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
+
+    $pdf->Ln(4);
+
+    $pdf->MultiCell(60, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
+    $pdf->MultiCell(20, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
+    $pdf->MultiCell(90, 10, 'Very truly yours,', 0, 'C', 0, 0, '', '', true, 0, false, true, 40, 'T');
+
+    $pdf->Ln(20);
+
+    $pdf->SetFont('lucidafaxdemib', '', 12);
+    $pdf->MultiCell(60, 1, '', 0, 'C', 0, 0, '', '', true, 0, false, true, 40, 'T');
+    $pdf->MultiCell(20, 1, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
+    $pdf->MultiCell(90, 1, 'MR. MHEL P. GARCIA', 0, 'C', 0, 0, '', '', true, 0, false, true, 40, 'T');
+
+    $pdf->Ln(4);
+
+
+
+    $pdf->SetFont('lucidafax', '', 12);
+
+    $pdf->MultiCell(60, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
+    $pdf->MultiCell(20, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
+    $pdf->MultiCell(90, 10, 'Head, Admission and Registration Office', 0, 'L', 0, 0, '', '', true, 300, false, true, 40, 'T');
+
+    $pdf->Ln(8);
+
+    $pdf->SetFont('lucidafaxdemib', '', 9);
+
+    $pdf->MultiCell(90, 10, 'Remarks:', 0, 'L', 0, 0, '', '', true, 0, false, true, 0, 'T');
+    $pdf->Ln(4);
+    $pdf->SetFont('lucidafax', '', 9);
+    if ($data['remarks'] == 1) {
+      $remark = '1st Request';
+    } elseif ($data['remarks'] == 2) {
+      $remark = '2nd Request';
+    } elseif ($data['remarks'] == 3) {
+      $remark = '3rd Request';
+    } else {
+      $remark = '4th Request';
+    }
+    $pdf->MultiCell(90, 10, $remark, 0, 'L', 0, 0, '', '', true, 0, false, true, 0, 'T');
+
+    // -----------------------------------------------------------------------------
+    // output the HTML content
+    // -----------------------------------------------------------------------------
+    $pdf->SetXY(122, 172);
+    $pdf->Image(APPPATH . 'libraries/tcpdf/examples/images/signature.png', '', '', 35, 20, '', '', 'T', false, 300, '', false, false, 1, false, false, false);
+
+
+    //Close and output PDF document
+    $pdf->Output('example_048.pdf', 'I');
+
+    //============================================================+
+    // END OF FILE
+    //============================================================+
+    die('here');
+  }
+
   public function claimRequest()
   {
 
@@ -385,166 +577,38 @@ Branch Director', 0, 'C', 0, 1, '', '', true, 0, false, true, 40, 'M');
 		die();
   }
 
-  public function requestForm(){
-    $pdf = new Pdf(PDF_PAGE_ORIENTATION, PDF_UNIT, 'LETTER', true, 'UTF-8', false);
-
-    // set document information
-    $pdf->SetCreator(PDF_CREATOR);
-    $pdf->SetAuthor('PUPT ODRS');
-    $pdf->SetTitle('Form-137 Request');
-    $pdf->SetSubject('Form-137 Request');
-
-    // set default header data
-    $pdf->SetHeaderData('PUPLogo.png', '20', 'Test', 'test');
-    // set header and footer fonts
-    $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-    $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-
-    // set default monospaced font
-    $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-
-    // set margins
-    $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP + 5, PDF_MARGIN_RIGHT);
-    $pdf->SetHeaderMargin(3);
-    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-
-    // set auto page breaks
-    $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-
-    // set image scale factor
-    $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-
-    // set some language-dependent strings (optional)
-    if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-        require_once(dirname(__FILE__).'/lang/eng.php');
-        $pdf->setLanguageArray($l);
+  public function addForm(){
+    $this->data['view'] = 'Modules\DocumentRequest\Views\requests\formrequest';
+    $this->data['requests'] = $this->formRequestModel->getDetails(['student_id' => $_SESSION['student_id'], 'form_requests.status !=' => 'c']);
+    if ($this->request->getMethod() == 'post') {
+      if ($this->validate('form')) {
+        $data = [
+          'student_id' => $_SESSION['student_id'],
+          'school' => $_POST['school'],
+          'address' => $_POST['address'],
+          'sy_admission' => $_POST['sy_admission'],
+          'status' => 'w',
+          'remarks' => $_POST['remarks']
+        ];
+        if ($this->formRequestModel->input($data)) {
+          $this->session->setFlashData('success_message', 'Sucessfully make a request');
+        } else {
+          $this->session->setFlashData('error_message', 'Something Went wrong!');
+        }
+        return redirect()->to(base_url('form-137'));
+        print_r($_POST);
+        die();
+      } else {
+        $this->data['error'] = $this->validation->getErrors();
+      }
     }
-    // ---------------------------------------------------------
+    return view('template/index', $this->data);
+  }
 
-
-    // set font
-    $pdf->SetFont('helvetica', '', 12);
-
-    // add a page
-    $pdf->AddPage();
-
-    $pdf->MultiCell(60, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(60, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(60, 10, date('F d, Y'), 0, 'L', 0, 1, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(1);
-
-    $pdf->MultiCell(70, 30, 'THE PRINCIPAL/REGISTRAR', 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(4);
-    $pdf->SetFont('helveticaBI', 'U', 12);
-
-    $pdf->MultiCell(120, 30, strtoupper($_POST['school']), 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(15);
-
-    $pdf->SetFont('helvetica', '', 12);
-    $pdf->MultiCell(70, 30, 'Dear Sir/Maam:', 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(10);
-    $pdf->writeHTML('May I request for the <b>original copy</b> of Form 137-A and/or Transcript of Records of <u><b>'.$_SESSION['name'].'</b></u>. Please indicate the <b>student\'s complete name</b> (Last Name, First Name, and Middle Name) and with <b>"Copy for POLYTECHNIC UNIVERSITY OF THE PHILIPPINES TAGUIG BRANCH"  </b> remarks. The above-mentioned student has been admitted on the basis of his/her transfer credentials presented in this University, S.Y. <u><b>'.SCHOOL_YEAR.'</b></u>.', true, 0, true, 0);
-    // $pdf->MultiCell(180, 30, , 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(5);
-
-    $pdf->writeHTML('May I Further request that said copy be sent to our Admission & Registration Office, c/o the undersigned, in a <b>sealed envelope</b>, bearing your signature on its flap, to be hand-carried by the student. Thank you.', true, 0, true, 0);
-    // $pdf->MultiCell(180, 30, , 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(5);
-
-    $pdf->MultiCell(60, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(30, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(60, 10, 'Very truly yours,', 0, 'L', 0, 1, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(1);
-
-    $pdf->SetFont('helveticaBI', '', 12);
-
-    $pdf->MultiCell(60, 1, $_POST['request'], 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(30, 1, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(90, 1, 'MHEL P. Garcia', 0, 'L', 0, 1, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(1);
-
-    $pdf->SetFont('helvetica', '', 12);
-
-    $pdf->MultiCell(60, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(30, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(90, 10, 'Head, Admission & Registration Office', 0, 'L', 0, 1, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(1);
-
-
-    $pdf->writeHTML("<hr>", true, 1, 1, 1, '');
-
-
-    // anther
-    $pdf->MultiCell(60, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(60, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(60, 10, date('F d, Y'), 0, 'L', 0, 1, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(1);
-
-    $pdf->MultiCell(70, 30, 'THE PRINCIPAL/REGISTRAR', 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(4);
-    $pdf->SetFont('helveticaBI', 'U', 12);
-
-    $pdf->MultiCell(120, 30, strtoupper($_POST['school']), 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(15);
-
-    $pdf->SetFont('helvetica', '', 12);
-    $pdf->MultiCell(70, 30, 'Dear Sir/Maam:', 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(10);
-    $pdf->writeHTML('May I request for the <b>original copy</b> of Form 137-A and/or Transcript of Records of <u><b>'.$_SESSION['name'].'</b></u>. Please indicate the <b>student\'s complete name</b> (Last Name, First Name, and Middle Name) and with <b>"Copy for POLYTECHNIC UNIVERSITY OF THE PHILIPPINES TAGUIG BRANCH"  </b> remarks. The above-mentioned student has been admitted on the basis of his/her transfer credentials presented in this University, S.Y. <u><b>'.SCHOOL_YEAR.'</b></u>.', true, 0, true, 0);
-    // $pdf->MultiCell(180, 30, , 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(5);
-
-    $pdf->writeHTML('May I Further request that said copy be sent to our Admission & Registration Office, c/o the undersigned, in a <b>sealed envelope</b>, bearing your signature on its flap, to be hand-carried by the student. Thank you.', true, 0, true, 0);
-    // $pdf->MultiCell(180, 30, , 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(5);
-
-    $pdf->MultiCell(60, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(30, 10, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(60, 10, 'Very truly yours,', 0, 'L', 0, 1, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(1);
-
-    $pdf->SetFont('helveticaBI', '', 12);
-
-    $pdf->MultiCell(60, 1, $_POST['request'], 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(30, 1, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(90, 1, 'MHEL P. Garcia', 0, 'L', 0, 1, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(1);
-
-    $pdf->SetFont('helvetica', '', 12);
-
-    $pdf->MultiCell(60, 5, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(30, 5, '', 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
-    $pdf->MultiCell(90, 5, 'Head, Admission & Registration Office', 0, 'L', 0, 1, '', '', true, 0, false, true, 40, 'T');
-
-    $pdf->Ln(1);
-    // -----------------------------------------------------------------------------
-    // output the HTML content
-    // -----------------------------------------------------------------------------
-
-    //Close and output PDF document
-    $pdf->Output('example_048.pdf', 'I');
-
-    //============================================================+
-    // END OF FILE
-    //============================================================+
-    die('here');
+  public function formRequests(){
+    $this->data['view'] = 'Modules\DocumentRequest\Views\requests\formrequestlist';
+    $this->data['requests'] = $this->formRequestModel->getDetails();
+    return view('template/index', $this->data);
   }
 
   public function goodmoral($request_id){

@@ -110,6 +110,7 @@ class BaseController extends Controller
 		$this->officeApprovalModel = new DocumentRequest\RequestApprovalsModel();
 		$this->requestDetailModel = new DocumentRequest\RequestDetailsModel();
 		$this->requestModel = new DocumentRequest\RequestsModel();
+		$this->formRequestModel = new DocumentRequest\FormRequestsModel();
 
 		$this->session = \Config\Services::session();
 		$this->validation =  \Config\Services::validation();

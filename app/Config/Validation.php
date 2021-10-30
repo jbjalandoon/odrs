@@ -455,6 +455,21 @@ class Validation
 		'status' => 'required'
 	];
 
+	public $form = [
+		'school' => [
+			'rules' => 'required',
+			'label' => 'School'
+		],
+		'address' => [
+			'rules' => 'required',
+			'label' => 'School Address',
+		],
+		'sy_admission' => [
+			'rules' => 'required',
+			'label' => 'SY - Admission is required',
+		]
+	];
+
 	public $office = [
 		'office' => 'required'
 	];

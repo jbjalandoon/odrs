@@ -1,4 +1,5 @@
-<h4 style="text-align:center">Stub</h4>
+<br>
+<h4 style="text-align:center"> Claiming Stub</h4>
 <?php $document_price = 0 ?>
 <?php foreach ($requests as $request): ?>
   <table cellpadding="5">
@@ -12,6 +13,16 @@
   </table>
   <br>
 <?php endforeach; ?>
+<br>
+<br>
+<table>
+  <tr>
+    <th><strong>Date of Release: </strong></th>
+    <th><strong>Released by: </strong></th>
+  </tr>
+</table>
+<br>
+<br>
 <h3>Document/s Requested:</h3>
 <table cellpadding="5" border="1">
   <tr style="text-align:center">

@@ -18,51 +18,7 @@
           <?php endif; ?>
         <?php endforeach; ?>
         <li class="nav-item">
-          <a class="nav-link sideLink" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Form-137 Request</a>
-
-          <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Generate Form-137 Request</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form class="" action="<?=base_url('form-137')?>" method="post" target="_blank">
-                  <div class="modal-body">
-                    <div class="form-group mb-3">
-                      <label for="school" class="form-label">School: </label>
-                      <input type="text" name="school" id="school" class="form-control" placeholder="School came from" required>
-                    </div>
-                    <div class="form-group">
-                      <label class="form-label">Request:</label>
-                      <br>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="request" type="radio" id="inlineCheckbox1" value="1st Request" checked>
-                        <label class="form-check-label" for="inlineCheckbox1">1st</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="request" type="radio" id="inlineCheckbox2" value="2nd Request">
-                        <label class="form-check-label" for="inlineCheckbox2">2nd</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="request" type="radio" id="inlineCheckbox3" value="3rd Request">
-                        <label class="form-check-label" for="inlineCheckbox3">3rd</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="request" type="radio" id="inlineCheckbox4" value="4th Request">
-                        <label class="form-check-label" for="inlineCheckbox4">4th</label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Generate</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+          <a class="nav-link sideLink active" href="<?=esc(base_url('form-137'))?>">Form 137 Form</a>
         </li>
       </ul>
       <ul class="navbar-nav logout">

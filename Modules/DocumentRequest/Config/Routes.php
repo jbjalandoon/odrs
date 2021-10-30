@@ -23,9 +23,18 @@ $routes->group('payment', ['namespace' => 'Modules\DocumentRequest\Controllers']
     $routes->get('/', 'DocumentRequests::payment');
 });
 
+$routes->group('payment', ['namespace' => 'Modules\DocumentRequest\Controllers'], function($routes)
+{
+    $routes->get('/', 'DocumentRequests::payment');
+});
+
 $routes->group('form-137', ['namespace' => 'Modules\DocumentRequest\Controllers'], function($routes)
 {
-    $routes->post('/', 'DocumentRequests::requestForm');
+    $routes->match(['post', 'get'], '/', 'DocumentRequests::addForm');
+    $routes->get('(:num)', 'DocumentRequests::form/$1');
+    $routes->get('requests', 'DocumentRequests::formRequests');
+    $routes->post('accept-form', 'DocumentRequests::acceptForm');
+    $routes->post('receive-form', 'DocumentRequests::receiveForm');
 });
 
 $routes->group('paid', ['namespace' => 'Modules\DocumentRequest\Controllers'], function($routes)

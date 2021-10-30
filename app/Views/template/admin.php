@@ -7,9 +7,13 @@
         <a class="btn dashboard btn-light btn-sm" href="<?=base_url('dashboards')?>">
           <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
-        <a class="btn completerqt btn-light btn-sm report" href="<?=base_url('completed')?>">
+        <a class="btn completerqt btn-light btn-sm" href="<?=base_url('form-137/requests')?>">
+          <i class="fas fa-file"></i> Form 137 Requests
+        </a>
+        <a class="btn completerqt btn-light btn-sm me-3" href="<?=base_url('completed')?>">
           <i class="fas fa-chart-line"></i> Completed Requests
         </a>
+
         <button class="btn logout btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fas fa-user-shield"></i> <?=esc($_SESSION['name'])?>
         </button>

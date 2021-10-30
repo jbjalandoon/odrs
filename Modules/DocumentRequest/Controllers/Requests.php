@@ -157,7 +157,7 @@ class Requests extends BaseController
     $pdf->SetTitle('Stub');
 
 
-		$pdf->SetHeaderData('header.png', '130', '', '');
+		$pdf->SetHeaderData('header.png', '200', '', '');
     // die(PDF_HEADER_LOGO);
     $pdf->setPrintHeader(true);
     // set header and footer fonts
@@ -168,9 +168,9 @@ class Requests extends BaseController
     $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
     // set margins
-    $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+    $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP + 10, PDF_MARGIN_RIGHT);
     $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER + 15);
 
     // set auto page breaks
     $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
@@ -222,7 +222,7 @@ All requested credentials will be released to the following assigned representat
 
 • PARENTS/SIBLINGS/SPOUSE/CHILDREN - with formal authorization letter duly signed by the student with two (2) valid ID\'s with picture of both the student/client and the representative and photo copy of the representative\'s PSA (NSO) Birth Certificate and PSA (NSO) marriage contract for the spouse.
 • REPRESENTATIVE OTHER THAN THE IMMEDIATE FAMILY - with Special Power of Attorney from the student concerned, duly notarized in the country/place of residence and two (2) valid ID\'s with picture of both'
-    , 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
+    , 0, 'J', 0, 0, '', '', true, 0, false, true, 40, 'T');
 
     $pdf->Ln(15);
 

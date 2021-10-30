@@ -60,6 +60,23 @@ const showLoading = function() {
   })
 };
 
+var adminFormTable = $('#admin-form-table').DataTable({
+  "columnDefs" : [{
+    "targets" : [0],
+    "visible" : false,
+    "searchable" : false,
+  }],
+  "bPaginate": true,
+  "bLengthChange": false,
+  "bFilter": true,
+  "bInfo": false,
+  "bAutoWidth": false,
+  "dom": '<"row"<"col-6"<"select-pending mb-3">><"col-6"f>>t<"row"<"col-6"<"action-pending mt-3">><"col-6 float-end mt-3"p>>',
+  fnInitComplete: function(){
+      $('div.select-pending').html('<span class="h2"> Form 137 Requests </span>');
+    }
+});
+
 var adminPaidTable = $('#admin-paid-table').DataTable({
   "columnDefs" : [{
     "targets" : [0],
@@ -190,6 +207,94 @@ function reUploadRequest(id, student_number)
           Swal.fire({
             icon: 'success',
             title: 'Successfuly notify the user!',
+          }).then(function(){
+            location.reload()
+          })
+        },
+        error: function (request, error) {
+          swal.close()
+          Swal.fire({
+            icon: 'error',
+            title: 'Something went wrong!'
+          }).then(function(){
+            location.reload()
+          })
+          // location.reload()
+        },
+      });
+    }
+  });
+}
+
+function acceptForm(id, student_number)
+{
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "The request will now mark to be process!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: 'POST',
+        url: 'accept-form',
+        data: {
+          'id' : id,
+          'student_number' : student_number
+        },
+        beforeSend: function(){
+          showLoading();
+        },
+        success: function(response){
+          swal.close()
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfuly Accepted',
+          }).then(function(){
+            location.reload()
+          })
+        },
+        error: function (request, error) {
+          swal.close()
+          Swal.fire({
+            icon: 'error',
+            title: 'Something went wrong!'
+          }).then(function(){
+            location.reload()
+          })
+          // location.reload()
+        },
+      });
+    }
+  });
+}
+
+function receiveForm(id, student_number)
+{
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "The request will now mark to be completed!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: 'POST',
+        url: 'receive-form',
+        data: {
+          'id' : id,
+          'student_number' : student_number
+        },
+        beforeSend: function(){
+          showLoading();
+        },
+        success: function(response){
+          swal.close()
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfuly Accepted',
           }).then(function(){
             location.reload()
           })
