@@ -47,21 +47,21 @@ class Email extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $SMTPHost = 'smtp.gmail.com';
+	public $SMTPHost = $_ENV["SMTP_HOST"];
 
 	/**
 	 * SMTP Username
 	 *
 	 * @var string
 	 */
-	public $SMTPUser = 'odrs.pupt@gmail.com';
+	public $SMTPUser = $_ENV["SMTP_EMAIL"];
 
 	/**
 	 * SMTP Password
 	 *
 	 * @var string
 	 */
-	public $SMTPPass = 'onl!neDocument_request$yst3m';
+	public $SMTPPass = $_ENV["SMTP_PASSWORD"];
 
 	/**
 	 * SMTP Port
